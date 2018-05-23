@@ -1,0 +1,21 @@
+{
+  "mysql": {
+    "host": "192.168.3.6",
+    "user": "root",
+    "password": "",
+    "database": "moves",
+    "port": 3306,
+    "connectionLimit": 50,
+    "acquireTimeout": 10000,
+    "charset": "utf8"
+  },
+  "redis": {
+    "cluster": false,
+    "connect_info": [
+      {
+        "port": 6379,
+        "host": "192.168.3.6"
+      }
+    ]
+  }
+}

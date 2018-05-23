@@ -1,0 +1,77 @@
+.top-box{
+    width:100%;
+    height:287px;
+    background:#d3e5a7;
+    position:relative;
+    overflow: hidden;
+}
+.contact-img{
+    width:915px;
+    height:238px;
+    margin:0 auto;
+    background:url('/images/contact.png') no-repeat;
+    background-size:915px auto;
+    background-position:bottom center;
+}
+
+/*中间部分样式*/
+.content{
+    width:1024px;
+    margin:55px auto;
+    overflow: hidden;
+}
+.content-contact,.content-attention{
+    width:50%;
+    float:left;
+}
+.ver{
+    width:4px;
+    height:28px;
+    border-radius:1px;
+    float:left;
+    margin-right:12px;
+}
+.content-contact .ver{
+    background:#ff7c7c;
+    margin-left:34px;
+    margin-top:2px;
+}
+.content-attention .ver{
+    background:#81a666;
+    margin-left:100px;
+    margin-top:2px;
+}
+.content-contact .title{
+     color:#ff7c7c;
+}
+.content-attention .title{
+    color:#81a666;
+}
+.title{
+    font-size:30px;
+    font-weight:normal;
+    margin-top:-2px;
+    font-family: "Microsoft YaHei";
+}
+.contact-con{
+    margin-left:34px;
+    font-size:16px;
+    line-height:32px;
+    margin-top:30px;
+    border-right:1px solid #b7b7b7;
+}
+.attention-con{
+    margin-left:100px;
+    font-size:16px;
+    line-height:32px;
+    margin-top:30px;
+    font-family: "Microsoft YaHei";
+}
+.small-title{
+    font-size:20px;
+    line-height:36px;
+    font-family: "Microsoft YaHei";
+}
+.attention-con a{
+    color:#3b8eff
+}

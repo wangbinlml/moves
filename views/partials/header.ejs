@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><%= title %></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/css/dataTables.bootstrap.min.css">
+    <link href='/css/style.css' rel='stylesheet'/>
+    <link href="/css/noty.css" rel="stylesheet">
+    <style>
+        .navbar-fixed-top {
+            box-sizing: border-box;
+            background: #fff;
+            color: #333;
+            box-shadow: 0 1px 2px rgba(150,150,150,.3);
+        }
+        .nav li {
+            height: 100%;
+        }
+        .nav li.active {
+            color: #00B7FF;
+            border-bottom: 2px solid #00B7FF;
+        }
+        .nav li a {
+            color: #333;
+            font-size: 16px;
+        }
+        .nav li a:hover {
+            background: #fff;
+            color: #00B7FF;
+        }
+        .nav-link.btn, .nav-link.btn:hover, a.nav-link.btn:active, .nav-link.btn:visited, .nav-link.btn:link {
+            padding: 5px 12px;
+            display: inline-block;
+            background: #00B7FF;
+            color: #fff;
+            border-radius: 20px;
+            margin-top: 11px;
+            border: 0;
+        }
+        .navbar-brand {
+            padding: 0;
+            margin-right: 30px;
+        }
+        .navbar-brand #logo {
+            display: inline-block;
+            width: 31px;
+            margin-top: 5px;
+        }
+        .navbar-brand #font-logo {
+            display: inline-block;
+            height: 30px;
+            margin-top: 10px;
+        }
+        .navbar-nav li {
+            margin-right: 20px;
+        }
+        #user-name:hover {
+            color: #333;
+        }
+    </style>
+
+</head>
+
+<body class="page_resource">
+<!-- Fixed navbar -->
+<!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
+<nav class="navbar-fixed-top">
+    <div class="container">
+        <div id="navbar" class="navbar-collapse collapse">
+            <a class="navbar-brand" href="/" style="width: 214px;">
+                晨讯电影
+            </a>
+            <ul class="nav navbar-nav">
+                <li <% if(active == "/") { %>class="active"<% } %>><a href="/">首页</a></li>
+                <li <% if(active == "app-manage"){ %> class="active"<% } %>><a   <% if (user) { %> href="/app-manage?id=1" <% } else { %> data-toggle="modal" data-target="#e-dialog-login" <% } %>>电影</a></li>
+                <li <% if(active == "resource-docs"){ %> class="active"<% } %>><a href="/resource-docs">电视剧</a></li>
+                <li <% if(active == "contact-us"){ %> class="active"<% } %>><a href="/contact-us">综艺</a></li>
+                <li <% if(active == "contact-us"){ %> class="active"<% } %>><a href="/contact-us">娱乐</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                    <% if (user) { %>
+                <li>
+                    <a id="user-name">您好： <%= user.name %></a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/login/exit">退出</a>
+                </li>
+                    <% } else { %>
+                <li>
+                    <a class="nav-link btn" href="javascript:;" data-toggle="modal"
+                       data-target="#e-dialog-login">登 录</a>
+                </li>
+                    <% } %>
+
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<% include ../login.ejs %>
