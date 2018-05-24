@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const commonUtil = require('./util/commonUtil');
-const config = require(commonUtil.getConfigPath() + "/db_config").mysql;
+const config = require("../config/db_config").mysql;
 const logger = require("./logger").getLogger("system");
 logger.info("mysql config ", JSON.stringify(config));
 

@@ -30,9 +30,10 @@ module.exports.findMoveByName = async (actor_name) => {
     }
     return result;
 };
-module.exports.insert = async (value) => {
-    return await mysql.query("insert into tb_move (category_id,tag_id,name,cover,source,description,creator_id)" +
-        "value (?,?,?,?,?,?,?)", value);
+module.exports.insert = async (conn, value) => {
+    console.log("===move=======", value);
+    return await mysql.query2(conn, "insert into tb_move (category_id,tag_id,name,year,area,cover,source,description,creator_id)" +
+        "value (?,?,?,?,?,?,?,?,?)", value);
 };
 module.exports.update = async (value) => {
     var sql = "update tb_move set ";

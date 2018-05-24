@@ -98,3 +98,7 @@ module.exports.getLocations = async function (ip) {
         return "";
     }
 };
+
+module.exports.StringAs = function(string) {
+    return '"' + string.replace(/(\\|\"|\n|\r|\t)/g, "\\$1") + '"';
+}

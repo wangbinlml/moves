@@ -13,9 +13,9 @@ module.exports.findMoveUrl = async (move_id) => {
     }
     return result;
 };
-module.exports.insert = async (value) => {
-    return await mysql.query("insert into tb_move_url (move_id,name,creator_id)" +
-        "value (?,?,?)", value);
+module.exports.insert = async (conn, value) => {
+    return await mysql.query2(conn,"insert into tb_move_url (move_id,name,url,player,creator_id)" +
+        "value (?,?,?,?,?)", value);
 };
 module.exports.update = async (value) => {
     var sql = "update tb_move_url set ";
