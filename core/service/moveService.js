@@ -1,12 +1,12 @@
 const mysql = require('../mysql');
 const Pagination = require('../Pagination');
 const moment = require('moment');
-module.exports.findAll = async (currrent_page) => {
+module.exports.findAll = async (currrent_page, num) => {
     let result = {};
     try {
         const data = await Pagination.getData(
             ["select count(*) count from tb_move where is_del =0",
-                "select * from tb_move where is_del=0 order by created_at desc limit ?,?"], currrent_page);
+                "select * from tb_move where is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
         result.error = 0;
         result.msg = "";
         result.data = data;

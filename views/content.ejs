@@ -25,5 +25,12 @@
 <div id="banner"></div>
 <div class="container">
     <p id="des">电影.</p>
+    <ul>
+    <% moves.forEach(function(item, index){ %>
+    <li style="float:left">
+        <div class="pic"><a href="/play/bdhd/16865.html" target="_blank"><img src="<%= item['cover'] %>" border="0" width="120" height="140" title="<%= item['name'] %>"></a></div>
+        <p style="margin:2px auto"> <b><a href="/play/bdhd/16865.html" class="title" target="_blank" title="<%= item['name'] %>"><%= item['name'] %></a></b></p>
+    <% }) %>
+    </ul>
 </div>
 <!-- /.container -->

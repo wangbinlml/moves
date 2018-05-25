@@ -5,11 +5,11 @@ const moveService = require('../core/service/moveService');
 /* GET home page. */
 router.get('/', async function (req, res, next) {
     var current_page = req.query.page;
-    var moves = await moveService.findAll(current_page);
-    console.log(moves);
+    var moves = await moveService.findAll(current_page,30);
     res.render('index', {
         title: '电影',
         msg: "",
+        moves: moves.data.data,
         user: req.session.user,
         active: "/"
     });
