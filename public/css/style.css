@@ -7,14 +7,16 @@ body {
     overflow-x: auto;
     box-sizing: border-box;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    padding-right: 0!important;
+    padding-right: 0 !important;
     position: relative;
     background: #f6f8f9;
 }
+
 a {
     color: #00B7FF;
     cursor: pointer;
 }
+
 #head_box {
     width: 100%;
     background: #0f0f0f url(/images/head_box_bg.png) no-repeat center;
@@ -26,6 +28,7 @@ a {
     text-align: left;
 
 }
+
 .bs-docs-footer {
     position: absolute;
     bottom: 0;
@@ -161,7 +164,7 @@ a {
     width: 100%
 }
 
-dt.menu_title_primary, #resMenu>dt.sub_menu_title_primary{
+dt.menu_title_primary, #resMenu > dt.sub_menu_title_primary {
     cursor: pointer;
     border-bottom: 1px solid #e6e6e6;
 }
@@ -251,9 +254,11 @@ body.page_resource {
     border-right: 1px solid #e6e6e6;
     width: 200px;
 }
+
 .col_main {
     width: 824px;
 }
+
 .page_resource .article_box .inner {
     padding: 20px 45px
 }
@@ -314,14 +319,17 @@ body.page_resource {
     margin-top: -0.2em;
     margin-right: .5em
 }
+
 .menu_active {
     background-color: #00B7FF;
     color: #fff;
 }
+
 .menu_active:hover {
-    background-color: #00B7FF!important;
-    color: #fff!important;
+    background-color: #00B7FF !important;
+    color: #fff !important;
 }
+
 .menu_link_primary.no_sub:hover {
     background-color: #f4f5f9;
     color: #222;
@@ -398,10 +406,12 @@ ul, ol {
     padding: 6px 13px;
     border: 1px solid #ddd;
 }
+
 .content-wrapper {
     padding-bottom: 100px;
     padding-top: 30px;
 }
+
 .container {
     width: 1024px;
     margin: 0 auto;
@@ -411,9 +421,151 @@ ul, ol {
 dd, dt {
     width: 230px;
 }
+
 #loginForm {
     margin-top: 100px;
 }
+
 .news_content ul li {
     list-style: circle;
+}
+
+.col-1-4 {
+    width: 25%;
+    float: left;
+    display: inline-block;
+}
+
+.wrap-col {
+    margin: 10px;
+}
+
+.post {
+    padding: 0;
+    text-align: center;
+}
+
+.view {
+    max-width: 160px;
+    max-height: 270px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    box-shadow: 0px 0px 5px #aaa;
+    cursor: default;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+.post img.thumb {
+    height: 180px;
+    width: 100%;
+}
+
+.view img {
+    display: block;
+    position: relative;
+}
+
+.effect .mask {
+    opacity: 0;
+    overflow: visible;
+    border: 0px solid rgba(0, 0, 0, 0.7);
+    box-sizing: border-box;
+    transition: all 0.4s ease-in-out;
+}
+
+.view .mask, .view .content {
+    width: 160px;
+    height: 270px;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+
+.effect a.info {
+    position: relative;
+    top: 0px;
+    right: 50px;
+    opacity: 0;
+    transform: scale(0, 0);
+    transition: transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
+}
+
+.view a.info {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0;
+    text-indent: -9999px;
+    width: 50px;
+    height: 50px;
+}
+.post h3 {
+    color: #fcab2b;
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 19px;
+    overflow: hidden;
+    line-height: 20px;
+    height: 20px;
+}
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f6f8f9;
+}
+/*--clients--*/
+.animals {
+    padding: 4em 0;
+    text-align: center;
+}
+
+#flexiselDemo1, #flexiselDemo2, #flexiselDemo3 {
+    display: none;
+}
+
+.clients {
+    /* margin-top: 3em;*/
+}
+
+.animals h3 {
+    font-size: 3em;
+    text-transform: capitalize;
+    font-family: 'FugazOne-Regular';
+    color: #a9a685;
+}
+
+.nbs-flexisel-container {
+    position: relative;
+    max-width: 100%;
+}
+
+.nbs-flexisel-ul {
+    position: relative;
+    width: 9999px;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    text-align: center;
+}
+
+.nbs-flexisel-inner {
+    overflow: hidden;
+}
+
+.nbs-flexisel-item {
+    float: left;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    position: relative;
+    line-height: 0px;
+}
+
+.nbs-flexisel-item > img {
+
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }

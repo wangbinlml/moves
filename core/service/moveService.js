@@ -17,6 +17,23 @@ module.exports.findAll = async (currrent_page, num) => {
     }
     return result;
 };
+module.exports.findMoves = async (tag_id, currrent_page, num) => {
+    let result = {};
+    try {
+        const data = await Pagination.getData(
+            ["select count(*) count from tb_move where  tag_id = "+tag_id+" and is_del =0",
+                "select * from tb_move where tag_id = "+tag_id+" and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+        result.error = 0;
+        result.msg = "";
+        result.data = data;
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取列表失败";
+    }
+    return result;
+};
+
 module.exports.findOne = async (move_id) => {
     let result = {};
     try {

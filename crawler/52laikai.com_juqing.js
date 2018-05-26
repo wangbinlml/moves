@@ -16,8 +16,9 @@ var tagService = require("../core/service/tagService");
 
 var base_url = "http://www.52lailook.com";
 //动作
-var url = "http://www.52lailook.com/play/plist/8";
+var url = "http://www.52lailook.com/play/plist/12";
 (async () => {
+    //到50页
     //for (var ab = 1; ab <10; ab++) {
     for (var ab = 1; ab > 0; ab--) {
         //列表
@@ -34,7 +35,8 @@ var url = "http://www.52lailook.com/play/plist/8";
             console.log("第"+ab+"页=====第" + i + "条======");
             var a = dt.attribs.href;
             var src = dt.children[0].attribs.src;
-            var title = dt.children[0].attribs.title;
+            var hd = $('.mov_list li').eq(i).find("font").html();
+            var title = dt.children[0].attribs.title+ (hd? "-"+hd: "");
             var detail_url = base_url + a;
             var movelist = await moveService.findMoveByName(title);
             if (movelist && movelist.data.length > 0) {
@@ -43,7 +45,7 @@ var url = "http://www.52lailook.com/play/plist/8";
             }
             var moveObj = {
                 category_id: 1,
-                tag_id: 1,
+                tag_id: 3,
                 name: title,
                 cover: src,
                 source: "",
@@ -173,13 +175,14 @@ var url = "http://www.52lailook.com/play/plist/8";
                 $5.find("#div").remove();
                 $5.find(".playurlm").remove();
                 var htm = $5.html();//.replace(/\n/g,"");
+                //http://i5.tietuku.com/26c48f01d8ff811ds.png
                 if (htm.indexOf("</a>") > 0) {
                     htm = htm.substr(htm.indexOf("</a>") + 4);
                 }
                 var description = StringUtils.htmlEncodeByRegExp(htm);
                 moveObj = await moveService.insert(conn, [moveObj.category_id, moveObj.tag_id, moveObj.name, year, area, moveObj.cover, moveObj.source, description, moveObj.creator_id]);
                 var move_id = moveObj.insertId;
-                var tagObj = await moveTagService.insert(conn, [move_id, 1]);
+                var tagObj = await moveTagService.insert(conn, [move_id, 3]);
 
                 for (var u = 0; u < actors.length; u++) {
                     var actorObj = await actorService.findActorByName(actors[u]);
