@@ -1,0 +1,74 @@
+<% include partials/header %>
+<link rel="stylesheet" href="/player/DPlayer/DPlayer.min.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Page Content -->
+    <div class="container">
+        <div id="dplayer">
+
+        </div>
+        <div id="detail">
+            <p>电影：<%= move['name'] %></p>
+            <p>演员表：
+                <% actors.forEach(function(item, index){ %>
+                <a href="/actor/detail?actor_id=<%= item['id'] %>" target="_blank"><%= item['actor_name'] %></a>
+                <% }) %>
+            </p>
+            <p>类型：<%= move['name'] %> 年代：<%= move['year'] %> 地区：<%= move['area'] %> </p>
+        </div>
+        <br>
+        <div id="">
+            <p>播放列表：</p>
+            <ul>
+                <% moveUrls.forEach(function(item, index){ %>
+                <li>
+                    <p><%= item['player'] %></p>
+                    <a href="/move/play?move_id=<%= item['move_id'] %>" target="_blank"><%= move['name'] %>
+                        - <%= item['name'] %></a>
+                </li>
+                <% }) %>
+            </ul>
+        </div>
+
+        <br>
+        <div id="">
+            <p>迅雷下载(下载链接复制到迅雷影音可边下边看)</p>
+            <p>下载列表：</p>
+            <ul>
+                <% downloads.forEach(function(item, index){ %>
+                <li>
+                    <a href="<%= item['download_address'] %>" target="_blank"><%= item['name'] %></a>
+                </li>
+                <% }) %>
+            </ul>
+        </div>
+
+        <br>
+        <div id="content">
+            <%- move['description'] %>
+        </div>
+    </div>
+</div>
+<% include partials/footer %>
+<script src="/player/DPlayer/hls.min.js"></script>
+<script src="/player/DPlayer/DPlayer.min.js"></script>
+<script type="text/javascript">
+    const dp = new DPlayer({
+        container: document.getElementById('dplayer'),
+        screenshot: true,
+        autoplay: true,
+        theme: '#FADFA3',
+        video: {
+            url: "<%= currentMoveUrls['url'] %>",
+            //pic: '/images/banner.jpg',
+            thumbnails: '/images/contact.png'
+        }/*,
+        subtitle: {
+            url: 'webvtt.vtt'
+        },
+        danmaku: {
+            id: 'demo',
+            api: 'https://api.prprpr.me/dplayer/'
+        }*/
+    });
+</script>

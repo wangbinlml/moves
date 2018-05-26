@@ -17,6 +17,19 @@ module.exports.findAll = async (currrent_page, num) => {
     }
     return result;
 };
+module.exports.findOne = async (move_id) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move where id = ? and is_del =0",move_id);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取电影失败";
+    }
+    return result;
+};
 module.exports.findMoveByName = async (actor_name) => {
     let result = {};
     try {

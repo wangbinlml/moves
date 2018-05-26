@@ -13,6 +13,19 @@ module.exports.findAll = async () => {
     }
     return result;
 };
+module.exports.findActorByMoveId = async (move_id) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select a.id,a.actor_name from tb_actor a inner join tb_move_actor b on a.id = b.actor_id where b.move_id = ? and a.is_del =0",move_id);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取演员失败";
+    }
+    return result;
+};
 module.exports.findActorByName = async (actor_name) => {
     let result = {};
     try {

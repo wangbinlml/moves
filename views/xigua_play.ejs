@@ -1,0 +1,86 @@
+<% include partials/header %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Page Content -->
+    <div class="container">
+        <%=currentMoveUrls['url']%>
+        <div id="dplayer">
+
+        </div>
+        <div id="detail">
+            <p>电影：<%= move['name'] %></p>
+            <p>演员表：
+                <% actors.forEach(function(item, index){ %>
+                <a href="/actor/detail?actor_id=<%= item['id'] %>" target="_blank"><%= item['actor_name'] %></a>
+                <% }) %>
+            </p>
+            <p>类型：<%= move['name'] %> 年代：<%= move['year'] %> 地区：<%= move['area'] %> </p>
+        </div>
+        <br>
+        <div id="">
+            <p>播放列表：</p>
+            <ul>
+                <% moveUrls.forEach(function(item, index){ %>
+                <li>
+                    <p><%= item['player'] %></p>
+                    <a href="/move/play?move_id=<%= item['move_id'] %>" target="_blank"><%= move['name'] %>
+                        - <%= item['name'] %></a>
+                </li>
+                <% }) %>
+            </ul>
+        </div>
+
+        <br>
+        <div id="">
+            <p>迅雷下载(下载链接复制到迅雷影音可边下边看)</p>
+            <p>下载列表：</p>
+            <ul>
+                <% downloads.forEach(function(item, index){ %>
+                <li>
+                    <a href="<%= item['download_address'] %>" target="_blank"><%= item['name'] %></a>
+                </li>
+                <% }) %>
+            </ul>
+        </div>
+
+        <br>
+        <div id="content">
+            <%- move['description'] %>
+        </div>
+    </div>
+</div>
+<% include partials/footer %>
+<script type="text/javascript" src="/player/ckplayer/ckplayer/ckplayer.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    var videoObject = {
+        //playerID:'ckplayer01',//播放器ID，第一个字符不能是数字，用来在使用多个播放器时监听到的函数将在所有参数最后添加一个参数用来获取播放器的内容
+        container: '#dplayer', //容器的ID或className
+        variable: 'player', //播放函数名称
+        //loaded: 'loadedHandler', //当播放器加载后执行的函数
+        loop: true, //播放结束是否循环播放
+        autoplay: true, //是否自动播放
+        //duration: 500, //设置视频总时间
+        //cktrack: 'material/srt.srt', //字幕文件
+        //poster: 'material/poster.jpg', //封面图片
+        /*preview: { //预览图片
+            file: ['material/mydream_en1800_1010_01.png', 'material/mydream_en1800_1010_02.png'],
+            scale: 2
+        },*/
+        config: '', //指定配置函数
+        debug: true, //是否开启调试模式
+        //flashplayer: true, //强制使用flashplayer
+        drag: 'start', //拖动的属性
+        seek: 0, //默认跳转的时间
+        //playbackrate:1,//默认速度的编号，只对html5有效,设置成-1则不显示倍速
+        //advertisements:'website:ad.json',
+        //front:'frontFun',//上一集的操作函数
+        //next:'nextFun',//下一集的操作函数
+
+        mobileCkControls:true,//是否在移动端（包括ios）环境中显示控制栏
+        //live:true,//是否是直播视频，true=直播，false=点播
+        video: [
+            ['<%=currentMoveUrls['url']%>', 'video/mp4', '中文标清', 0]
+        ]
+    };
+    var player = new ckplayer(videoObject);
+</script>

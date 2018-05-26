@@ -13,8 +13,21 @@ module.exports.findMoveUrl = async (move_id) => {
     }
     return result;
 };
+module.exports.findMoveUrlByMoveIdAndPlayer = async (move_id, player) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move_url where move_id = ? and player = ? and is_del =0", [move_id,player]);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取演员失败";
+    }
+    return result;
+};
 module.exports.insert = async (conn, value) => {
-    return await mysql.query2(conn,"insert into tb_move_url (move_id,name,url,player,creator_id)" +
+    return await mysql.query2(conn, "insert into tb_move_url (move_id,name,url,player,creator_id)" +
         "value (?,?,?,?,?)", value);
 };
 module.exports.update = async (value) => {
