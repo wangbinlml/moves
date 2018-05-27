@@ -56,7 +56,7 @@ router.get('/detail', async function (req, res, next) {
     var moveUrls = await moveUrlService.findMoveUrl(move_id);
     var downloads = await moveDownloadService.findDownloadUrl(move_id);
     res.render('detail', {
-        title: '电影',
+        title: move.name || '电影',
         msg: "",
         move: moves.data[0],
         moveUrls: moveUrls.data,
@@ -84,7 +84,7 @@ router.get('/play', async function (req, res, next) {
         template = "xigua_play";
     }*/
     res.render(template, {
-        title: '电影',
+        title:  move.name || '电影',
         msg: "",
         move: moves.data[0],
         currentMoveUrls: currentMoveUrls.data[0],
