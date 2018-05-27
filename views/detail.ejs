@@ -3,44 +3,66 @@
 <div class="content-wrapper">
     <!-- Page Content -->
     <div class="container">
-        <div id = "detail">
-            <p>电影：<%=move['name']%></p>
-            <p>演员表：
-                <% actors.forEach(function(item, index){ %>
-                <a href="/actor/detail?actor_id=<%= item['id'] %>" target="_blank"><%=item['actor_name']%></a>
-                <% }) %>
-            </p>
-            <p>类型：<%=move['name']%> 年代：<%=move['year']%> 地区：<%=move['area']%> </p>
-        </div>
-        <br>
-        <div id = "">
-            <p>播放列表：</p>
-            <ul>
-                <% moveUrls.forEach(function(item, index){ %>
-                <li>
-                    <p><%= item['player'] %></p>
-                    <a href="/move/play?move_id=<%= item['move_id'] %>&player=<%= item['player'] %>" target="_blank"><%=move['name']%> - <%=item['name']%></a>
-                </li>
-                <% }) %>
-            </ul>
-        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <section class="panel">
+                    <div class="panel-body table-responsive">
+                        <div id = "detail">
+                            <p>电影：<%=move['name']%></p>
+                            <p>演员表：
+                                <% actors.forEach(function(item, index){ %>
+                                <a href="/actor/detail?actor_id=<%= item['id'] %>" target="_blank"><%=item['actor_name']%></a>
+                                <% }) %>
+                            </p>
+                            <p>类型：<%=move['name']%> 年代：<%=move['year']%> 地区：<%=move['area']%> </p>
+                        </div>
+                        <br>
+                        <div id = "">
+                            <p>播放列表：</p>
+                            <ul>
+                                <% moveUrls.forEach(function(item, index){ %>
+                                <li>
+                                    <p><%= item['player'] %></p>
+                                    <a href="/move/play?move_id=<%= item['move_id'] %>&player=<%= item['player'] %>" target="_blank"><%=move['name']%> - <%=item['name']%></a>
+                                </li>
+                                <% }) %>
+                            </ul>
+                        </div>
 
-        <br>
-        <div id = "">
-            <p>迅雷下载(下载链接复制到迅雷影音可边下边看)</p>
-            <p>下载列表：</p>
-            <ul>
-                <% downloads.forEach(function(item, index){ %>
-                <li>
-                    <a href="<%= item['download_address'] %>" target="_blank"><%=item['name']%></a>
-                </li>
-                <% }) %>
-            </ul>
-        </div>
+                        <br>
+                        <div id = "">
+                            <p>迅雷下载(下载链接复制到迅雷影音可边下边看)</p>
+                            <p>下载列表：</p>
+                            <ul>
+                                <% downloads.forEach(function(item, index){ %>
+                                <li>
+                                    <a href="<%= item['download_address'] %>" target="_blank"><%=item['name']%></a>
+                                </li>
+                                <% }) %>
+                            </ul>
+                        </div>
 
-        <br>
-        <div id="content">
-            <%-move['description']%>
+                        <br>
+                        <div id="content">
+                            <%-move['description']%>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-xs-4">
+                <section class="panel">
+                    <header class="panel-heading">
+                        Tags
+                    </header>
+                    <div class="slimScrollDiv">
+                        <div class="panel-body" id="noti-box">
+                            <url>
+                                <li>剧情片</li>
+                            </url>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 </div>

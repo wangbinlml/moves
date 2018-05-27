@@ -33,6 +33,38 @@ module.exports.findMoves = async (tag_id, currrent_page, num) => {
     }
     return result;
 };
+module.exports.findAllMoves = async (category, currrent_page, num) => {
+    let result = {};
+    try {
+        const data = await Pagination.getData(
+            ["select count(*) count from tb_move where  category_id = "+category+" and is_del =0",
+                "select * from tb_move where category_id = "+category+" and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+        result.error = 0;
+        result.msg = "";
+        result.data = data;
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取列表失败";
+    }
+    return result;
+};
+module.exports.search = async (keyword, currrent_page, num) => {
+    let result = {};
+    try {
+        const data = await Pagination.getData(
+            ["select count(*) count from tb_move where name like '%"+keyword+"%' and is_del =0",
+                "select * from tb_move where name like '%"+keyword+"%' and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+        result.error = 0;
+        result.msg = "";
+        result.data = data;
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取列表失败";
+    }
+    return result;
+};
 
 module.exports.findOne = async (move_id) => {
     let result = {};
