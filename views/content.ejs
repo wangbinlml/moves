@@ -1,27 +1,25 @@
 <div id="banner"></div>
 <div class="container">
     <div class="row">
-        <div class="col-xs-9">
+        <div class="col-md-9 order-md-1">
             <section class="panel">
                 <header class="panel-heading">
                     最新电影
                 </header>
                 <div class="panel-body table-responsive">
-                    <div class="span12">
-                        <ul class="thumbnails">
-                            <% moves.forEach(function(item, index){ %>
-                            <li class="span4">
-                                <div class="thumbnail">
-                                    <a href="/move/detail?move_id=<%= item['id'] %>"><img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
-                                    <div class="caption">
-                                        <h3>
-                                            <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
-                                        </h3>
-                                    </div>
+                    <div class="row">
+                        <% moves.forEach(function(item, index){ %>
+                        <div class="col-md-3 mb-4">
+                            <div class="thumbnail" style="height: 340px;">
+                                <a href="/move/detail?move_id=<%= item['id'] %>"><img style="height: 250px;" title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
+                                <div class="caption">
+                                    <h3>
+                                        <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
+                                    </h3>
                                 </div>
-                            </li>
-                            <% }) %>
-                        </ul>
+                            </div>
+                        </div>
+                        <% }) %>
                     </div>
                 </div>
             </section>
@@ -30,21 +28,19 @@
                     剧情电影
                 </header>
                 <div class="panel-body table-responsive">
-                    <div class="span12">
-                        <ul class="thumbnails">
-                            <% juqing.forEach(function(item, index){ %>
-                            <li class="span4">
-                                <div class="thumbnail">
-                                    <a href="/move/detail?move_id=<%= item['id'] %>"><img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
-                                    <div class="caption">
-                                        <h3>
-                                            <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
-                                        </h3>
-                                    </div>
+                    <div class="row">
+                        <% juqing.forEach(function(item, index){ %>
+                        <div class="col-md-3 mb-4">
+                            <div class="thumbnail" style="height: 340px;">
+                                <a href="/move/detail?move_id=<%= item['id'] %>"><img style="height: 250px;" title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
+                                <div class="caption">
+                                    <h3>
+                                        <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
+                                    </h3>
                                 </div>
-                            </li>
-                            <% }) %>
-                        </ul>
+                            </div>
+                        </div>
+                        <% }) %>
                     </div>
                 </div>
             </section>
@@ -53,21 +49,19 @@
                     动作电影
                 </header>
                 <div class="panel-body table-responsive">
-                    <div class="span12">
-                        <ul class="thumbnails">
-                            <% dongzuo.forEach(function(item, index){ %>
-                            <li class="span4">
-                                <div class="thumbnail">
-                                    <a href="/move/detail?move_id=<%= item['id'] %>"><img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
-                                    <div class="caption">
-                                        <h3>
-                                            <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
-                                        </h3>
-                                    </div>
+                    <div class="row">
+                        <% dongzuo.forEach(function(item, index){ %>
+                        <div class="col-md-3 mb-4">
+                            <div class="thumbnail" style="height: 340px;">
+                                <a href="/move/detail?move_id=<%= item['id'] %>"><img style="height: 250px;" title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
+                                <div class="caption">
+                                    <h3>
+                                        <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
+                                    </h3>
                                 </div>
-                            </li>
-                            <% }) %>
-                        </ul>
+                            </div>
+                        </div>
+                        <% }) %>
                     </div>
                 </div>
             </section>
@@ -77,26 +71,24 @@
                     科幻电影
                 </header>
                 <div class="panel-body table-responsive">
-                    <div class="span12">
-                        <ul class="thumbnails">
-                            <% kehuan.forEach(function(item, index){ %>
-                            <li class="span4">
-                                <div class="thumbnail">
-                                    <a href="/move/detail?move_id=<%= item['id'] %>"><img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
-                                    <div class="caption">
-                                        <h3>
-                                            <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
-                                        </h3>
-                                    </div>
+                    <div class="row">
+                        <% kehuan.forEach(function(item, index){ %>
+                        <div class="col-md-3 mb-4">
+                            <div class="thumbnail" style="height: 340px;">
+                                <a href="/move/detail?move_id=<%= item['id'] %>"><img style="height: 250px;" title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
+                                <div class="caption">
+                                    <h3>
+                                        <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
+                                    </h3>
                                 </div>
-                            </li>
-                            <% }) %>
-                        </ul>
+                            </div>
+                        </div>
+                        <% }) %>
                     </div>
                 </div>
             </section>
         </div>
-        <div class="col-xs-3">
+        <div class="col-md-3 order-md-2 mb-4">
             <section class="panel">
                 <header class="panel-heading">
                     Tags

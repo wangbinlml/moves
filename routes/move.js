@@ -99,7 +99,7 @@ router.get('/play', async function (req, res, next) {
 router.get('/search', async function (req, res, next) {
     var keyword = req.query.keyword || "";
     var current_page = req.query.current_page || "1";
-    var moves = {};
+    var moves = [];
     if (keyword != "") {
         var data = await moveService.search(keyword, current_page, 10);
         var paginationObj = data.data;

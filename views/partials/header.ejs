@@ -18,36 +18,40 @@
 
 <body class="page_resource">
 <!-- Fixed navbar -->
-<!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
 <div class="navbar-fixed-container">
-<div class="navbar navbar-inverse navbar-fixed-top affix">
-<nav class="navbar navbar-inverse navbar-fixed-top affix">
-    <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">
-                    晨讯网
-                </a>
+    <div class="navbar navbar-inverse navbar-fixed-top affix" data-spy="affix" data-offset-top="1">
+        <nav role="navigation">
+            <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Expand and Collapse Menu">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/">
+                            <span itemprop="name">晨讯网</span>
+                        </a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li <% if(active == "/") { %>class="active"<% } %>><a href="/">首页</a></li>
+                            <li <% if(active == "1"){ %> class="active"<% } %>><a  href="/move?category_id=1">电影</a></li>
+                            <li <% if(active == "2"){ %> class="active"<% } %>><a href="/move?category_id=2">电视剧</a></li>
+                            <li <% if(active == "3"){ %> class="active"<% } %>><a href="/move?category_id=3">综艺</a></li>
+                            <li <% if(active == "4"){ %> class="active"<% } %>><a href="/move?category_id=4">娱乐</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <form action="/move/search" method="get" class="navbar-form navbar-left">
+                                    <div class="form-group">
+                                        <input name="keyword" id="keyword" class="form-control" type="text" placeholder="Search..."/>
+                                    </div>
+                                    <button type="submit" class="btn btn btn-outline-success my-2 my-sm-0">搜索</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-left">
-                    <li <% if(active == "/") { %>class="active"<% } %>><a href="/">首页</a></li>
-                    <li <% if(active == "1"){ %> class="active"<% } %>><a  href="/move?category_id=1">电影</a></li>
-                    <li <% if(active == "2"){ %> class="active"<% } %>><a href="/move?category_id=2">电视剧</a></li>
-                    <li <% if(active == "3"){ %> class="active"<% } %>><a href="/move?category_id=3">综艺</a></li>
-                    <li <% if(active == "4"){ %> class="active"<% } %>><a href="/move?category_id=4">娱乐</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <form action="/move/search" method="get" class="navbar-form navbar-left">
-                            <div class="form-group">
-                                <input name="keyword" id="keyword" class="form-control" type="text" size="40" placeholder="Search..."/>
-                            </div>
-                            <button type="submit" class="btn btn-default">搜索</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
+        </nav>
     </div>
-</nav>
-</div>
 </div>
