@@ -2,14 +2,11 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>晨讯网-<%= title %></title>
-
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/jquery-ui.css">
@@ -22,16 +19,17 @@
 <body class="page_resource">
 <!-- Fixed navbar -->
 <!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
-<nav class="navbar-fixed-top">
+<div class="navbar-fixed-container">
+<div class="navbar navbar-inverse navbar-fixed-top affix">
+<nav class="navbar navbar-inverse navbar-fixed-top affix">
     <div class="container">
-        <div id="navbar" class="navbar-collapse collapse">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">
                     晨讯网
                 </a>
             </div>
-            <div>
-                <ul class="nav navbar-nav">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
                     <li <% if(active == "/") { %>class="active"<% } %>><a href="/">首页</a></li>
                     <li <% if(active == "1"){ %> class="active"<% } %>><a  href="/move?category_id=1">电影</a></li>
                     <li <% if(active == "2"){ %> class="active"<% } %>><a href="/move?category_id=2">电视剧</a></li>
@@ -49,7 +47,7 @@
                     </li>
                 </ul>
             </div>
-        </div><!--/.nav-collapse -->
     </div>
 </nav>
-<% include ../login.ejs %>
+</div>
+</div>
