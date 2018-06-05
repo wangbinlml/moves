@@ -65,7 +65,35 @@ module.exports.search = async (keyword, currrent_page, num) => {
     }
     return result;
 };
-
+module.exports.findMovesByArea = async (area, currrent_page, num) => {
+    let result = {};
+    try {
+        const data = await Pagination.getData(
+            ["select count(*) count from tb_move where area = '"+area+"' and is_del =0",
+                "select * from tb_move where area = '"+area+"' and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+        result.error = 0;
+        result.msg = "";
+        result.data = data;
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取列表失败";
+    }
+    return result;
+};
+module.exports.findAllArea = async () => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select area from tb_move where is_del =0 group by area");
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取电影失败";
+    }
+    return result;
+};
 module.exports.findOne = async (move_id) => {
     let result = {};
     try {

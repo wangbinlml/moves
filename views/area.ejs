@@ -2,27 +2,24 @@
 <!--<link href="/css/bootstrap-combined.min.css" rel="stylesheet">-->
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <input type="hidden" id="category_id" value="<%=category_id%>"/>
     <!-- Page Content -->
     <div class="container">
         <div class="row">
             <div class="col-md-9 order-md-1">
                 <section class="panel">
                     <div class="panel-body table-responsive">
-                        <div class="row">
-                            <% moves.data.forEach(function(item, index){ %>
-                            <div class="col-md-3 mb-4">
-                                <div class="thumbnail" style="height: 340px;">
-                                    <a href="/move/detail?move_id=<%= item['id'] %>"><img style="height: 250px;" title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
-                                    <div class="caption">
-                                        <h3>
-                                            <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
-                                        </h3>
-                                    </div>
+                        <% moves.data.forEach(function(item, index){ %>
+                        <div class="col-md-3 mb-4">
+                            <div class="thumbnail" style="height: 340px;">
+                                <a href="/move/detail?move_id=<%= item['id'] %>"><img style="height: 250px;" title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
+                                <div class="caption">
+                                    <h3>
+                                        <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
+                                    </h3>
                                 </div>
                             </div>
-                            <% }) %>
                         </div>
+                        <% }) %>
                         <div id="pagination" class="pagination">
                         </div>
                     </div>
@@ -32,10 +29,11 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="area" name="area"/>
 <% include partials/footer %>
 <script src="/javascripts/bootstrap-paginator.min.js"></script>
 <script type="application/javascript">
-    $("#category_id").val("<%= category_id %>");
+    $("#area").val("<%= area %>");
     var options = {
         currentPage:'<%= moves.current_page %>'||1, //设置当前页，默认起始页为第一页
         totalPages:'<%= moves.total_pages %>', //总页数
@@ -43,7 +41,7 @@
         //bootstrapMajorVersion:3,//如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
         useBootstrapTooltip:'true',//是否显示tip提示框
         pageUrl:function(type,page, current){
-            return '?category_id='+$("#category_id").val()+'&current_page='+page //为每个页码设置url访问请求链接，page为页码数
+            return '?area='+$("#area").val()+'&current_page='+page //为每个页码设置url访问请求链接，page为页码数
         }
     }
     $('#pagination').bootstrapPaginator(options);

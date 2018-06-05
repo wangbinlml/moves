@@ -1,0 +1,16 @@
+<div class="col-md-3 order-md-2 mb-4">
+    <section class="panel">
+        <header class="panel-heading">
+            地区
+        </header>
+        <div class="slimScrollDiv">
+            <div class="panel-body" id="noti-box">
+                <url>
+                    <% areas.data.forEach(function(item, index){ %>
+                    <li><a href="/move/area?area=<%= item['area'] %>"><%= item['area'] %></a></li>
+                    <% }) %>
+                </url>
+            </div>
+        </div>
+    </section>
+</div>
