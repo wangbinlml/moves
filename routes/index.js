@@ -11,7 +11,7 @@ router.get('/', async function (req, res, next) {
     var juqing = await moveService.findMoves(3, current_page,18);
     var areas = await moveService.findAllArea();
     res.render('index', {
-        title: '首页',
+        title: '最新电影',
         msg: "",
         areas: areas,
         moves: moves.data.data,
