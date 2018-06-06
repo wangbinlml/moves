@@ -530,8 +530,11 @@ dd, dt {
         height: 190px;
         margin-bottom: 5px;
     }
-    .container-fluid>.navbar-collapse {
-        margin-right: 0px;
-        margin-left: 0px;
+    .no-container {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .navbar-nav {
+        margin: 7.5px 0px;
     }
 }
