@@ -530,4 +530,8 @@ dd, dt {
         height: 190px;
         margin-bottom: 5px;
     }
+    .container-fluid>.navbar-collapse {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
 }
