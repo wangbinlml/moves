@@ -18,7 +18,7 @@ router.get('/', async function (req, res, next) {
         if(category && category.data.length > 0){
             title = category.data[0].name;
         }
-        var data = await moveService.findAllMoves(category_id, current_page, 28);
+        var data = await moveService.findAllMoves(category_id, current_page, 30);
         var paginationObj = data.data;
         var paginationData = paginationObj.data;
         var pData = [];
@@ -137,7 +137,7 @@ router.get('/area', async function (req, res, next) {
     var current_page = req.query.current_page || "1";
     var moves = [];
     if (area != "") {
-        var data = await moveService.findMovesByArea(area, current_page, 12);
+        var data = await moveService.findMovesByArea(area, current_page, 18);
         var paginationObj = data.data;
         var paginationData = paginationObj.data;
         var pData = [];

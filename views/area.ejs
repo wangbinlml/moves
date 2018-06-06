@@ -9,9 +9,9 @@
                 <section class="panel">
                     <div class="panel-body table-responsive">
                         <% moves.data.forEach(function(item, index){ %>
-                        <div class="col-md-3 mb-4">
-                            <div class="thumbnail" style="height: 340px;">
-                                <a href="/move/detail?move_id=<%= item['id'] %>"><img style="height: 250px;" title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
+                        <div class="col-md-2 col-sm-3 col-xs-4">
+                            <div class="thumbnail">
+                                <a href="/move/detail?move_id=<%= item['id'] %>"><img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
                                 <div class="caption">
                                     <h3>
                                         <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
