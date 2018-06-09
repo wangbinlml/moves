@@ -142,11 +142,26 @@ var url = "http://www.52lailook.com/play/plist/8";
                             if (sc.html() != "") {
                                 source = sc.html().replace(/\n|\"/g, "").split("=")[1];
                                 if (source != "" && source.indexOf("(function()") == -1) {
-                                    playList.push({
-                                        play: titlePlay,//播放器
-                                        title: linkPlay.title,
-                                        url: source.substr(source.indexOf("$") + 1)
-                                    });
+                                    if (source.indexOf("+++") > -1) {
+                                        var list = source.split("+++");
+                                        for (var pi = 0; pi<list.length;pi++) {
+                                            var pli = list[pi].split("$");
+                                            var ptitle = pli[0];
+                                            var purl = pli[1];
+                                            playList.push({
+                                                play: titlePlay,//播放器
+                                                title: ptitle,
+                                                url: purl
+                                            });
+                                        }
+                                    } else {
+                                        var playUrl = source.substr(source.indexOf("$") + 1);
+                                        playList.push({
+                                            play: titlePlay,//播放器
+                                            title: linkPlay.title,
+                                            url: playUrl
+                                        });
+                                    }
                                 }
                             }
                         });
