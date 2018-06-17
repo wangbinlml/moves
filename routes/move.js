@@ -84,6 +84,8 @@ router.get('/play', async function (req, res, next) {
     var template = "online_play";
     if (player == "西瓜影音") {
         template = "xigua_play";
+    } else if (player == "iframe") {
+        template = "iframe";
     }
     var areas = await moveService.findAllArea();
     res.render(template, {
