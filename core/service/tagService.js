@@ -9,7 +9,20 @@ module.exports.findTagByName = async (name) => {
     } catch (e) {
         console.log(e);
         result.error = 1;
-        result.msg = "获取演员失败";
+        result.msg = "获取失败";
+    }
+    return result;
+};
+module.exports.findTagById = async (id) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_tag where id = ? and is_del =0", id);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取失败";
     }
     return result;
 };

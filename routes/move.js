@@ -1,4 +1,5 @@
 var express = require('express');
+var _ = require('lodash');
 var router = express.Router();
 const StringUtils = require('../core/util/StringUtils');
 const moveService = require('../core/service/moveService');
@@ -6,7 +7,7 @@ const actorService = require('../core/service/actorService');
 const moveDownloadService = require('../core/service/moveDownloadService');
 const moveUrlService = require('../core/service/moveUrlService');
 const categoryService = require('../core/service/categoryService');
-
+const tagService = require('../core/service/tagService');
 
 router.get('/', async function (req, res, next) {
     var category_id = req.query.category_id || "1";
@@ -57,10 +58,21 @@ router.get('/detail', async function (req, res, next) {
     var moveUrls = await moveUrlService.findMoveUrl(move_id);
     var downloads = await moveDownloadService.findDownloadUrl(move_id);
     var areas = await moveService.findAllArea();
+    if(!_.isEmpty(move)){
+        var tag_id = move.tag_id;
+        var tags = await tagService.findTagById(tag_id);
+        if(tags && tags['data'].length>0) {
+            move.tag_id = tags['data'][0]['tag_name'];
+        } else {
+            move.tag_id = "未知";
+        }
+    } else {
+        move.tag_id = "未知";
+    }
     res.render('detail', {
         title: move.name || '电影',
         msg: "",
-        move: moves.data[0],
+        move: move,
         moveUrls: moveUrls.data,
         downloads: downloads.data,
         actors: actors.data,
@@ -81,6 +93,17 @@ router.get('/play', async function (req, res, next) {
     var moveUrls = await moveUrlService.findMoveUrl(move_id);
     var downloads = await moveDownloadService.findDownloadUrl(move_id);
     var currentMoveUrls = await moveUrlService.findMoveUrlByMoveIdAndPlayer(move_id, player);
+    if(!_.isEmpty(move)){
+        var tag_id = move.tag_id;
+        var tags = await tagService.findTagById(tag_id);
+        if(tags && tags['data'].length>0) {
+            move.tag_id = tags['data'][0]['tag_name'];
+        } else {
+            move.tag_id = "未知";
+        }
+    } else {
+        move.tag_id = "未知";
+    }
     var template = "online_play";
     if (player == "西瓜影音") {
         template = "xigua_play";
@@ -91,7 +114,7 @@ router.get('/play', async function (req, res, next) {
     res.render(template, {
         title:  move.name || '电影',
         msg: "",
-        move: moves.data[0],
+        move: move,
         currentMoveUrls: currentMoveUrls.data[0],
         moveUrls: moveUrls.data,
         downloads: downloads.data,

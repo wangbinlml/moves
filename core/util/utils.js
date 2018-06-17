@@ -6,6 +6,7 @@
  */
 var fs = require('fs');
 var http = require('http');
+var https = require('https');
 var originRequest = require("request");
 var iconv = require('iconv-lite');
 var cheerio = require("cheerio");
@@ -97,9 +98,39 @@ var get = function (url, cb) {
         });
     }
 };
+var get2 = function (url, cb) {
+    if (typeof cb == "function") {
+        https.get(url, function (res) {
+            var data = "";
+            res.on("data", function (buf) {
+                data = data + buf;
+            });
+            res.on('end', function () {
+                cb(null, data);
+            });
+        }).on('error', function (e) {
+            cb("Got error: " + e.message);
+        });
+    } else {
+        return new Promise(function (resolve, reject) {
+            https.get(url, function (res) {
+                var data = "";
+                res.on("data", function (buf) {
+                    data = data + buf;
+                });
+                res.on('end', function () {
+                    resolve(data);
+                });
+            }).on('error', function (e) {
+                reject("Got error: " + e.message)
+            });
+        });
+    }
+};
 
 
 exports.get = get;
+exports.get2 = get2;
 exports.request = request;
 exports.GetRandomNum = GetRandomNum;
 exports.download = download;

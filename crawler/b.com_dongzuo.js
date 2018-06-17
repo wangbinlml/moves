@@ -19,7 +19,7 @@ var tagService = require("../core/service/tagService");
 
 var base_url = "http://www.84dm.com";
 //动作
-var url = "http://www.84dm.com/type/1/1.html";
+var url = "http://www.84dm.com/type/1/2.html";
 (async () => {
     //到50页
         //列表
@@ -27,41 +27,43 @@ var url = "http://www.84dm.com/type/1/1.html";
         var $ = cheerio.load(html, {decodeEntities: false});
         var data = $('.movie-item a');
         for (var i = 0; i < data.length; i++) {
-            var dt = data[i];
-            console.log("=====第" + i + "条======");
-            var a = dt.attribs.href;
-            var src = dt.children[1].attribs.src;
-            var hd = $('.mov_list li').eq(i).find("font").html();
-            var title = dt.children[1].attribs.title+ (hd? "-"+hd: "");
-            var detail_url = base_url + a;
-            var movelist = await moveService.findMoveByName(title);
-            if (movelist && movelist.data.length > 0) {
-                console.log("===" + title + "已经存在里");
-                continue;
-            }
-            var moveObj = {
-                category_id: 1,
-                tag_id: 3,
-                name: title,
-                cover: src,
-                source: "",
-                description: "",
-                creator_id: 1
-            };
-            var actors = [];
-            var type = "";//类型：动作片，剧情片
-            var year = "";//年代
-            var area = "";//区域
-            var content = "";
-            var playList = [];
-
-            var detail_html = await utils.get(detail_url);
-            var $2 = cheerio.load(detail_html, {decodeEntities: false});
-
             var conn = await mysql.getConnection();
             mysql.beginTransaction(conn);
-
             try {
+                var dt = data[i];
+                var a = dt.attribs.href;
+                if(dt.children[1] == undefined) {
+                    continue;
+                }
+                console.log("=====第" + i + "条======");
+                var src = dt.children[1].attribs.src;
+                var hd = $('.mov_list li').eq(i).find("font").html();
+                var title = dt.children[1].attribs.title+ (hd? "-"+hd: "");
+                var detail_url = base_url + a;
+                var movelist = await moveService.findMoveByName(title);
+                if (movelist && movelist.data.length > 0) {
+                    console.log("===" + title + "已经存在里");
+                    continue;
+                }
+                var moveObj = {
+                    category_id: 1,
+                    tag_id: 3,
+                    name: title,
+                    cover: src,
+                    source: "",
+                    description: "",
+                    creator_id: 1
+                };
+                var actors = [];
+                var type = "";//类型：动作片，剧情片
+                var year = "";//年代
+                var area = "";//区域
+                var content = "";
+                var playList = [];
+
+                var detail_html = await utils.get(detail_url);
+                var $2 = cheerio.load(detail_html, {decodeEntities: false});
+
                 var $5 = $2(".col-md-8");
                 var p = $2(".col-md-8 table tr");
                 p.each(function (index, item) {
@@ -136,7 +138,7 @@ var url = "http://www.84dm.com/type/1/1.html";
 
                 moveObj.area = area;
                 moveObj.year = year;
-
+                var flag = true;
                 //网盘链接：
                 //无
                 //播放地址
@@ -160,7 +162,13 @@ var url = "http://www.84dm.com/type/1/1.html";
                         var play_html = await utils.get(play_url);
                         var $3 = cheerio.load(play_html, {decodeEntities: false});
                         var script = $3("iframe").attr("src");
-                        play_html = await utils.get(script);
+                        if(script.indexOf("https")>-1){
+                            play_html = await httpUtils.get2(script);
+                            console.log("==========https============");
+                            flag = true;
+                        }else {
+                            play_html = await utils.get(script);
+                        }
                         var $4 = cheerio.load(play_html, {decodeEntities: false});
                         script = $4("iframe").attr("src");
                         /*play_html = await utils.get(script);
