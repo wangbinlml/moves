@@ -68,6 +68,14 @@ router.get('/list', async function (req, res, next) {
             description = description.replace(/<\/?.+?>/g,"").replace(/<\/?.+?>/g,"");
             description = description.length > 30 ? description.substr(30)+"..." : description;
             paginObj.description = description;
+
+	    var tag_id = paginObj.tag_id;
+	    var tag_name = "未知";
+            var tags = await tagService.findTagById(tag_id);
+            if(tags && tags['data'].length>0) {
+                tag_name = tags['data'][0]['tag_name'];
+            }
+            paginObj.tag_name = tag_name;
             pData.push(paginObj);
         }
         paginationObj.data = pData;
