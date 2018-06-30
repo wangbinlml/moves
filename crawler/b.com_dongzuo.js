@@ -19,7 +19,7 @@ var tagService = require("../core/service/tagService");
 
 var base_url = "http://www.84dm.com";
 //动作
-var url = "http://www.84dm.com/type/1/2.html";
+var url = "http://www.84dm.com/type/1/1.html";
 (async () => {
     //到50页
         //列表
@@ -163,7 +163,21 @@ var url = "http://www.84dm.com/type/1/2.html";
                         var $3 = cheerio.load(play_html, {decodeEntities: false});
                         var script = $3("iframe").attr("src");
                         if(script.indexOf("https")>-1){
-                            play_html = await httpUtils.get2(script);
+                            var script_id = script.split("?id=")[1];
+                            var option={
+                                hostname:'apis.tianxianle.com',
+                                path:'/dapi.php?id='+ script_id,
+                                headers:{
+                                    'Accept':'*/*',
+                                    'Accept-Encoding':'utf-8',  //这里设置返回的编码方式 设置其他的会是乱码
+                                    'Accept-Language':'zh-CN,zh;q=0.8',
+                                    'Connection':'keep-alive',
+                                    'Host':'www.apis.tianxianle.com',
+                                    'Referer':play_url
+
+                                }
+                            };
+                            play_html = await httpUtils.get2(option);
                             console.log("==========https============");
                             flag = true;
                         }else {
