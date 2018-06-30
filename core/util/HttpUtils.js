@@ -155,10 +155,7 @@ module.exports.get2 = (url, cb) => {
     } else {
         return new Promise((resolve, reject) => {
             https.get(url, (res) => {
-                console.log('statusCode:', res.statusCode);
-                console.log('headers:', res.headers);
                 res.on('data', (rawData) => {
-                    console.log(rawData.toString());
                     resolve(rawData.toString());
                 });
 
