@@ -47,6 +47,43 @@ router.get('/', async function (req, res, next) {
         active: category_id
     });
 });
+router.get('/list', async function (req, res, next) {
+    var category_id = req.query.category_id || "1";
+    var current_page = req.query.current_page || "1";
+    var moves = {};
+    var title = "电影";
+    if (category_id != "") {
+        var category = await categoryService.findCategory(category_id);
+        if(category && category.data.length > 0){
+            title = category.data[0].name;
+        }
+        var data = await moveService.findAllMoves(category_id, current_page, 30);
+        var paginationObj = data.data;
+        var paginationData = paginationObj.data;
+        var pData = [];
+        for (var i = 0; i<paginationData.length; i++) {
+            var paginObj = paginationData[i];
+            paginObj.name = paginObj.name;
+            var description = StringUtils.htmlDecodeByRegExp(paginObj['description']);
+            description = description.replace(/<\/?.+?>/g,"").replace(/<\/?.+?>/g,"");
+            description = description.length > 30 ? description.substr(30)+"..." : description;
+            paginObj.description = description;
+
+	    var tag_id = paginObj.tag_id;
+	    var tag_name = "未知";
+            var tags = await tagService.findTagById(tag_id);
+            if(tags && tags['data'].length>0) {
+                tag_name = tags['data'][0]['tag_name'];
+            }
+            paginObj.tag_name = tag_name;
+            pData.push(paginObj);
+        }
+        paginationObj.data = pData;
+        data.data = paginationObj;
+        moves = paginationObj;
+    }
+    res.status(200).json(moves);
+});
 router.get('/detail', async function (req, res, next) {
     var move_id = req.query.move_id;
     var moves = await moveService.findOne(move_id);
