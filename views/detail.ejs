@@ -25,7 +25,7 @@
                                     <p>
                                         <% if(item['player'] == "iframe") { %> 在线播放 <% } else { %> <%= item['player'] %> <% } %>
                                     </p>
-                                    <a href="/move/play?move_id=<%= item['move_id'] %>&player=<%= item['player'] %>" target="_blank"><%=move['name']%> - <%=item['name']%></a>
+                                    <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%=move['name']%> - <%=item['name']%></a>
                                 </li>
                                 <% }) %>
                             </ul>
@@ -39,6 +39,7 @@
                                 <% downloads.forEach(function(item, index){ %>
                                 <li>
                                     <a href="<%= item['download_address'] %>" target="_blank"><%=item['name']%></a>
+                                    <input type="text" value="<%= item['download_address'] %>" class="form-control" title="鼠标左键单击可全选后手动复制该条迅雷地址进行分享或其它操作" onclick="this.select()" style="width: 100%;">
                                 </li>
                                 <% }) %>
                             </ul>
@@ -51,6 +52,7 @@
                     </div>
                 </section>
             </div>
+            <% include partials/tags_list %>
             <% include partials/area_list %>
         </div>
     </div>

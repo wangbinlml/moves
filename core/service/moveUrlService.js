@@ -9,20 +9,20 @@ module.exports.findMoveUrl = async (move_id) => {
     } catch (e) {
         console.log(e);
         result.error = 1;
-        result.msg = "获取演员失败";
+        result.msg = "获取播放url失败";
     }
     return result;
 };
-module.exports.findMoveUrlByMoveIdAndPlayer = async (move_id, player) => {
+module.exports.findMoveUrlByMoveIdAndPlayer = async (id, move_id, player) => {
     let result = {};
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select * from tb_move_url where move_id = ? and player = ? and is_del =0", [move_id,player]);
+        result.data = await mysql.query("select * from tb_move_url where id=? and move_id = ? and player = ? and is_del =0", [id, move_id,player]);
     } catch (e) {
         console.log(e);
         result.error = 1;
-        result.msg = "获取演员失败";
+        result.msg = "获取播放url失败";
     }
     return result;
 };

@@ -1,13 +1,13 @@
 <div class="col-md-3 order-md-2 area_list">
     <section class="panel">
         <header class="panel-heading">
-            地区
+            类型
         </header>
         <div class="slimScrollDiv">
             <div class="panel-body" id="noti-box">
                 <ul>
-                    <% areas.data.forEach(function(item, index){ %>
-                    <li><a href="/move/area?area=<%= item['area'] %>"><%= item['area'] %>(<%= item['count']%>)</a></li>
+                    <% tags.data.forEach(function(item, index){ %>
+                    <li><a href="/move/tags?tag_id=<%= item['id'] %>&tag_name=<%= item['tag_name'] %>"><%= item['tag_name'] %></a></li>
                     <% }) %>
                 </ul>
             </div>

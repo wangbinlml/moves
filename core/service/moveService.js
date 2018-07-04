@@ -81,12 +81,28 @@ module.exports.findMovesByArea = async (area, currrent_page, num) => {
     }
     return result;
 };
+module.exports.findMovesByTagId = async (tag_id, currrent_page, num) => {
+    let result = {};
+    try {
+        const data = await Pagination.getData(
+            ["select count(*) count from tb_move where tag_id = '"+tag_id+"' and is_del =0",
+                "select * from tb_move where tag_id = '"+tag_id+"' and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+        result.error = 0;
+        result.msg = "";
+        result.data = data;
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取列表失败";
+    }
+    return result;
+};
 module.exports.findAllArea = async () => {
     let result = {};
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select area from tb_move where is_del =0 group by area");
+        result.data = await mysql.query("select count(*) count, area from tb_move where is_del =0 group by area order by area asc");
     } catch (e) {
         console.log(e);
         result.error = 1;
