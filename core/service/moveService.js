@@ -102,7 +102,7 @@ module.exports.findAllArea = async () => {
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select count(*) count, area from tb_move where is_del =0 group by area order by area asc");
+        result.data = await mysql.query("select count(*) count, area from tb_move where is_del =0 group by area order by count desc, area asc limit 0,15");
     } catch (e) {
         console.log(e);
         result.error = 1;
@@ -137,7 +137,6 @@ module.exports.findMoveByName = async (actor_name) => {
     return result;
 };
 module.exports.insert = async (conn, value) => {
-    console.log("===move=======", value);
     return await mysql.query2(conn, "insert into tb_move (category_id,tag_id,name,year,area,cover,source,description,creator_id)" +
         "value (?,?,?,?,?,?,?,?,?)", value);
 };
