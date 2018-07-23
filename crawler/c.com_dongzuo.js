@@ -176,7 +176,7 @@ var crawler = function () {
             }
         }
         //await pageService.update();
-        //process.exit(0);
+        process.exit(0);
     })();
 };
 
