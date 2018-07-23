@@ -1,6 +1,32 @@
 <!--<div id="banner"></div>-->
 <div class="container">
     <div class="row">
+        <% include partials/today_list %>
+        <div class="col-md-9 order-md-1">
+            <section class="panel">
+                <header class="panel-heading">
+                    推荐电影 (查看更多请搜索)
+                </header>
+                <div class="panel-body table-responsive">
+                    <div class="row">
+                        <% tops.data.forEach(function(item, index){ %>
+                        <div class="col-md-2 col-sm-3 col-xs-4">
+                            <div class="thumbnail">
+                                <a href="/move/detail?move_id=<%= item['id'] %>"><img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
+                                <div class="caption">
+                                    <h3>
+                                        <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-9 order-md-1">
             <section class="panel">
                 <header class="panel-heading">

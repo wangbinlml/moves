@@ -6,7 +6,7 @@ module.exports.findAll = async (currrent_page, num) => {
     try {
         const data = await Pagination.getData(
             ["select count(*) count from tb_move where is_del =0",
-                "select * from tb_move where is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+                "select * from tb_move where is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
@@ -21,8 +21,8 @@ module.exports.findMoves = async (tag_id, currrent_page, num) => {
     let result = {};
     try {
         const data = await Pagination.getData(
-            ["select count(*) count from tb_move where  tag_id = "+tag_id+" and is_del =0",
-                "select * from tb_move where tag_id = "+tag_id+" and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+            ["select count(*) count from tb_move where  tag_id = " + tag_id + " and is_del =0",
+                "select * from tb_move where tag_id = " + tag_id + " and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
@@ -37,8 +37,8 @@ module.exports.findAllMoves = async (category, currrent_page, num) => {
     let result = {};
     try {
         const data = await Pagination.getData(
-            ["select count(*) count from tb_move where  category_id = "+category+" and is_del =0",
-                "select * from tb_move where category_id = "+category+" and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+            ["select count(*) count from tb_move where  category_id = " + category + " and is_del =0",
+                "select * from tb_move where category_id = " + category + " and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
@@ -53,8 +53,8 @@ module.exports.search = async (keyword, currrent_page, num) => {
     let result = {};
     try {
         const data = await Pagination.getData(
-            ["select count(*) count from tb_move where name like '%"+keyword+"%' and is_del =0",
-                "select * from tb_move where name like '%"+keyword+"%' and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+            ["select count(*) count from tb_move where name like '%" + keyword + "%' and is_del =0",
+                "select * from tb_move where name like '%" + keyword + "%' and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
@@ -69,8 +69,8 @@ module.exports.findMovesByArea = async (area, currrent_page, num) => {
     let result = {};
     try {
         const data = await Pagination.getData(
-            ["select count(*) count from tb_move where area = '"+area+"' and is_del =0",
-                "select * from tb_move where area = '"+area+"' and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+            ["select count(*) count from tb_move where area = '" + area + "' and is_del =0",
+                "select * from tb_move where area = '" + area + "' and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
@@ -85,8 +85,8 @@ module.exports.findMovesByTagId = async (tag_id, currrent_page, num) => {
     let result = {};
     try {
         const data = await Pagination.getData(
-            ["select count(*) count from tb_move where tag_id = '"+tag_id+"' and is_del =0",
-                "select * from tb_move where tag_id = '"+tag_id+"' and is_del=0 order by created_at desc limit ?,?"], currrent_page,num);
+            ["select count(*) count from tb_move where tag_id = '" + tag_id + "' and is_del =0",
+                "select * from tb_move where tag_id = '" + tag_id + "' and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
@@ -115,7 +115,7 @@ module.exports.findOne = async (move_id) => {
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select * from tb_move where id = ? and is_del =0",move_id);
+        result.data = await mysql.query("select * from tb_move where id = ? and is_del =0", move_id);
     } catch (e) {
         console.log(e);
         result.error = 1;
@@ -128,7 +128,33 @@ module.exports.findMoveByName = async (actor_name) => {
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select * from tb_move where name = ? and is_del =0",actor_name);
+        result.data = await mysql.query("select * from tb_move where name = ? and is_del =0", actor_name);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取电影失败";
+    }
+    return result;
+};
+module.exports.findMoveToday = async (start_time, end_time, count) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move where created_at >= ? and created_at<= ? and is_del =0 order by created_at desc limit ?", [start_time, end_time, count]);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取电影失败";
+    }
+    return result;
+};
+module.exports.findMoveTops = async (count) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move where top=1 and is_del =0 limit 0,?", count);
     } catch (e) {
         console.log(e);
         result.error = 1;
