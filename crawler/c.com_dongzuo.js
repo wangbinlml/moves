@@ -23,8 +23,8 @@ var schedule = require("node-schedule");
 
 var crawler = function () {
     (async () => {
-        var pageObj = await pageService.findAll();
-        var page = pageObj.data[0]['page'];
+        //var pageObj = await pageService.findAll();
+        var page = 1;//pageObj.data[0]['page'];
         var url = "http://www.yezitu.cc/list/?1-" + page + ".html";
         logger.info("url: " + url);
         var html = await utils.get(url);
@@ -175,15 +175,15 @@ var crawler = function () {
                 logger.error(e);
             }
         }
-        await pageService.update();
+        //await pageService.update();
         //process.exit(0);
     })();
 };
 
-schedule.scheduleJob('*/2 * * * *', function(){
+//schedule.scheduleJob('*/2 * * * *', function(){
     logger.info("====================="+new Date()+"======================");
     crawler();
-});
+//});
 /*
 setInterval(function () {
     logger.info("====================="+new Date()+"======================");
