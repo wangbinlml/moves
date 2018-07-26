@@ -47,7 +47,7 @@ a {
 }
 .bs-docs-footer {
     position: absolute;
-    bottom: 0;
+    bottom: -24px;
     padding: 30px 0;
     color: #99979c;
     text-align: center;
