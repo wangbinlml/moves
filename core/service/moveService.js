@@ -6,7 +6,7 @@ module.exports.findAll = async (currrent_page, num) => {
     try {
         const data = await Pagination.getData(
             ["select count(*) count from tb_move where is_del =0",
-                "select * from tb_move where is_del=0 order by year,created_at desc limit ?,?"], currrent_page, num);
+                "select * from tb_move where is_del=0 order by year desc,created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
