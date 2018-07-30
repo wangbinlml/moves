@@ -8,6 +8,7 @@
                 <section class="panel">
                     <div class="panel-body table-responsive">
                         <div id = "detail">
+                            <p><a href="/move/detail?move_id=<%= move['id'] %>"><img title="<%= move['name'] %>" alt="<%= move['name'] %>" src="<%= move['cover'] %>" /></a></p>
                             <p>电影：<%=move['name']%></p>
                             <p>演员表：
                                 <% actors.forEach(function(item, index){ %>

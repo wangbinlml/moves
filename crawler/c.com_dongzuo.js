@@ -133,6 +133,9 @@ var crawler = function () {
                 }
                 if (playList.length > 0) {
                     $2.children("script").remove();
+                    $2.children(".bds_qzone").remove();
+                    $2.children(".bds_tsina").remove();
+                    $2.children(".bds_weixin").remove();
                     var description = $2('.tab-content').find(".hy-play-list").find(".plot").html();
                     description = StringUtils.htmlEncodeByRegExp(description);
                     var tag_id = moveObj.tag_id;

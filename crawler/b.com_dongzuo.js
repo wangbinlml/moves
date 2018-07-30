@@ -227,6 +227,9 @@ var url = "http://www.84dm.com/type/1/1.html";
                 var downloadList = [];
                 $5.children("table").remove();
                 $5.children("script").remove();
+                $5.children(".bds_qzone").remove();
+                $5.children(".bds_tsina").remove();
+                $5.children(".bds_weixin").remove();
                 if (playList.length > 0) {
                     var htm = $5.html();//.replace(/\n/g,"");
                     if (htm.indexOf("</a>") > 0) {
