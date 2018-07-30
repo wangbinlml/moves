@@ -154,7 +154,7 @@ module.exports.findMoveTops = async (count) => {
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select * from tb_move where top=1 and is_del =0 limit 0,?", count);
+        result.data = await mysql.query("select * from tb_move where top=1 and is_del =0 order by created_at limit 0,?", count);
     } catch (e) {
         console.log(e);
         result.error = 1;
