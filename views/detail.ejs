@@ -12,21 +12,19 @@
                             <p>电影：<%=move['name']%></p>
                             <p>演员表：
                                 <% actors.forEach(function(item, index){ %>
-                                <a href="/actor/detail?actor_id=<%= item['id'] %>" target="_blank"><%=item['actor_name']%></a>
+                                <a href="/actor/move_list?actor_id=<%= item['id'] %>" target="_blank"><%=item['actor_name']%></a>
                                 <% }) %>
                             </p>
                             <p>类型：<%=move['tag_id']%> 年代：<%=move['year']%> 地区：<%=move['area']%> </p>
                         </div>
                         <br>
-                        <div style="color: red">小提示：视频加载需十秒左右，请耐心等待一会，如果播放器一直没反应，请刷新页面重新加载或者选择播放列表中另一个<b>播放地址</b>！</div>
-                        <br>
                         <div id = "">
-                            <p>播放列表：</p>
+                            <p><b>播放列表：</b></p>
                             <ul>
                                 <% moveUrls.forEach(function(item, index){ %>
                                 <li>
                                     <p>
-                                        <% if(item['player'] == "iframe") { %> 在线播放 <% } else { %> <%= item['player'] %> <% } %>
+                                        <% if(item['player'] == "iframe") {  %> 在线播放 <% } else { %> <%= item['player'] %> <% } %>地址<%=index+1%>
                                     </p>
                                     <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%=move['name']%> - <%=item['name']%></a>
                                 </li>
@@ -37,7 +35,7 @@
                         <br>
                         <div id = "">
                             <p>迅雷下载(下载链接复制到迅雷影音可边下边看)</p>
-                            <p>下载列表：</p>
+                            <p><b>下载列表：</b></p>
                             <ul>
                                 <% downloads.forEach(function(item, index){ %>
                                 <li>
