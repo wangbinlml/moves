@@ -226,6 +226,7 @@ var url = "http://www.84dm.com/type/1/1.html";
                 //下载地址
                 var downloadList = [];
                 $5.children("table").remove();
+                $5.children("script").remove();
                 if (playList.length > 0) {
                     var htm = $5.html();//.replace(/\n/g,"");
                     if (htm.indexOf("</a>") > 0) {

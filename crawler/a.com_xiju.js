@@ -187,6 +187,7 @@ var url = "http://www.52lailook.com/play/plist/9";
                 }
                 $5.children("p").eq(0).remove();
                 $5.children("hr").remove();
+                $5.children("script").remove();
                 $5.find(".ui-box").remove();
                 $5.find(".jiathis_style_24x24").parent().remove();
                 $5.find("#div").remove();
