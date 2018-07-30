@@ -151,6 +151,8 @@ router.get('/play', async function (req, res, next) {
         template = "xigua_play";
     } else if (player == "iframe") {
         template = "iframe";
+    } else if (player == "优酷" || player == "土豆") {
+        template = "youku_play";
     }
     var areas = await moveService.findAllArea();
     var tags = await tagService.findTags();

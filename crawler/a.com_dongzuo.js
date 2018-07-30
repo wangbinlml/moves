@@ -134,6 +134,7 @@ var url = "http://www.52lailook.com/play/plist/8";
                         var titlePlay = titleP[j];
                         var linkPlay = linkP[j];
                         var play_url = base_url + linkPlay.link;
+                        //play_url = "http://www.52lailook.com/play/player/16750-1-19.html";
                         var play_html = await utils.get(play_url);
                         var $3 = cheerio.load(play_html, {decodeEntities: false});
                         var script = $3("center div script");
@@ -141,7 +142,7 @@ var url = "http://www.52lailook.com/play/plist/8";
                             var sc = $(this);
                             if (sc.html() != "") {
                                 source = sc.html().replace(/\n|\"/g, "").split("=")[1];
-                                if (source != "" && source.indexOf("(function()") == -1) {
+                                if (source != "" && (source.indexOf("(function()") == -1 && source.indexOf("{") == -1)) {
                                     if (source.indexOf("+++") > -1) {
                                         var list = source.split("+++");
                                         for (var pi = 0; pi<list.length;pi++) {

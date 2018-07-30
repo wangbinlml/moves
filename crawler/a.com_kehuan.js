@@ -142,7 +142,7 @@ var url = "http://www.52lailook.com/play/plist/11";
                             var sc = $(this);
                             if (sc.html() != "") {
                                 source = sc.html().replace(/\n|\"/g, "").split("=")[1];
-                                if (source != "" && source.indexOf("(function()") == -1) {
+                                if (source != "" && (source.indexOf("(function()") == -1 && source.indexOf("{") == -1)) {
                                     if (source.indexOf("+++") > -1) {
                                         var list = source.split("+++");
                                         for (var pi = 0; pi<list.length;pi++) {

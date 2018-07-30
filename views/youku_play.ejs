@@ -1,0 +1,62 @@
+<% include partials/header %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 order-md-1">
+                <section class="panel">
+                    <div class="panel-body table-responsive">
+                        <div id="youku_player">
+                            <embed src="http://player.youku.com/player.php/sid/<%= currentMoveUrls['url'] %>/v.swf" allowFullScreen="true"
+                                   quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+                        </div>
+                        <div id="detail">
+                            <p>电影：<%= move['name'] %></p>
+                            <p>演员表：
+                                <% actors.forEach(function(item, index){ %>
+                                <a href="/actor/detail?actor_id=<%= item['id'] %>" target="_blank"><%= item['actor_name'] %></a>
+                                <% }) %>
+                            </p>
+                            <p>类型：<%= move['tag_id'] %> 年代：<%= move['year'] %> 地区：<%= move['area'] %> </p>
+                        </div>
+                        <br>
+                        <div id="">
+                            <p>播放列表：</p>
+                            <ul>
+                                <% moveUrls.forEach(function(item, index){ %>
+                                <li>
+                                    <p><%= item['player'] %></p>
+                                    <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
+                                        - <%= item['name'] %></a>
+                                </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+
+                        <br>
+                        <div id="">
+                            <p>迅雷下载(下载链接复制到迅雷影音可边下边看)</p>
+                            <p>下载列表：</p>
+                            <ul>
+                                <% downloads.forEach(function(item, index){ %>
+                                <li>
+                                    <a href="<%= item['download_address'] %>" target="_blank"><%= item['name'] %></a>
+                                    <input type="text" value="<%= item['download_address'] %>" class="form-control" title="鼠标左键单击可全选后手动复制该条迅雷地址进行分享或其它操作" onclick="this.select()" style="width: 100%;">
+                                </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+
+                        <br>
+                        <div id="content">
+                            <%- move['description'] %>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <% include partials/area_list %>
+        </div>
+    </div>
+</div>
+<% include partials/footer %>
