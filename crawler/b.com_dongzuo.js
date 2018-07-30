@@ -17,6 +17,7 @@ var moveTagService = require("../core/service/moveTagService");
 var moveUrlService = require("../core/service/moveUrlService");
 var tagService = require("../core/service/tagService");
 
+var logger = require('../core/logger').getLogger("system");
 var base_url = "http://www.84dm.com";
 //动作
 var url = "http://www.84dm.com/type/1/1.html";
@@ -41,9 +42,10 @@ var url = "http://www.84dm.com/type/1/1.html";
                 var title = dt.children[1].attribs.title+ (hd? "-"+hd: "");
                 var detail_url = base_url + a;
                 var movelist = await moveService.findMoveByName(title);
+                var exits = false;
                 if (movelist && movelist.data.length > 0) {
-                    console.log("===" + title + "已经存在里");
-                    continue;
+                    logger.info("===" + title + "已经存在里");
+                    exits = true;
                 }
                 var moveObj = {
                     category_id: 1,
@@ -224,38 +226,51 @@ var url = "http://www.84dm.com/type/1/1.html";
                 //下载地址
                 var downloadList = [];
                 $5.children("table").remove();
-                var htm = $5.html();//.replace(/\n/g,"");
-                if (htm.indexOf("</a>") > 0) {
-                    htm = htm.substr(htm.indexOf("</a>") + 4);
-                }
-                var description = StringUtils.htmlEncodeByRegExp(htm);
-                var tag_id = moveObj.tag_id;
-                moveObj = await moveService.insert(conn, [moveObj.category_id, moveObj.tag_id, moveObj.name, year, area, moveObj.cover, moveObj.source, description, moveObj.creator_id]);
-                var move_id = moveObj.insertId;
-                var tagObj = await moveTagService.insert(conn, [move_id, tag_id]);
-
-                for (var u = 0; u < actors.length; u++) {
-                    var actorObj = await actorService.findActorByName(actors[u]);
-                    if (actorObj && actorObj.data.length > 0) {
-                        var actor_id = actorObj.data[0]['id'];
-                        await moveActorService.insert(conn, [move_id, actor_id]);
-                    } else {
-                        actorObj = await actorService.insert(conn, [actors[u], "", "", 1]);
-                        var actor_id = actorObj.insertId;
-                        await moveActorService.insert(conn, [move_id, actor_id]);
+                if (playList.length > 0) {
+                    var htm = $5.html();//.replace(/\n/g,"");
+                    if (htm.indexOf("</a>") > 0) {
+                        htm = htm.substr(htm.indexOf("</a>") + 4);
                     }
-                }
-                for (var r = 0; r < playList.length; r++) {
-                    var playObj = playList[r];
-                    await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
-                }
+                    var description = StringUtils.htmlEncodeByRegExp(htm);
+                    var tag_id = moveObj.tag_id;
+                    moveObj = await moveService.insert(conn, [moveObj.category_id, moveObj.tag_id, moveObj.name, year, area, moveObj.cover, moveObj.source, description, moveObj.creator_id]);
+                    var move_id = moveObj.insertId;
+                    var tagObj = await moveTagService.insert(conn, [move_id, tag_id]);
 
-                for (var f = 0; f < downloadList.length; f++) {
-                    var downloadObj = downloadList[f];
-                    await moveDownloadService.insert(conn, [move_id, downloadObj.title, downloadObj.url, 1]);
-                }
+                    for (var u = 0; u < actors.length; u++) {
+                        var actorObj = await actorService.findActorByName(actors[u]);
+                        if (actorObj && actorObj.data.length > 0) {
+                            var actor_id = actorObj.data[0]['id'];
+                            await moveActorService.insert(conn, [move_id, actor_id]);
+                        } else {
+                            actorObj = await actorService.insert(conn, [actors[u], "", "", 1]);
+                            var actor_id = actorObj.insertId;
+                            await moveActorService.insert(conn, [move_id, actor_id]);
+                        }
+                    }
+                    /*for (var r = 0; r < playList.length; r++) {
+                        var playObj = playList[r];
+                        await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
+                    }*/
+                    for (var r = 0; r < playList.length; r++) {
+                        var playObj = playList[r];
+                        var moveUrlExists = await moveUrlService.findMoveByName(move_id, playObj.title, playObj.play);
+                        if (moveUrlExists && moveUrlExists.data.length > 0) {
+                            logger.info("===" + title + "__" + playObj.title + "鏈接已经存在里");
+                        } else {
+                            await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
+                        }
+                    }
+                    for (var f = 0; f < downloadList.length; f++) {
+                        var downloadObj = downloadList[f];
+                        await moveDownloadService.insert(conn, [move_id, downloadObj.title, downloadObj.url, 1]);
+                    }
 
-                mysql.commit(conn);
+                    mysql.commit(conn);
+                } else {
+                    logger.info(title + "無鏈接");
+                    mysql.rollback(conn);
+                }
                 console.log("=====第" + i + "条======完成");
             } catch (e) {
                 mysql.rollback(conn);
