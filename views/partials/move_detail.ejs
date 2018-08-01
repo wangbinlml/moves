@@ -12,38 +12,53 @@
         <p>类型：<%= move['tag_id'] %> 年代：<%= move['year'] %> 地区：<%= move['area'] %> </p>
     </div>
     <div class="col-md-12">
-        <div id="">
-            <p><b>播放列表：</b></p>
-            <ul>
-                <% moveUrls.forEach(function(item, index){ %>
-                <li>
-                    <p><%= item['player'] %>地址<%=index+1%></p>
-                    <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
-                        - <%= item['name'] %></a>
-                </li>
-                <% }) %>
-            </ul>
-
-            <div style="color: red">小提示：视频加载需十秒左右，请耐心等待一会，如果播放器一直没反应，<br>请刷新页面重新加载或者选择播放列表中另一个<b>播放地址</b>！</div>
-        </div>
-
-        <br>
-        <div id="">
-            <p>迅雷下载(下载链接复制到迅雷影音可边下边看)</p>
-            <p>下载列表：</p>
-            <ul>
-                <% downloads.forEach(function(item, index){ %>
-                <li>
-                    <a href="<%= item['download_address'] %>" target="_blank"><%= item['name'] %></a>
-                    <input type="text" value="<%= item['download_address'] %>" class="form-control" title="鼠标左键单击可全选后手动复制该条迅雷地址进行分享或其它操作" onclick="this.select()" style="width: 100%;">
-                </li>
-                <% }) %>
-            </ul>
-        </div>
-
-        <br>
-        <div id="content">
-            <%- move['description'] %>
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active">
+                <a href="#play_list" data-toggle="tab">
+                    播放列表
+                </a>
+            </li>
+            <li><a href="#content" data-toggle="tab">剧情介绍</a></li>
+            <li><a href="#download_list" data-toggle="tab">下载列表</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade in active" id="play_list">
+                <div id="download_list">
+                    <div style="color: red">小提示：视频加载需十秒左右，请耐心等待一会，如果播放器一直没反应，<br>请刷新页面重新加载或者选择播放列表中另一个<b>播放地址</b>！</div>
+                    <ul>
+                        <% moveUrls.forEach(function(item, index){ %>
+                        <li>
+                            <p><%= item['player'] %>地址<%=index+1%></p>
+                            <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
+                                - <%= item['name'] %></a>
+                        </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="content">
+                <div id="content">
+                    <%- move['description'] %>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="download_list">
+                <div id="download_list">
+                    <p>迅雷下载(下载链接复制到迅雷影音可边下边看)</p>
+                    <ul>
+                        <% downloads.forEach(function(item, index){ %>
+                        <li>
+                            <a href="<%= item['download_address'] %>" target="_blank"><%= item['name'] %></a>
+                            <input type="text" value="<%= item['download_address'] %>" class="form-control" title="鼠标左键单击可全选后手动复制该条迅雷地址进行分享或其它操作" onclick="this.select()" style="width: 100%;">
+                        </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    $(function () {
+        $('#myTab li:eq(1) a').tab('show');
+    });
+</script>
