@@ -82,7 +82,7 @@ function ckplayerConfig() {
 				align: 'right',
 				vAlign: 'top',
 				offsetX: -350,
-				offsetY: 10
+				offsetY: 5
 			},
 			advertisement: { //广告相关的配置
 				time: 5, //广告默认播放时长以及多个广告时每个广告默认播放时间，单位：秒
