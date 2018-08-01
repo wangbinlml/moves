@@ -29,7 +29,7 @@
                         <% moveUrls.forEach(function(item, index){ %>
                         <li>
                             <p>
-                            地址<%=index+1%>:<% if(item['player'] == "iframe") {  %> 在线播放 <% } else { %> <%= item['player'] %> <% } %>地址<%=index+1%></p>
+                            地址<%=index+1%>:<% if(item['player'] == "iframe") {  %> 在线播放 <% } else { %> <%= item['player'] %> <% } %></p>
                             <p><a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
                                     - <%= item['name'] %></a></p>
                         </li>
