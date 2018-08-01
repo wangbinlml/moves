@@ -3,7 +3,7 @@
         <p><a href="/move/detail?move_id=<%= move['id'] %>"><img width="100%" title="<%= move['name'] %>" alt="<%= move['name'] %>" src="<%= move['cover'] %>" /></a></p>
     </div>
     <div class="col-md-8">
-        <p>电影：<h1><%= move['name'] %></h1></p>
+        <p><h3><%= move['name'] %></h3></p>
         <p>演员表：
             <% actors.forEach(function(item, index){ %>
             <a href="/actor/move_list?actor_id=<%= item['id'] %>" target="_blank"><%= item['actor_name'] %></a>
