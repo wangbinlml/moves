@@ -3,7 +3,7 @@
         <p><a href="/move/detail?move_id=<%= move['id'] %>"><img width="100%" title="<%= move['name'] %>" alt="<%= move['name'] %>" src="<%= move['cover'] %>" /></a></p>
     </div>
     <div class="col-md-8">
-        <p>电影：<%= move['name'] %></p>
+        <p>电影：<h1><%= move['name'] %></h1></p>
         <p>演员表：
             <% actors.forEach(function(item, index){ %>
             <a href="/actor/move_list?actor_id=<%= item['id'] %>" target="_blank"><%= item['actor_name'] %></a>
@@ -24,13 +24,13 @@
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade in active" id="play_list">
                 <div id="play_page" style="padding-top: 10px">
-                    <div style="color: red">小提示：视频加载需十秒左右，请耐心等待一会，如果播放器一直没反应，<br>请刷新页面重新加载或者选择播放列表中另一个<b>播放地址</b>！</div>
+                    <div style="color: red"><p>小提示：视频加载需十秒左右，请耐心等待一会，如果播放器一直没反应，请刷新页面重新加载或者选择播放列表中另一个<b>播放地址</b>！</p></div>
                     <ul>
                         <% moveUrls.forEach(function(item, index){ %>
                         <li>
                             <p>地址<%=index+1%>: <%= item['player'] %></p>
-                            <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
-                                - <%= item['name'] %></a>
+                            <p><a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
+                                    - <%= item['name'] %></a></p>
                         </li>
                         <% }) %>
                     </ul>
