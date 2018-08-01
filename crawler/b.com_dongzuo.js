@@ -39,7 +39,7 @@ var url = "http://www.84dm.com/type/1/1.html";
                 console.log("=====第" + i + "条======");
                 var src = dt.children[1].attribs.src;
                 var hd = $('.mov_list li').eq(i).find("font").html();
-                var title = dt.children[1].attribs.title+ (hd? "-"+hd: "");
+                var title = dt.children[1].attribs.title;//+ (hd? "-"+hd: "");
                 var detail_url = base_url + a;
                 var movelist = await moveService.findMoveByName(title);
                 var exits = false;
