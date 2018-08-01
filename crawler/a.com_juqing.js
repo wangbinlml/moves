@@ -187,10 +187,13 @@ var url = "http://www.52lailook.com/play/plist/12";
                 }
                 $5.children("p").eq(0).remove();
                 $5.children("hr").remove();
-                $5.children("script").remove();
-                $5.children(".bds_qzone").remove();
-                $5.children(".bds_tsina").remove();
-                $5.children(".bds_weixin").remove();
+                $5.find("script").remove();
+                $5.find(".bdsharebuttonbox").remove();
+                $5.find("a").eq(0).remove();
+                $5.find(".title").remove();
+                $5.find(".bds_qzone").remove();
+                $5.find(".bds_tsina").remove();
+                $5.find(".bds_weixin").remove();
                 $5.find(".ui-box").remove();
                 $5.find(".jiathis_style_24x24").parent().remove();
                 $5.find("#div").remove();
