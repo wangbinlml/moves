@@ -10,48 +10,7 @@
                         <div id="dplayer">
                             <iframe border="0" frameborder="0" height="390px" id="player_swf" marginheight="0" marginwidth="0" scrolling="no" src="<%= currentMoveUrls['url'] %>" width="100%" allowfullscreen="true" allowtransparency="true"></iframe>
                         </div>
-                        <div id="detail">
-                            <p><a href="/move/detail?move_id=<%= move['id'] %>"><img title="<%= move['name'] %>" alt="<%= move['name'] %>" src="<%= move['cover'] %>" /></a></p>
-                            <p>电影：<%= move['name'] %></p>
-                            <p>演员表：
-                                <% actors.forEach(function(item, index){ %>
-                                <a href="/actor/move_list?actor_id=<%= item['id'] %>" target="_blank"><%= item['actor_name'] %></a>
-                                <% }) %>
-                            </p>
-                            <p>类型：<%= move['tag_id'] %> 年代：<%= move['year'] %> 地区：<%= move['area'] %> </p>
-                        </div>
-                        <br>
-                        <div id="">
-                            <p>播放列表：</p>
-                            <ul>
-                                <% moveUrls.forEach(function(item, index){ %>
-                                <li>
-                                    <% if(item['player'] == "iframe") { %> 在线播放 <% } else { %> <%= item['player'] %> <% } %>地址<%=index+1%>
-                                    <a href="/move/play?move_id=<%= item['move_id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
-                                        - <%= item['name'] %></a>
-                                </li>
-                                <% }) %>
-                            </ul>
-                            <div style="color: red">小提示：视频加载需十秒左右，请耐心等待一会，如果播放器一直没反应，<br>请刷新页面重新加载或者选择播放列表中另一个<b>播放地址</b>！</div>
-                        </div>
-
-                        <br>
-                        <div id="">
-                            <p>迅雷下载(下载链接复制到迅雷影音可边下边看)</p>
-                            <p>下载列表：</p>
-                            <ul>
-                                <% downloads.forEach(function(item, index){ %>
-                                <li>
-                                    <a href="<%= item['download_address'] %>" target="_blank"><%= item['name'] %></a>
-                                </li>
-                                <% }) %>
-                            </ul>
-                        </div>
-
-                        <br>
-                        <div id="content">
-                            <%- move['description'] %>
-                        </div>
+                        <% include partials/move_detail %>
                     </div>
                 </section>
             </div>
