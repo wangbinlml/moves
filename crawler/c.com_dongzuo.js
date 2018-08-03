@@ -24,7 +24,7 @@ var schedule = require("node-schedule");
 var crawler = function () {
     (async () => {
         //var pageObj = await pageService.findAll();
-        var page = 1;//pageObj.data[0]['page'];
+        var page = 2;//pageObj.data[0]['page'];
         var url = "http://www.yezitu.cc/list/?1-" + page + ".html";
         logger.info("url: " + url);
         var html = await utils.get(url);
@@ -132,10 +132,10 @@ var crawler = function () {
                     break;
                 }
                 if (playList.length > 0) {
-                    $2.find("script").remove();
-                    $2.find(".bds_qzone").remove();
-                    $2.find(".bds_tsina").remove();
-                    $2.find(".bds_weixin").remove();
+                    $2('.tab-content').find(".hy-play-list").find(".plot").find("script").remove();
+                    $2('.tab-content').find(".hy-play-list").find(".plot").find(".bds_qzone").remove();
+                    $2('.tab-content').find(".hy-play-list").find(".plot").find(".bds_tsina").remove();
+                    $2('.tab-content').find(".hy-play-list").find(".plot").find(".bds_weixin").remove();
                     var description = $2('.tab-content').find(".hy-play-list").find(".plot").html();
                     description = StringUtils.htmlEncodeByRegExp(description);
                     var tag_id = moveObj.tag_id;
