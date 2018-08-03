@@ -24,7 +24,7 @@ var schedule = require("node-schedule");
 var crawler = function () {
     (async () => {
         //var pageObj = await pageService.findAll();
-        var page = 2;//pageObj.data[0]['page'];
+        var page = 1;//pageObj.data[0]['page'];
         var url = "http://www.yezitu.cc/list/?1-" + page + ".html";
         logger.info("url: " + url);
         var html = await utils.get(url);
