@@ -39,7 +39,7 @@ var url = "http://www.84dm.com/type/1/1.html";
                 console.log("=====第" + i + "条======");
                 var src = dt.children[1].attribs.src;
                 var hd = $('.mov_list li').eq(i).find("font").html();
-                var title = dt.children[1].attribs.title+ (hd? "-"+hd: "");
+                var title = dt.children[1].attribs.title;//+ (hd? "-"+hd: "");
                 var detail_url = base_url + a;
                 var movelist = await moveService.findMoveByName(title);
                 var exits = false;
@@ -226,10 +226,11 @@ var url = "http://www.84dm.com/type/1/1.html";
                 //下载地址
                 var downloadList = [];
                 $5.children("table").remove();
-                $5.children("script").remove();
-                $5.children(".bds_qzone").remove();
-                $5.children(".bds_tsina").remove();
-                $5.children(".bds_weixin").remove();
+                $5.find("script").remove();
+                $5.find(".bdsharebuttonbox").remove();
+                $5.find(".bds_qzone").remove();
+                $5.find(".bds_tsina").remove();
+                $5.find(".bds_weixin").remove();
                 if (playList.length > 0) {
                     var htm = $5.html();//.replace(/\n/g,"");
                     if (htm.indexOf("</a>") > 0) {

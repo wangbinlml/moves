@@ -39,7 +39,7 @@ var crawler = function () {
                 var imgs = dt.children[0].attribs.style;
                 var src = imgs.substring(imgs.indexOf("(") + 1, imgs.indexOf(")"));
                 var hd = dt.children[0].children[1].children[0].data;
-                var title = dt.children[1].children[0].children[0].children[0].data + (hd ? "-" + hd : "");
+                var title = dt.children[1].children[0].children[0].children[0].data;// + (hd ? "-" + hd : "");
                 logger.info("=====第" + page + "_" + i + "条======");
                 var movelist = await moveService.findMoveByName(title);
                 var exits = false;
@@ -132,10 +132,10 @@ var crawler = function () {
                     break;
                 }
                 if (playList.length > 0) {
-                    $2.children("script").remove();
-                    $2.children(".bds_qzone").remove();
-                    $2.children(".bds_tsina").remove();
-                    $2.children(".bds_weixin").remove();
+                    $2('.tab-content').find(".hy-play-list").find(".plot").find("script").remove();
+                    $2('.tab-content').find(".hy-play-list").find(".plot").find(".bds_qzone").remove();
+                    $2('.tab-content').find(".hy-play-list").find(".plot").find(".bds_tsina").remove();
+                    $2('.tab-content').find(".hy-play-list").find(".plot").find(".bds_weixin").remove();
                     var description = $2('.tab-content').find(".hy-play-list").find(".plot").html();
                     description = StringUtils.htmlEncodeByRegExp(description);
                     var tag_id = moveObj.tag_id;
