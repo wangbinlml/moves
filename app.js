@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var log4js = require('log4js');
 var commonUtil = require('./core/util/commonUtil');
 var systemConfig = require(commonUtil.getConfigPath() + "/system_config");
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -15,11 +14,11 @@ var log = require('./core/logger').getLogger("system");
 var fs = require('fs');
 var markdown = require('markdown-js');
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var move = require('./routes/move');
 var login = require('./routes/login');
 var contactUs = require('./routes/contact-us');
 var downloads = require('./routes/downloads');
+var menu_auth = require("./routes/backend/menu_auth");
 var admin = require('./routes/admin');
 
 var app = express();
@@ -55,9 +54,12 @@ app.use(function (req, res, next) {
         log.error(str);
         res.render("notice", {msg: str});
         return;
-    } else if (need_login(req)) {
+    }  else if (is_login(req)) {
+        res.render("login", {msg: '您未登录或登录已超时！'});
+        return;
+    } else if (menu_auth.check(req) == false) {
         res.status(401);
-        res.render('401', {
+        res.render('backend/401', {
             message: "没有权限访问该页面",
             error: {}
         });
@@ -67,11 +69,10 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', routes);
-app.use('/login', login);
-app.use('/users', users);
 app.use('/contact-us', contactUs);
 app.use('/downloads', downloads);
 app.use('/move', move);
+app.use('/login', login);
 app.use('/admin', admin);
 
 // catch 404 and forward to error handler
@@ -112,11 +113,8 @@ app.engine('md', function(path, options, fn){
         fn(null, str);
     });
 });
-
-
-function need_login(req) {
-    if ((req.url.indexOf("app-manage") >0)
-        && !req.session.user) {
+function is_login(req) {
+    if (req.url.indexOf("/admin") == 0 && !req.session.user) {
         return true;
     }
     return false;
