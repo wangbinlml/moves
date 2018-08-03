@@ -211,20 +211,33 @@ var url = "http://www.52lailook.com/play/plist/13";
                         htm = htm.substr(htm.indexOf("</a>") + 4);
                     }
                     var description = StringUtils.htmlEncodeByRegExp(htm);
-                    moveObj = await moveService.insert(conn, [moveObj.category_id, moveObj.tag_id, moveObj.name, year, area, moveObj.cover, moveObj.source, description, moveObj.creator_id]);
-                    var move_id = moveObj.insertId;
-                    var tagObj = await moveTagService.insert(conn, [move_id, 5]);
+                    /*moveObj = await moveService.insert(conn, [moveObj.category_id, moveObj.tag_id, moveObj.name, year, area, moveObj.cover, moveObj.source, description, moveObj.creator_id]);
+                    var move_id = moveObj.insertId;*/
+                    var move_id = "";
+                    if (exits == false) {
+                        moveObj = await moveService.insert(conn, [moveObj.category_id, moveObj.tag_id, moveObj.name, year, area, moveObj.cover, moveObj.source, description, moveObj.creator_id]);
+                        move_id = moveObj.insertId;
+                        var tagObj = await moveTagService.insert(conn, [move_id, 4]);
+                            var tagObj = await moveTagService.insert(conn, [move_id, 5]);
 
-                    for (var u = 0; u < actors.length; u++) {
-                        var actorObj = await actorService.findActorByName(actors[u]);
-                        if (actorObj && actorObj.data.length > 0) {
-                            var actor_id = actorObj.data[0]['id'];
-                            await moveActorService.insert(conn, [move_id, actor_id]);
-                        } else {
-                            actorObj = await actorService.insert(conn, [actors[u], "", "", 1]);
-                            var actor_id = actorObj.insertId;
-                            await moveActorService.insert(conn, [move_id, actor_id]);
+                        for (var u = 0; u < actors.length; u++) {
+                            var actorObj = await actorService.findActorByName(actors[u]);
+                            if (actorObj && actorObj.data.length > 0) {
+                                var actor_id = actorObj.data[0]['id'];
+                                await moveActorService.insert(conn, [move_id, actor_id]);
+                            } else {
+                                actorObj = await actorService.insert(conn, [actors[u], "", "", 1]);
+                                var actor_id = actorObj.insertId;
+                                await moveActorService.insert(conn, [move_id, actor_id]);
+                            }
                         }
+
+                        for (var f = 0; f < downloadList.length; f++) {
+                            var downloadObj = downloadList[f];
+                            await moveDownloadService.insert(conn, [move_id, downloadObj.title, downloadObj.url, 1]);
+                        }
+                    } else {
+                        move_id = movelist.data[0]['id'];
                     }
                     /*for (var r = 0; r < playList.length; r++) {
                         var playObj = playList[r];
@@ -238,11 +251,6 @@ var url = "http://www.52lailook.com/play/plist/13";
                         } else {
                             await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
                         }
-                    }
-
-                    for (var f = 0; f < downloadList.length; f++) {
-                        var downloadObj = downloadList[f];
-                        await moveDownloadService.insert(conn, [move_id, downloadObj.title, downloadObj.url, 1]);
                     }
                     mysql.commit(conn);
                 } else {
