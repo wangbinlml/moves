@@ -19,6 +19,7 @@ var login = require('./routes/login');
 var contactUs = require('./routes/contact-us');
 var downloads = require('./routes/downloads');
 var menu_auth = require("./routes/backend/menu_auth");
+var verify = require('./routes/verify');
 var admin = require('./routes/admin');
 
 var app = express();
@@ -73,6 +74,7 @@ app.use('/contact-us', contactUs);
 app.use('/downloads', downloads);
 app.use('/move', move);
 app.use('/login', login);
+app.use('/verify', verify);
 app.use('/admin', admin);
 
 // catch 404 and forward to error handler
