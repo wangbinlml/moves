@@ -98,8 +98,10 @@ router.get('/detail', async function (req, res, next) {
     var downloads = await moveDownloadService.findDownloadUrl(move_id);
     var areas = await moveService.findAllArea();
     var tags = await tagService.findTags();
+    var tagID = "";
     if(!_.isEmpty(move)){
         var tag_id = move.tag_id;
+        tagID = tag_id;
         var current_tags = await tagService.findTagById(tag_id);
         if(current_tags && current_tags['data'].length>0) {
             move.tag_id = current_tags['data'][0]['tag_name'];
@@ -109,10 +111,16 @@ router.get('/detail', async function (req, res, next) {
     } else {
         move.tag_id = "未知";
     }
+    //获取相关视频
+    var relation_list = await moveService.findRelationMoves(tagID, 18);
+    //浏览量最多的视频
+    var mostViews = await moveService.findMostViewsMoves(tagID, 18);
     res.render('detail', {
         title: move.name || '电影',
         msg: "",
         move: move,
+        relation_list: relation_list || [],
+        mostViews: mostViews || [],
         moveUrls: moveUrls.data,
         downloads: downloads.data,
         actors: actors.data,
@@ -135,8 +143,10 @@ router.get('/play', async function (req, res, next) {
     var moveUrls = await moveUrlService.findMoveUrl(move_id);
     var downloads = await moveDownloadService.findDownloadUrl(move_id);
     var currentMoveUrls = await moveUrlService.findMoveUrlByMoveIdAndPlayer(id, move_id, player);
+    var tagID = "";
     if(!_.isEmpty(move)){
         var tag_id = move.tag_id;
+        tagID = tag_id;
         var tags = await tagService.findTagById(tag_id);
         if(tags && tags['data'].length>0) {
             move.tag_id = tags['data'][0]['tag_name'];
@@ -156,10 +166,18 @@ router.get('/play', async function (req, res, next) {
     }
     var areas = await moveService.findAllArea();
     var tags = await tagService.findTags();
+
+    //获取相关视频
+    var relation_list = await moveService.findRelationMoves(tagID, 18);
+    //浏览量最多的视频
+    var mostViews = await moveService.findMostViewsMoves(tagID, 18);
+
     res.render(template, {
         title:  move.name || '电影',
         msg: "",
         move: move,
+        relation_list: relation_list || [],
+        mostViews: mostViews || [],
         currentMoveUrls: currentMoveUrls.data[0],
         moveUrls: moveUrls.data,
         downloads: downloads.data,

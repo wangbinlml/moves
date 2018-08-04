@@ -24,7 +24,7 @@ router.get('/get_menu', async (req, res, next) => {
     try {
         var role_id = req.query.role_id;
         var sql = "select a.menu_id from bs_menu a inner join bs_menu_role b on a.menu_id=b.menu_id where b.role_id=? and a.is_del=0";
-        var sql2 = "select * from bs_menu where is_del=0";
+        var sql2 = "select * from bs_menu where is_del=0 order by parent_id,opt asc";
         var menuId = await mysql.query(sql, role_id);
         var menus = await mysql.query(sql2);
         result.data['menus'] = getAllMenu(menus);
@@ -35,6 +35,7 @@ router.get('/get_menu', async (req, res, next) => {
         result['data']['menuId'] = ids;
         res.status(200).json(result);
     } catch (e) {
+        log.error(e);
         result.error = 1;
         res.status(500).json(result);
     }

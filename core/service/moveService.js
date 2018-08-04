@@ -123,6 +123,32 @@ module.exports.findOne = async (move_id) => {
     }
     return result;
 };
+module.exports.findRelationMoves = async (tag_id, offset) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move where tag_id = ? and is_del =0 limit 0,?", [tag_id,offset]);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取电影失败";
+    }
+    return result;
+};
+module.exports.findMostViewsMoves = async (tag_id, offset) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move where tag_id = ? and is_del =0 order by views desc limit 0,?", [tag_id,offset]);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取电影失败";
+    }
+    return result;
+};
 module.exports.findMoveByName = async (actor_name) => {
     let result = {};
     try {

@@ -1,0 +1,24 @@
+<!-- 当前栏目下访问最多的视频-->
+<div class="col-md-3 order-md-2 area_list">
+    <section class="panel">
+        <header class="panel-heading">
+            人气视频
+        </header>
+        <div class="slimScrollDiv">
+            <div class="panel-body" id="noti-box">
+                <ul>
+                    <% if (mostViews.data.length>0) {
+                        mostViews.data.forEach(function(item, index){
+                    %>
+                    <li><%=index+1%> &nbsp;<a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a></li>
+                    <%
+                        })
+                        } else {
+                    %>
+                    <li>今天暂无更新</li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
