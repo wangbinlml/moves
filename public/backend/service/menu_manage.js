@@ -143,7 +143,8 @@ $('#e-dialog-menu').find('.modal-footer #saveMenu').click(function () {
                     timeout: '2000'
                 }).show();
                 $('#e-dialog-menu').modal('hide');
-                datatables.ajax.url('/admin/menus/load').load();
+                //datatables.ajax.url('/admin/menus/load').load();
+                window.location.href = '/admin/menus';
             }
         }
     });
