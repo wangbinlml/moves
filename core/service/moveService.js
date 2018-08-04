@@ -136,12 +136,12 @@ module.exports.findRelationMoves = async (tag_id, area, offset) => {
     }
     return result;
 };
-module.exports.findMostViewsMoves = async (tag_id, offset) => {
+module.exports.findMostViewsMoves = async (tag_id, area, offset) => {
     let result = {};
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select * from tb_move where tag_id = ? and is_del =0 order by views desc limit 0,?", [tag_id,offset]);
+        result.data = await mysql.query("select * from tb_move where tag_id = ? and area = ? and is_del =0 order by views desc limit 0,?", [tag_id,area, offset]);
     } catch (e) {
         console.log(e);
         result.error = 1;
