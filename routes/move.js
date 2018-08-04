@@ -112,9 +112,9 @@ router.get('/detail', async function (req, res, next) {
         move.tag_id = "未知";
     }
     //获取相关视频
-    var relation_list = await moveService.findRelationMoves(tagID, 18);
+    var relation_list = await moveService.findRelationMoves(tagID, move.area, 18);
     //浏览量最多的视频
-    var mostViews = await moveService.findMostViewsMoves(tagID, 18);
+    var mostViews = await moveService.findMostViewsMoves(tagID, move.area, 18);
     res.render('detail', {
         title: move.name || '电影',
         msg: "",
@@ -168,9 +168,9 @@ router.get('/play', async function (req, res, next) {
     var tags = await tagService.findTags();
 
     //获取相关视频
-    var relation_list = await moveService.findRelationMoves(tagID, 18);
+    var relation_list = await moveService.findRelationMoves(tagID, move.area, 18);
     //浏览量最多的视频
-    var mostViews = await moveService.findMostViewsMoves(tagID, 18);
+    var mostViews = await moveService.findMostViewsMoves(tagID, move.area, 18);
 
     res.render(template, {
         title:  move.name || '电影',
