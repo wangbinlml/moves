@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
     res.render('backend/menu_role', {
         user: req.session.user,
         menus: req.session.menus,
-        menu_active: req.session.menu_active['/menu_role'] || {},
+        menu_active: req.session.menu_active['/admin/menu_role'] || {},
         title: '菜单权限管理'
     });
 });

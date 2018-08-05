@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
     res.render('backend/login_log', {
         user: req.session.user,
         menus: req.session.menus,
-        menu_active: req.session.menu_active['/login_log'] || {},
+        menu_active: req.session.menu_active['/admin/login_log'] || {},
         title: '登录日志'
     });
 });

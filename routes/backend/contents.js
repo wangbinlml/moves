@@ -8,17 +8,18 @@ var moment = require("moment");
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
-    res.render('backend/role', {
+    res.
+    render('backend/contents', {
         user: req.session.user,
         menus: req.session.menus,
-        menu_active: req.session.menu_active['/roles'] || {},
-        title: '角色管理',
-        router: '/roles'
+        menu_active: req.session.menu_active['/admin/contents'] || {},
+        title: '内容管理',
+        router: '/admin/contents'
     });
 });
 router.get('/load', async(req, res, next) => {
-    var sqlcount = "select count(*) count from bs_role where is_del=0";
-    var sql = "select * from bs_role where is_del=0";
+    var sqlcount = "select count(*) count from tb_move where is_del=0";
+    var sql = "select * from tb_move where is_del=0";
 
     var start = req.query.start;
     var length = req.query.length;
@@ -34,12 +35,12 @@ router.get('/load', async(req, res, next) => {
 
     var search = req.query.search;
     if (search) {
-        sqlcount = sqlcount + " and role_name like '%" + search.value + "%'";
-        sql = sql + " and role_name like '%" + search.value + "%'";
+        sqlcount = sqlcount + " and name like '%" + search.value + "%'";
+        sql = sql + " and name like '%" + search.value + "%'";
     }
 
     var memuCount = await mysql.query(sqlcount);
-    sql = sql + " ORDER BY role_id DESC limit " + start + "," + length;
+    sql = sql + " ORDER BY id DESC limit " + start + "," + length;
     var result = await mysql.query(sql);
     var backResult = {
         draw: draw,
@@ -48,11 +49,30 @@ router.get('/load', async(req, res, next) => {
         data: []
     };
     for (var i in result) {
+        var tag_id = result[i].tag_id;
+        if(tag_id == 1) {
+            tag_id = "动作片";
+        } else if(tag_id == 2) {
+            tag_id = "科幻片";
+        } else if(tag_id == 3) {
+            tag_id = "剧情片";
+        } else if(tag_id == 4) {
+            tag_id = "喜剧片";
+        } else if(tag_id == 5) {
+            tag_id = "恐怖片";
+        }
+
         backResult.data.push({
-            role_id: result[i].role_id,
-            is: result[i].role_id + "_",
-            role_name: result[i].role_name,
-            description: result[i].description,
+            id: result[i].id,
+            is: result[i].id + "_",
+            name: result[i].name,
+            tag: tag_id,
+            year: result[i].year,
+            area: result[i].area,
+            hot: result[i].hot,
+            flash: result[i].flash,
+            views: result[i].views,
+            source: result[i].source,
             created_at: result[i].created_at ? moment(result[i].created_at).format("YYYY-MM-DD HH:mm:ss") : "",
             modified_at: result[i].modified_at != "0000-00-00 00:00:00" ? moment(result[i].modified_at).format("YYYY-MM-DD HH:mm:ss") : ""
         });

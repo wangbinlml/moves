@@ -11,9 +11,9 @@ router.get('/', (req, res, next) => {
     res.render('backend/menu', {
         user: req.session.user,
         menus: req.session.menus,
-        menu_active: req.session.menu_active['/menus'] || {},
+        menu_active: req.session.menu_active['/admin/menus'] || {},
         title: '菜单管理',
-        router: '/menus'
+        router: '/admin/menus'
     });
 });
 router.get('/load', async (req, res, next) => {

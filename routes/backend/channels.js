@@ -8,12 +8,12 @@ var moment = require("moment");
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
-    res.render('backend/role', {
+    res.render('backend/channels', {
         user: req.session.user,
         menus: req.session.menus,
-        menu_active: req.session.menu_active['/roles'] || {},
+        menu_active: req.session.menu_active['/admin/channels'] || {},
         title: '角色管理',
-        router: '/roles'
+        router: '/admin/channels'
     });
 });
 router.get('/load', async(req, res, next) => {

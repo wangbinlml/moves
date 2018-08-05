@@ -1,0 +1,175 @@
+<% include partials/header %>
+<% include partials/sidebar %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            内容
+            <small>管理</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin"><i class="fa fa-dashboard"></i>首页</a></li>
+            <li class="active">内容</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">查询条件</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-4">
+                                <span>内容名称：</span>
+                                <input type="text" class=".col-xs-4" id="s_name" placeholder="请输入用户名称"/>
+                            </div>
+                            <div class="col-md-3 col-sm-4">
+                                <a class="btn btn-default btn-sm" href="javascript:void(0)" id="content-search"><i
+                                            class="glyphicon glyphicon-search"></i>
+                                    查询</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box" style="margin-bottom:auto">
+                    <div class="box-header with-border">
+                        <b>工具栏： </b>
+                        <caption>
+                            <button type="button" class="btn btn-default" id="content_refresh"><i class="fa fa-refresh icon-white"></i> 刷新
+                            </button>
+                            <button type="button" class="btn btn-success" id="content_add" data-toggle="modal" data-target="#e-dialog-content" data-whatever=""><i class="glyphicon glyphicon-edit icon-white"></i> 新增
+                            </button>
+                            <button type="button" class="btn btn-info" id="content_edit" data-toggle="modal" id="content-edit"><i class="fa fa-edit icon-white"></i> 编辑
+                            </button>
+                            <button type="button" class="btn btn-danger" id="content_batch_remove"><i class="fa fa-remove icon-white"></i> 删除
+                            </button>
+                            <button type="button" class="btn btn-info" id="content_find" onclick="optionContentData(this);"><i class="glyphicon glyphicon-zoom-in icon-white"></i> 详情
+                            </button>
+                        </caption>
+                        <!--<h3 class="box-title">用户列表</h3>-->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="contents" class="table datatable table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th><input value="all" type="checkbox"
+                                           onclick="$('.datatable tbody :checkbox').prop('checked', this.checked);"/>
+                                </th>
+                                <th>标题</th>
+                                <th>类型</th>
+                                <th>年份</th>
+                                <th>地区</th>
+                                <th>置顶</th>
+                                <th>轮播</th>
+                                <th>点击量</th>
+                                <th>来源</th>
+                                <th>创建时间</th>
+                                <th>更新时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<div class="modal fade" id="e-dialog-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">用户修改</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="e-menu-role-form">
+                    <div class="box-body">
+                        <input type="hidden" data-name="e_id" name="e_id" id="e_id"/>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">用户名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="e_name" name="e_name" placeholder="请输入用户名称">
+                            </div>
+                        </div>
+                        <div class="form-group" id="form-password">
+                            <label for="password" class="col-sm-2 control-label">用户密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="e_password" name="e_password" placeholder="请输入密码"><label id="user_password_desc">不修改密码，该项可为空</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">性别</label>
+                            <div class="col-sm-10">
+                                <select name="e_sex" id="e_sex" class="form-control">
+                                    <option value="1">男</option>
+                                    <option value="0">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">生日</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" name="e_birthday" class="form-control" id="e_birthday"
+                                           placeholder="请选择生日" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">电话</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="e_phone" id="e_phone" placeholder="请输入电话">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">邮箱</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="e_mail" name="e_mail" placeholder="请输入邮箱">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveContent">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<% include partials/footer %>
+<script src="/backend/service/content_manage.js"></script>
