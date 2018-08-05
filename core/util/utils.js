@@ -128,6 +128,87 @@ var get2 = function (url, cb) {
     }
 };
 
+/*
+ * 递归遍历
+ * @param data array
+ * @param id int
+ * return array
+ * */
+var recursion = function(data, id) {
+    var list = [];
+    for(var index in data) {
+        var v = data[index];
+        if(v['parent_id'] == id) {
+            v['children'] = recursion(data, v['id']);
+            if(v['children'].length == 0) {
+                //unset(v['son']);
+            }
+            list.push(v);
+        }
+    }
+    return list;
+}
+
+
+/*
+ * 遍历文件夹，获取所有文件夹里面的文件信息
+ * @param path 路径
+ *
+ */
+
+function geFileList(path)
+{
+    var filesList = [];
+    var targetObj = {};
+    readFile(path,filesList,targetObj);
+    return filesList;
+}
+
+//遍历读取文件
+var readFile = function(path,filesList,targetObj)
+{
+    files = fs.readdirSync(path);//需要用到同步读取
+    files.forEach(walk);
+    function walk(file)
+    {
+        states = fs.statSync(path+'/'+file);
+        if(states.isDirectory())
+        {
+            var item ;
+            if(targetObj["children"])
+            {
+                item = {name:file,children:[]};
+                targetObj["children"].push(item);
+            }
+            else
+            {
+                item = {name:file,children:[]};
+                filesList.push(item);
+            }
+
+            readFile(path+'/'+file,filesList,item);
+        }
+        else
+        {
+            //创建一个对象保存信息
+            var obj = new Object();
+            obj.size = states.size;//文件大小，以字节为单位
+            obj.name = file;//文件名
+            obj.path = path+'/'+file; //文件绝对路径
+
+            if(targetObj["children"])
+            {
+                var item = {name:file,value:obj.path}
+                targetObj["children"].push(item);
+            }
+            else
+            {
+                var item = {name:file,value:obj.path};
+                filesList.push(item);
+            }
+        }
+    }
+}
 
 exports.get = get;
 exports.get2 = get2;
@@ -135,3 +216,5 @@ exports.request = request;
 exports.GetRandomNum = GetRandomNum;
 exports.download = download;
 exports.request = request;
+exports.recursion = recursion;
+exports.geFileList = geFileList;

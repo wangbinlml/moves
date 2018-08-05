@@ -3,30 +3,44 @@ const mysql = require('../../core/mysql');
 const log = require('../../core/logger').getLogger("system");
 const router = express.Router();
 const _ = require('lodash');
+const fs = require('fs');
 const common = require('../../core/common');
+const utils = require('../../core/util/utils');
 var moment = require("moment");
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
-    res.render('backend/channels', {
+    res.render('backend/resources', {
         user: req.session.user,
         menus: req.session.menus,
-        menu_active: req.session.menu_active['/admin/channels'] || {},
-        title: '栏目管理',
-        router: '/admin/channels'
+        menu_active: req.session.menu_active['/admin/resources'] || {},
+        title: '资源管理',
+        router: '/admin/resources'
     });
 });
 
 router.get('/load', async(req, res, next) => {
-    var sql = "select * from tb_category where is_del=0";
     var result = {
         error: 0,
         msg: ""
     };
-    var data = await mysql.query(sql);
+    var data = utils.geFileList(__dirname + "/../../public");
     result.data = data;
     res.status(200).json(result);
 });
+
+
+router.get('/saveContent', async(req, res, next) => {
+    var file = req.query.fileName;
+    var result = {
+        error: 0,
+        msg: ""
+    };
+    var data = fs.readFileSync(__dirname + "/../../public" + file,{encoding: "utf-8"});
+    result.data = data;
+    res.status(200).json(result);
+});
+
 
 router.get('/save', async(req, res, next) => {
     var result = {

@@ -1,0 +1,145 @@
+<% include partials/header %>
+<% include partials/sidebar %>
+<link rel="stylesheet" href="/backend/vendor/css/demo/demo.css" type="text/css">
+<link rel="stylesheet" href="/backend/vendor/css/metroStyle/metroStyle.css" type="text/css">
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            资源
+            <small>管理</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin"><i class="fa fa-dashboard"></i>首页</a></li>
+            <li class="active">资源管理</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box" style="margin-bottom:auto">
+                    <div class="box-header">
+                        <h3 class="box-title">资源列表</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="col-xs-2" style="padding-left: 0;">
+                            <div id="resources" class="zTreeDemoBackground left">
+                                <div class="loading"></div>
+                                <ul id="treeResources" class="ztree" style="padding-left: 0;"></ul>
+                                <p>
+                                    <a href="javascript:void(0);" id="user_refresh">[新建文件]</a>
+                                    <a href="javascript:void(0);" id="user_refresh">[新建目录]</a>
+                                    <a href="javascript:void(0);" id="user_refresh">[文件上传]</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xs-10" id="resourcesContent">
+                            <div class="form-group" style="padding-left: 20px;border-left: #bbbbbb 1px solid; position: relative;">
+                                <p>文件内容</p>
+                                <p><textarea class="form-control" id="fileContent" rows="20"></textarea></p>
+                                <p><button type="button" class="btn btn-default" id="user_refresh"><i class="fa fa-refresh icon-white"></i> 保存</button></p>
+                                <div id="mask_div"><center><img src='/backend/images/loading.gif'></center></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<% include partials/footer %>
+<script type="text/javascript" src="/backend/vendor/js/jquery.ztree.all.js"></script>
+<script language="JavaScript">
+    <!--
+    var zTreeOnClick = function (event, treeId, treeNode) {
+        var isParent = treeNode.isParent;
+        var name = treeNode.name;
+
+        if((name.indexOf(".js") == -1 && name.indexOf(".css") == -1) || isParent == true) {//文件夹
+
+        } else {
+            var value = treeNode.value.split("public");
+            $.ajax({
+                type: "get",
+                url: value[1],
+                asyc: false,
+                data: {},
+                beforeSend:function(){
+                    $("#mask_div").show();
+                },
+                error: function (error) {
+                    new Noty({
+                        type: 'error',
+                        layout: 'topCenter',
+                        text: '内部错误，请稍后再试',
+                        timeout: '5000'
+                    }).show();
+                    $("#mask_div").hide();
+                },
+                success: function (result) {
+                    $("#mask_div").hide();
+                    $("#resourcesContent textarea").text(result);
+                }
+            });
+        }
+    }
+
+    var setting = {
+        view: {
+            selectedMulti: false
+        },
+        check: {
+            enable: false
+        },
+        callback: {
+            onClick: zTreeOnClick
+        }
+    };
+
+    $(document).ready(function(){
+        $.ajax({
+            type: "get",
+            url: "/admin/resources/load",
+            asyc: false,
+            data: {},
+            beforeSend:function(){
+                $(".loading").html("<img src='/backend/images/loading.gif'>");
+            },
+            error: function (error) {
+                new Noty({
+                    type: 'error',
+                    layout: 'topCenter',
+                    text: '内部错误，请稍后再试',
+                    timeout: '5000'
+                }).show();
+                $(".loading").html("");
+            },
+            success: function (result) {
+                if (result.error) {
+                    new Noty({
+                        type: 'error',
+                        layout: 'topCenter',
+                        text: result.msg || '获取数据失败',
+                        timeout: '2000'
+                    }).show();
+                } else {
+                    zNodes = result.data;
+                    $.fn.zTree.init($("#treeResources"), setting, zNodes);
+                }
+                $(".loading").html("");
+            }
+        });
+    });
+    //-->
+
+</script>
