@@ -43,6 +43,21 @@
         numberOfPages:5, //设置控件显示的页码数,跟后台计算出来的总页数没多大关系
         //bootstrapMajorVersion:3,//如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
         useBootstrapTooltip:'true',//是否显示tip提示框
+        shouldShowPage:true,
+        itemTexts: function (type, page, current) {
+            switch (type) {
+                case "first":
+                    return "首页";
+                case "prev":
+                    return "上一页";
+                case "next":
+                    return "下一页";
+                case "last":
+                    return "末页";
+                case "page":
+                    return page;
+            }
+        },
         pageUrl:function(type,page, current){
             return '?category_id='+$("#category_id").val()+'&current_page='+page //为每个页码设置url访问请求链接，page为页码数
         }

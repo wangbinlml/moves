@@ -52,7 +52,7 @@ var url = "http://www.84dm.com/type/1/1.html";
                     tag_id: 3,
                     name: title,
                     cover: src,
-                    source: "",
+                    source: "84dm",
                     description: "",
                     creator_id: 1
                 };

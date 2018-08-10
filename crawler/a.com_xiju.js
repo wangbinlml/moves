@@ -50,7 +50,7 @@ var url = "http://www.52lailook.com/play/plist/9";
                 tag_id: 4,
                 name: title,
                 cover: src,
-                source: "",
+                source: "52lailook",
                 description: "",
                 creator_id: 1
             };

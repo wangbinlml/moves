@@ -18,16 +18,16 @@ var moveTagService = require("../core/service/moveTagService");
 var moveUrlService = require("../core/service/moveUrlService");
 var tagService = require("../core/service/tagService");
 var pageService = require("../core/service/pageService");
-var base_url = "http://www.yezitu.cc";
+var base_url = "https://www.lookpian.com";
 var schedule = require("node-schedule");
 
 var crawler = function () {
     (async () => {
-        //var pageObj = await pageService.findAll();
-        var page = 1;//pageObj.data[0]['page'];
-        var url = "http://www.yezitu.cc/list/?1-" + page + ".html";
+        var pageObj = await pageService.findAll();
+        var page = pageObj.data[0]['page'];
+        var url = "https://www.lookpian.com/search.php?page="+page+"&searchtype=5&tid=1";
         logger.info("url: " + url);
-        var html = await utils.get(url);
+        var html = await utils.get2(url);
         var $ = cheerio.load(html, {decodeEntities: false});
         var data = $('.hy-video-list ul li');
         for (var i = 0; i < data.length; i++) {
@@ -36,10 +36,8 @@ var crawler = function () {
             try {
                 var dt = data[i];
                 var href = dt.children[0].attribs.href;
-                var imgs = dt.children[0].attribs.style;
-                var src = imgs.substring(imgs.indexOf("(") + 1, imgs.indexOf(")"));
-                var hd = dt.children[0].children[1].children[0].data;
-                var title = dt.children[1].children[0].children[0].children[0].data;// + (hd ? "-" + hd : "");
+                var src = dt.children[0].attribs['data-original'];
+                var title = dt.children[0].attribs.title;
                 logger.info("=====第" + page + "_" + i + "条======");
                 var movelist = await moveService.findMoveByName(title);
                 var exits = false;
@@ -52,7 +50,7 @@ var crawler = function () {
                     tag_id: 3,
                     name: title,
                     cover: src,
-                    source: "yezitu",
+                    source: "lookpian",
                     description: "",
                     creator_id: 1
                 };
@@ -64,9 +62,9 @@ var crawler = function () {
                 var playList = [];
 
                 var detail_url = base_url + href;
-                var detail_html = await utils.get(detail_url);
+                var detail_html = await utils.get2(detail_url);
                 var $2 = cheerio.load(detail_html, {decodeEntities: false});
-                var detail_li = $2('.hy-video-details .content').find(".score").find("li");
+                var detail_li = $2('.hy-video-details .content').find("ul").find("li");
                 detail_li.each(function (index, item) {
                     var $li2 = $(this);
                     if (index == 0) {
@@ -105,6 +103,7 @@ var crawler = function () {
                 moveObj.year = year;
                 var flag = true;
                 var playlist = $2('.tab-content').find(".playlist");
+                var playa = $2('.tab-content').find("#playlist").find("a").eq(0).attr("title");
                 var playLinks = playlist.find("a");
                 var linkP = [];
                 playLinks.each(function (plindex, pl) {
@@ -117,18 +116,17 @@ var crawler = function () {
                 for (var c = 0; c < linkP.length; c++) {
                     var plObj = linkP[c];
                     var play_url = base_url + plObj.url;
-                    var play_html = await utils.get(play_url);
+                    var play_html = await utils.get2(play_url);
                     var $4 = cheerio.load(play_html, {decodeEntities: false});
-                    var scripts = $4(".hy-player").find("script").html().replace(/var VideoInfoList=/g, "").split("$$$");
-                    for (var a = 0; a < scripts.length; a++) {
-                        var playSAS = scripts[a].split("$$");
-                        var playBSA = playSAS[1].split("$");
-                        playList.push({
-                            play: "在线播放",//播放器
-                            title: playBSA[0],
-                            url: playBSA[1]
-                        });
-                    }
+                    var scripts = unescape($4(".hy-player").find("script").html()).replace(/var VideoInfoList=unescape\(\"/g, "").replace(/\"\)/g,"").replace(/\$\$[\s\S]*?(\$)/g,"$$$");
+                    scripts = scripts.split("$$");
+                    var play = (playa == "m3u8" || playa == "mp4")?"在线播放": playa;
+                    var playBSA = scripts[1].split("$");
+                    playList.push({
+                        play: play,//播放器
+                        title: plObj.title,
+                        url: playBSA[0]
+                    });
                     break;
                 }
                 if (playList.length > 0) {
@@ -184,9 +182,9 @@ var crawler = function () {
     })();
 };
 
-//schedule.scheduleJob('*/2 * * * *', function(){
-    logger.info("====================="+new Date()+"======================");
-    crawler();
+//schedule.scheduleJob('*/1 * * * *', function(){
+logger.info("====================="+new Date()+"======================");
+crawler();
 //});
 /*
 setInterval(function () {

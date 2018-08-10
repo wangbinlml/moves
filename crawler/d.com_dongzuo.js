@@ -18,28 +18,26 @@ var moveTagService = require("../core/service/moveTagService");
 var moveUrlService = require("../core/service/moveUrlService");
 var tagService = require("../core/service/tagService");
 var pageService = require("../core/service/pageService");
-var base_url = "http://www.yezitu.cc";
+var base_url = "http://www.yingshidaquan.cc";
 var schedule = require("node-schedule");
 
 var crawler = function () {
     (async () => {
         //var pageObj = await pageService.findAll();
         var page = 1;//pageObj.data[0]['page'];
-        var url = "http://www.yezitu.cc/list/?1-" + page + ".html";
+        var url = "http://www.yingshidaquan.cc/vod-show-id-1-year--area--order--p-" + page + ".html";
         logger.info("url: " + url);
         var html = await utils.get(url);
         var $ = cheerio.load(html, {decodeEntities: false});
-        var data = $('.hy-video-list ul li');
+        var data = $('.movielist ul li a.p');
         for (var i = 0; i < data.length; i++) {
             var conn = await mysql.getConnection();
             mysql.beginTransaction(conn);
             try {
                 var dt = data[i];
-                var href = dt.children[0].attribs.href;
-                var imgs = dt.children[0].attribs.style;
-                var src = imgs.substring(imgs.indexOf("(") + 1, imgs.indexOf(")"));
-                var hd = dt.children[0].children[1].children[0].data;
-                var title = dt.children[1].children[0].children[0].children[0].data;// + (hd ? "-" + hd : "");
+                var href = dt.attribs.href;
+                var src = dt.children[0].attribs.src;
+                var title = dt.children[0].attribs.alt;
                 logger.info("=====第" + page + "_" + i + "条======");
                 var movelist = await moveService.findMoveByName(title);
                 var exits = false;
@@ -52,7 +50,7 @@ var crawler = function () {
                     tag_id: 3,
                     name: title,
                     cover: src,
-                    source: "yezitu",
+                    source: "",
                     description: "",
                     creator_id: 1
                 };
@@ -66,27 +64,23 @@ var crawler = function () {
                 var detail_url = base_url + href;
                 var detail_html = await utils.get(detail_url);
                 var $2 = cheerio.load(detail_html, {decodeEntities: false});
-                var detail_li = $2('.hy-video-details .content').find(".score").find("li");
+                var detail_li = $2('#main .view .info').find("ul").find("li");
                 detail_li.each(function (index, item) {
                     var $li2 = $(this);
                     if (index == 0) {
-                        //主演
-                        var actorsA = $li2.find('a');
-                        actorsA.each(function (indexA, itemA) {
-                            var $liA = $(this);
-                            actors.push($liA.text());
-                        });
+                        //年代
+                        year = ($li2.text() + "").replace(/上映年代：|状态：全集/g, "").trim();
                     } else if (index == 1) {
-                        //导演
+                        //豆瓣
                     } else if (index == 2) {
-                        //地区
-                        area = ($li2.text() + "").replace(/地区：/g, "");
-                    } else if (index == 3) {
                         //类型
                         type = ($li2.text() + "").replace(/类型：/g, "");
-                    } else if (index == 5) {
-                        //年份
-                        year = ($li2.text() + "").replace(/年份：/g, "");
+
+                    } else if (index == 3) {
+                        //地区
+                        area = ($li2.text() + "").replace(/地区：/g, "");
+                    } else if (index == 4) {
+                        actors = ($li2.text() + "").replace(/主演：/g, "").split(",");
                     }
                 });
                 if (type == "动作片") {
@@ -99,28 +93,44 @@ var crawler = function () {
                     moveObj.tag_id = 4;
                 } else if (type == "恐怖片") {
                     moveObj.tag_id = 5;
+                } else {
+                    moveObj.tag_id = 4;
                 }
-
+                if(area == "大陆"){
+                    area = "中国大陆"
+                } else if(area == "台湾"){
+                    area = "中国台湾"
+                } else if(area == "香港"){
+                    area = "中国香港"
+                }
                 moveObj.area = area;
-                moveObj.year = year;
-                var flag = true;
-                var playlist = $2('.tab-content').find(".playlist");
-                var playLinks = playlist.find("a");
+                moveObj.year = year || 2017;
+                $2('.playendpage').find(".mox").eq(0).remove();
+                var playlist = $2('.playendpage').find(".mox");
+
                 var linkP = [];
-                playLinks.each(function (plindex, pl) {
+                var abcd = href.replace(/html/g,"play").split(".");
+                playlist.each(function (index2, pl) {
                     var $plindex = $(this);
+                    var player = $plindex.find("span").eq(1).text();
+                    var ahref = $plindex.find(".play-list").children("a");
+                    var bhref = ahref.attr("href");
+                    var name = ahref.attr("title");
+                    var chref = abcd[0] +"-"+ index2 + "-1.html";
                     linkP.push({
-                        title: $plindex.attr("title"),
-                        url: $plindex.attr("href")
+                        title: name,
+                        player: player,
+                        url: chref
                     })
                 });
+
                 for (var c = 0; c < linkP.length; c++) {
                     var plObj = linkP[c];
                     var play_url = base_url + plObj.url;
                     var play_html = await utils.get(play_url);
                     var $4 = cheerio.load(play_html, {decodeEntities: false});
-                    var scripts = $4(".hy-player").find("script").html().replace(/var VideoInfoList=/g, "").split("$$$");
-                    for (var a = 0; a < scripts.length; a++) {
+                    var playListB = $4("#endplay").find("iframe");
+                    for (var a = 0; a < playListB.length; a++) {
                         var playSAS = scripts[a].split("$$");
                         var playBSA = playSAS[1].split("$");
                         playList.push({
@@ -129,7 +139,6 @@ var crawler = function () {
                             url: playBSA[1]
                         });
                     }
-                    break;
                 }
                 if (playList.length > 0) {
                     $2('.tab-content').find(".hy-play-list").find(".plot").find("script").remove();
