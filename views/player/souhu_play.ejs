@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 order-md-1">
+                <section class="panel">
+                    <div class="panel-body table-responsive">
+                        <div id="souhu_player">
+                            <embed wmode="Transparent" allowfullscreen="true" allowscriptaccess="always" quality="high"
+                                   src="http://share.vrs.sohu.com/<%= currentMoveUrls['url'] %>/v.swf&topBar=1&autoplay=false&plid=8399917&pub_catecode=0&from=page"
+                                   type="application/x-shockwave-flash"/>
+                            </embed>
+
+                        </div>
+                        <% include ../partials/move_detail %>
+                        <% include ../partials/relation_list %>
+                    </div>
+                </section>
+            </div>
+            <% include ../partials/most_views_list %>
+            <% include ../partials/tags_list %>
+            <% include ../partials/area_list %>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>

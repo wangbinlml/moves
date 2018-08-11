@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 order-md-1">
+                <section class="panel">
+                    <div class="panel-body table-responsive">
+                        <div id="letv_player">
+                            <object width='100%' height='400'>
+                                <param name='allowFullScreen' value='true'>
+                                <param name='movie'
+                                       value='http://img1.c0.letv.com/ptv/player/swfPlayer.swf?autoPlay=0&id=<%= currentMoveUrls['url'] %>'/>
+                                <embed src='http://img1.c0.letv.com/ptv/player/swfPlayer.swf?autoPlay=0&id=<%= currentMoveUrls['url'] %>'
+                                       width='100%' height='400' allowFullScreen='true'
+                                       type='application/x-shockwave-flash'/>
+                            </object>
+                        </div>
+                        <% include ../partials/move_detail %>
+                        <% include ../partials/relation_list %>
+                    </div>
+                </section>
+            </div>
+            <% include ../partials/most_views_list %>
+            <% include ../partials/tags_list %>
+            <% include ../partials/area_list %>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>

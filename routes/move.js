@@ -16,19 +16,19 @@ router.get('/', async function (req, res, next) {
     var title = "电影";
     if (category_id != "") {
         var category = await categoryService.findCategory(category_id);
-        if(category && category.data.length > 0){
+        if (category && category.data.length > 0) {
             title = category.data[0].name;
         }
         var data = await moveService.findAllMoves(category_id, current_page, 30);
         var paginationObj = data.data;
         var paginationData = paginationObj.data;
         var pData = [];
-        for (var i = 0; i<paginationData.length; i++) {
+        for (var i = 0; i < paginationData.length; i++) {
             var paginObj = paginationData[i];
             paginObj.name = paginObj.name;
             var description = StringUtils.htmlDecodeByRegExp(paginObj['description']);
-            description = description.replace(/<\/?.+?>/g,"").replace(/<\/?.+?>/g,"");
-            description = description.length > 30 ? description.substr(30)+"..." : description;
+            description = description.replace(/<\/?.+?>/g, "").replace(/<\/?.+?>/g, "");
+            description = description.length > 30 ? description.substr(30) + "..." : description;
             paginObj.description = description;
             pData.push(paginObj);
         }
@@ -56,25 +56,25 @@ router.get('/list', async function (req, res, next) {
     var title = "电影";
     if (category_id != "") {
         var category = await categoryService.findCategory(category_id);
-        if(category && category.data.length > 0){
+        if (category && category.data.length > 0) {
             title = category.data[0].name;
         }
         var data = await moveService.findAllMoves(category_id, current_page, 30);
         var paginationObj = data.data;
         var paginationData = paginationObj.data;
         var pData = [];
-        for (var i = 0; i<paginationData.length; i++) {
+        for (var i = 0; i < paginationData.length; i++) {
             var paginObj = paginationData[i];
             paginObj.name = paginObj.name;
             var description = StringUtils.htmlDecodeByRegExp(paginObj['description']);
-            description = description.replace(/<\/?.+?>/g,"").replace(/<\/?.+?>/g,"");
-            description = description.length > 30 ? description.substr(30)+"..." : description;
+            description = description.replace(/<\/?.+?>/g, "").replace(/<\/?.+?>/g, "");
+            description = description.length > 30 ? description.substr(30) + "..." : description;
             paginObj.description = description;
 
-	    var tag_id = paginObj.tag_id;
-	    var tag_name = "未知";
+            var tag_id = paginObj.tag_id;
+            var tag_name = "未知";
             var tags = await tagService.findTagById(tag_id);
-            if(tags && tags['data'].length>0) {
+            if (tags && tags['data'].length > 0) {
                 tag_name = tags['data'][0]['tag_name'];
             }
             paginObj.tag_name = tag_name;
@@ -99,11 +99,11 @@ router.get('/detail', async function (req, res, next) {
     var areas = await moveService.findAllArea();
     var tags = await tagService.findTags();
     var tagID = "";
-    if(!_.isEmpty(move)){
+    if (!_.isEmpty(move)) {
         var tag_id = move.tag_id;
         tagID = tag_id;
         var current_tags = await tagService.findTagById(tag_id);
-        if(current_tags && current_tags['data'].length>0) {
+        if (current_tags && current_tags['data'].length > 0) {
             move.tag_id = current_tags['data'][0]['tag_name'];
         } else {
             move.tag_id = "未知";
@@ -144,11 +144,11 @@ router.get('/play', async function (req, res, next) {
     var downloads = await moveDownloadService.findDownloadUrl(move_id);
     var currentMoveUrls = await moveUrlService.findMoveUrlByMoveIdAndPlayer(id, move_id, player);
     var tagID = "";
-    if(!_.isEmpty(move)){
+    if (!_.isEmpty(move)) {
         var tag_id = move.tag_id;
         tagID = tag_id;
         var tags = await tagService.findTagById(tag_id);
-        if(tags && tags['data'].length>0) {
+        if (tags && tags['data'].length > 0) {
             move.tag_id = tags['data'][0]['tag_name'];
         } else {
             move.tag_id = "未知";
@@ -156,14 +156,30 @@ router.get('/play', async function (req, res, next) {
     } else {
         move.tag_id = "未知";
     }
-    var template = "online_play";
-    if (player == "西瓜影音") {
-        template = "xigua_play";
+    currentMoveUrls = currentMoveUrls.data[0];
+    var template = "player/online_play";
+    if (player.indexOf("西瓜影音") >= 0 || currentMoveUrls.url.indexOf(".rmvb") > 0) {
+        template = "player/xigua_play";
     } else if (player == "iframe") {
-        template = "iframe";
-    } else if (player == "优酷" || player == "土豆") {
-        template = "youku_play";
+        template = "player/iframe";
+    } else if (player.indexOf("优酷") >= 0) {
+        template = "player/youku_play";
+    } else if (player.indexOf("土豆") >= 0) {
+        template = "player/tudou_play";
+    } else if (player.indexOf("乐视") >= 0) {
+        template = "player/letv_play";
+    } else if (player.indexOf("酷6") >= 0) {
+        template = "player/ku6_play";
+    } else if (player.indexOf("腾讯") >= 0) {
+        template = "player/qq_play";
+    } else if (player.indexOf("搜狐") >= 0) {
+        template = "player/souhu_play";
+    } else if (player.indexOf("爱奇艺") >= 0) {
+        template = "player/souhu_play";
+    } else if (player.indexOf("Bilibili") >= 0) {
+        template = "player/bilibili_play";
     }
+
     var areas = await moveService.findAllArea();
     var tags = await tagService.findTags();
 
@@ -173,12 +189,12 @@ router.get('/play', async function (req, res, next) {
     var mostViews = await moveService.findMostViewsMoves(tagID, move.area, 18);
 
     res.render(template, {
-        title:  move.name || '电影',
+        title: move.name || '电影',
         msg: "",
         move: move,
         relation_list: relation_list || [],
         mostViews: mostViews || [],
-        currentMoveUrls: currentMoveUrls.data[0],
+        currentMoveUrls: currentMoveUrls,
         moveUrls: moveUrls.data,
         downloads: downloads.data,
         actors: actors.data,
@@ -197,12 +213,12 @@ router.get('/search', async function (req, res, next) {
         var paginationObj = data.data;
         var paginationData = paginationObj.data;
         var pData = [];
-        for (var i = 0; i<paginationData.length; i++) {
+        for (var i = 0; i < paginationData.length; i++) {
             var paginObj = paginationData[i];
-            paginObj.name = paginObj.name.replace(keyword,"<font color='red'>"+keyword+"</font>");
+            paginObj.name = paginObj.name.replace(keyword, "<font color='red'>" + keyword + "</font>");
             var description = StringUtils.htmlDecodeByRegExp(paginObj['description']);
-            description = description.replace(/<\/?.+?>/g,"").replace(/<\/?.+?>/g,"");
-            description = description.length > 30 ? description.substr(30)+"..." : description;
+            description = description.replace(/<\/?.+?>/g, "").replace(/<\/?.+?>/g, "");
+            description = description.length > 30 ? description.substr(30) + "..." : description;
             paginObj.description = description;
             pData.push(paginObj);
         }
@@ -232,11 +248,11 @@ router.get('/area', async function (req, res, next) {
         var paginationObj = data.data;
         var paginationData = paginationObj.data;
         var pData = [];
-        for (var i = 0; i<paginationData.length; i++) {
+        for (var i = 0; i < paginationData.length; i++) {
             var paginObj = paginationData[i];
             paginObj.name = paginObj.name;
             var description = StringUtils.htmlDecodeByRegExp(paginObj['description']);
-            description = description.length > 30 ? description.substr(30)+"..." : description;
+            description = description.length > 30 ? description.substr(30) + "..." : description;
             paginObj.description = description;
             pData.push(paginObj);
         }
@@ -267,11 +283,11 @@ router.get('/tags', async function (req, res, next) {
         var paginationObj = data.data;
         var paginationData = paginationObj.data;
         var pData = [];
-        for (var i = 0; i<paginationData.length; i++) {
+        for (var i = 0; i < paginationData.length; i++) {
             var paginObj = paginationData[i];
             paginObj.name = paginObj.name;
             var description = StringUtils.htmlDecodeByRegExp(paginObj['description']);
-            description = description.length > 30 ? description.substr(30)+"..." : description;
+            description = description.length > 30 ? description.substr(30) + "..." : description;
             paginObj.description = description;
             pData.push(paginObj);
         }
@@ -294,7 +310,6 @@ router.get('/tags', async function (req, res, next) {
     });
 });
 router.get('/player_show', async function (req, res, next) {
-    res.render("player_show", {
-    });
+    res.render("player_show", {});
 });
 module.exports = router;

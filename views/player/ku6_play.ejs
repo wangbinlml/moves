@@ -1,0 +1,34 @@
+<% include ../partials/header %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 order-md-1">
+                <section class="panel">
+                    <div class="panel-body table-responsive">
+                        <div id="ku6_player">
+                            <object id="video_player" type="application/x-shockwave-flash" data="http://player.ku6.com/refer/<%= currentMoveUrls['url'] %>/v.swf" height="400" width="100%">
+                                <!--[if lt IE 9.0]>
+                                <param name="movie" value="http://player.ku6.com/refer/live.swf">
+                                <![endif]-->
+                                <param name="quality" value="high">
+                                <param name="allowScriptAccess" value="always">
+                                <param name="allowFullScreen" value="true">
+                                <param name="wMode" value="transparent">
+                                <param name="swLiveConnect" value="true">
+                                <param name="flashvars" value="p=910">
+                            </object>
+                        </div>
+                        <% include ../partials/move_detail %>
+                        <% include ../partials/relation_list %>
+                    </div>
+                </section>
+            </div>
+            <% include ../partials/most_views_list %>
+            <% include ../partials/tags_list %>
+            <% include ../partials/area_list %>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>
