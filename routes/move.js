@@ -181,7 +181,7 @@ router.get('/play', async function (req, res, next) {
     } else if (player.indexOf("搜狐") >= 0) {
         template = "player/souhu_play";
     } else if (player.indexOf("爱奇艺") >= 0 || player.indexOf("qiyi") >= 0 || player.indexOf("iqiyi") >= 0) {
-        template = "player/souhu_play";
+        template = "player/iqiyi_play";
     } else if (player.indexOf("Bilibili") >= 0) {
         template = "player/bilibili_play";
     } else if (player.indexOf("mp4") >= 0) {
