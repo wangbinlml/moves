@@ -23,8 +23,8 @@ var schedule = require("node-schedule");
 
 var crawler = function () {
     (async () => {
-        var pageObj = await pageService.findAll();
-        var page = pageObj.data[0]['page'];
+        //var pageObj = await pageService.findAll();
+        var page = 1;//pageObj.data[0]['page'];
         var url = "https://www.lookpian.com/search.php?page="+page+"&searchtype=5&tid=1";
         logger.info("url: " + url);
         var html = await utils.get2(url);
@@ -120,13 +120,22 @@ var crawler = function () {
                     var $4 = cheerio.load(play_html, {decodeEntities: false});
                     var scripts = unescape($4(".hy-player").find("script").html()).replace(/var VideoInfoList=unescape\(\"/g, "").replace(/\"\)/g,"").replace(/\$\$[\s\S]*?(\$)/g,"$$$");
                     scripts = scripts.split("$$");
-                    var play = (playa == "m3u8" || playa == "mp4")?"在线播放": playa;
                     var playBSA = scripts[1].split("$");
-                    playList.push({
-                        play: play,//播放器
-                        title: plObj.title,
-                        url: playBSA[0]
-                    });
+                    var urlPy = playBSA[0];
+                    var play = "";
+                    if(urlPy.indexOf("m3u8")>0) {
+                        play = "在线播放";
+                    } else if(playa.indexOf("qq")>=0 || playa.indexOf("腾讯")>=0) {
+                        play = "腾讯视频";
+                    }
+                    logger.info("=====play=" + play + "===="+moveObj.name);
+                    if(play!='') {
+                        playList.push({
+                            play: play,//播放器
+                            title: plObj.title,
+                            url: urlPy
+                        });
+                    }
                     break;
                 }
                 if (playList.length > 0) {
@@ -159,7 +168,7 @@ var crawler = function () {
 
                     for (var r = 0; r < playList.length; r++) {
                         var playObj = playList[r];
-                        var moveUrlExists = await moveUrlService.findMoveByName(move_id, playObj.title, "在线播放");
+                        var moveUrlExists = await moveUrlService.findMoveByName(move_id, playObj.title, playObj.play);
                         if (moveUrlExists && moveUrlExists.data.length > 0) {
                             logger.info("===" + title + "__" + playObj.title + "鏈接已经存在里");
                         } else {
@@ -177,7 +186,7 @@ var crawler = function () {
                 logger.error(e);
             }
         }
-        //await pageService.update();
+        await pageService.update();
         process.exit(0);
     })();
 };
