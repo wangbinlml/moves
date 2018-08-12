@@ -176,7 +176,7 @@ router.get('/play', async function (req, res, next) {
         template = "player/letv_play";
     } else if (player.indexOf("酷6") >= 0) {
         template = "player/ku6_play";
-    } else if (player.indexOf("腾讯") >= 0) {
+    } else if (player.indexOf("腾讯") >= 0 || player.indexOf("qq") >= 0) {
         template = "player/qq_play";
     } else if (player.indexOf("搜狐") >= 0) {
         template = "player/souhu_play";
