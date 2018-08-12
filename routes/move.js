@@ -188,6 +188,8 @@ router.get('/play', async function (req, res, next) {
         template = "player/mp4_play";
     } else if (player.indexOf("芒果") >= 0 || player.indexOf("mgtv") >= 0) {
         template = "player/mangguo_play";
+    } else if (player.indexOf("AcFun视频") >= 0 || player.indexOf("AcFun") >= 0) {
+        template = "player/acfun_play";
     }
 
     var areas = await moveService.findAllArea();

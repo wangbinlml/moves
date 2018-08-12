@@ -1,0 +1,35 @@
+<% include ../partials/header %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 order-md-1">
+                <section class="panel">
+                    <div class="panel-body table-responsive">
+                        <div id="iqiyi_player">
+                            <object wmode="window" allowfullscreeninteractive="true" allowfullscreen="true"
+                                    allowscriptaccess="always" width="100%" height="380" id="ACFlashPlayer"
+                                    type="application/x-shockwave-flash"
+                                    data="http://cdn.aixifan.com/flash/player-view-homura.swf"
+                                    style="visibility: visible;">
+                                <param name="wmode" value="Opaque">
+                                <param name="allowFullscreenInteractive" value="true">
+                                <param name="allowfullscreen" value="true">
+                                <param name="allowscriptaccess" value="always">
+                                <param name="flashvars"
+                                       value="wmode=window&amp;allowFullscreenInteractive=true&amp;allowfullscreen=true&amp;allowscriptaccess=always&amp;hint=小贴士：打开右侧弹幕列表后，可以在列表下方开启合并重复弹幕、连播模式等功能。&amp;type=acfun&amp;vid=<%= currentMoveUrls['url'] %>&amp;videoId=<%= currentMoveUrls['url'] %>&amp;autoplay=0">
+                            </object>
+                        </div>
+                        <% include ../partials/move_detail %>
+                        <% include ../partials/relation_list %>
+                    </div>
+                </section>
+            </div>
+            <% include ../partials/most_views_list %>
+            <% include ../partials/tags_list %>
+            <% include ../partials/area_list %>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>
