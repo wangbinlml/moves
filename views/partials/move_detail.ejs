@@ -30,8 +30,14 @@
                         <li>
                             <p>
                             地址<%=index+1%>:<% if(item['player'] == "iframe") {  %> 在线播放 <% } else { %> <%= item['player'] %> <% } %></p>
-                            <p><a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
+                            <p>
+                                <% if(item['player'].indexOf("腾讯")>=0 && item['url'].indexOf("http") == 0) { %>
+                                    <a href="<%= item['url'] %>" target="_blank"><%= move['name'] %></a>
+                                <% } else { %>
+
+                                <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
                                     - <%= item['name'] %></a></p>
+                            <%}%>
                         </li>
                         <% }) %>
                     </ul>

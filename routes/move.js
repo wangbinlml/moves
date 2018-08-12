@@ -89,46 +89,52 @@ router.get('/list', async function (req, res, next) {
 router.get('/detail', async function (req, res, next) {
     var move_id = req.query.move_id;
     var moves = await moveService.findOne(move_id);
-    var move = moves.data[0] || {};
-    if (moves.data[0]['name']) {
-        move.description = StringUtils.htmlDecodeByRegExp(moves.data[0]['description']);
-    }
-    var actors = await actorService.findActorByMoveId(move_id);
-    var moveUrls = await moveUrlService.findMoveUrl(move_id);
-    var downloads = await moveDownloadService.findDownloadUrl(move_id);
-    var areas = await moveService.findAllArea();
-    var tags = await tagService.findTags();
-    var tagID = "";
-    if (!_.isEmpty(move)) {
-        var tag_id = move.tag_id;
-        tagID = tag_id;
-        var current_tags = await tagService.findTagById(tag_id);
-        if (current_tags && current_tags['data'].length > 0) {
-            move.tag_id = current_tags['data'][0]['tag_name'];
+    var move = moves.data[0];
+    if(move) {
+        if (moves.data[0]['name']) {
+            move.description = StringUtils.htmlDecodeByRegExp(moves.data[0]['description']);
+        }
+        var actors = await actorService.findActorByMoveId(move_id);
+        var moveUrls = await moveUrlService.findMoveUrl(move_id);
+        var downloads = await moveDownloadService.findDownloadUrl(move_id);
+        var areas = await moveService.findAllArea();
+        var tags = await tagService.findTags();
+        var tagID = "";
+        if (!_.isEmpty(move)) {
+            var tag_id = move.tag_id;
+            tagID = tag_id;
+            var current_tags = await tagService.findTagById(tag_id);
+            if (current_tags && current_tags['data'].length > 0) {
+                move.tag_id = current_tags['data'][0]['tag_name'];
+            } else {
+                move.tag_id = "未知";
+            }
         } else {
             move.tag_id = "未知";
         }
+        //获取相关视频
+        var relation_list = await moveService.findRelationMoves(tagID, move.area, 18);
+        //浏览量最多的视频
+        var mostViews = await moveService.findMostViewsMoves(tagID, move.area, 18);
+        res.render('detail', {
+            title: move.name || '电影',
+            msg: "",
+            move: move,
+            relation_list: relation_list || [],
+            mostViews: mostViews || [],
+            moveUrls: moveUrls.data,
+            downloads: downloads.data,
+            actors: actors.data,
+            user: req.session.user,
+            areas: areas,
+            tags: tags,
+            active: "/"
+        });
     } else {
-        move.tag_id = "未知";
+        let err = new Error('Not Found');
+        err.status = 404;
+        res.render('404');
     }
-    //获取相关视频
-    var relation_list = await moveService.findRelationMoves(tagID, move.area, 18);
-    //浏览量最多的视频
-    var mostViews = await moveService.findMostViewsMoves(tagID, move.area, 18);
-    res.render('detail', {
-        title: move.name || '电影',
-        msg: "",
-        move: move,
-        relation_list: relation_list || [],
-        mostViews: mostViews || [],
-        moveUrls: moveUrls.data,
-        downloads: downloads.data,
-        actors: actors.data,
-        user: req.session.user,
-        areas: areas,
-        tags: tags,
-        active: "/"
-    });
 });
 router.get('/play', async function (req, res, next) {
     var move_id = req.query.move_id;
