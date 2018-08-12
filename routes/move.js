@@ -162,7 +162,7 @@ router.get('/play', async function (req, res, next) {
         template = "player/xigua_play";
     } else if (player == "iframe") {
         template = "player/iframe";
-    } else if (player.indexOf("优酷") >= 0) {
+    } else if (player.indexOf("优酷") >= 0 || player.indexOf("youku") >= 0) {
         template = "player/youku_play";
     } else if (player.indexOf("土豆") >= 0) {
         template = "player/tudou_play";
@@ -178,6 +178,8 @@ router.get('/play', async function (req, res, next) {
         template = "player/souhu_play";
     } else if (player.indexOf("Bilibili") >= 0) {
         template = "player/bilibili_play";
+    } else if (player.indexOf("mp4") >= 0) {
+        template = "player/mp4_play";
     }
 
     var areas = await moveService.findAllArea();

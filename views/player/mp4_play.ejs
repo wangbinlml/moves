@@ -1,0 +1,26 @@
+<% include ../partials/header %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 order-md-1">
+                <section class="panel">
+                    <div class="panel-body table-responsive">
+                        <div id="mp4_player">
+                            <video controls="" autoplay="" name="media">
+                                <source src="<%= currentMoveUrls['url'] %>?playlist=%5B%22hd%22%2C%22sc%22%5D" type="video/mp4">
+                            </video>
+                        </div>
+                        <% include ../partials/move_detail %>
+                        <% include ../partials/relation_list %>
+                    </div>
+                </section>
+            </div>
+            <% include ../partials/most_views_list %>
+            <% include ../partials/tags_list %>
+            <% include ../partials/area_list %>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>
