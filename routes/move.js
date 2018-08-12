@@ -186,6 +186,8 @@ router.get('/play', async function (req, res, next) {
         template = "player/bilibili_play";
     } else if (player.indexOf("mp4") >= 0) {
         template = "player/mp4_play";
+    } else if (player.indexOf("芒果") >= 0 || player.indexOf("mgtv") >= 0) {
+        template = "player/mangguo_play";
     }
 
     var areas = await moveService.findAllArea();

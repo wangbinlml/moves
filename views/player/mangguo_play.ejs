@@ -8,8 +8,9 @@
                 <section class="panel">
                     <div class="panel-body table-responsive">
                         <div id="youku_player">
-                            <embed src="http://player.youku.com/player.php/sid/<%= currentMoveUrls['url'] %>/v.swf" allowFullScreen="true"
-                                   quality="high" width="100%" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+                            <embed src="//player.mgtv.com/mgtv_v6_out/main.swf?video_id=<%= currentMoveUrls['url'] %>"
+                                   allowFullScreen="true" quality="high" width="100%" height="400" align="middle"
+                                   allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
                         </div>
                         <% include ../partials/move_detail %>
                         <% include ../partials/relation_list %>
