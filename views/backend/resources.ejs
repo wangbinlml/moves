@@ -41,7 +41,8 @@
                             <div class="form-group" style="padding-left: 20px;border-left: #bbbbbb 1px solid; position: relative;">
                                 <p>文件内容</p>
                                 <p><textarea class="form-control" id="fileContent" rows="20"></textarea></p>
-                                <p><button type="button" class="btn btn-default" id="user_refresh"><i class="fa fa-refresh icon-white"></i> 保存</button></p>
+                                <input type="hidden" id="filePath" />
+                                <p><button type="button" class="btn btn-default" id="saveResources"><i class="fa fa-refresh icon-white"></i> 保存</button></p>
                                 <div id="mask_div"><center><img src='/backend/images/loading.gif'></center></div>
                             </div>
                         </div>
@@ -61,6 +62,44 @@
 <script type="text/javascript" src="/backend/vendor/js/jquery.ztree.all.js"></script>
 <script language="JavaScript">
     <!--
+    $("#saveResources").click(function () {
+        var fileContent = $("#fileContent").text();
+        $.ajax({
+            type: "post",
+            url: "/admin/resources/saveContent",
+            data: {
+                fileContent: fileContent
+            },
+            asyc: false,
+            error: function (error) {
+                new Noty({
+                    type: 'error',
+                    layout: 'topCenter',
+                    text: '内部错误，请稍后再试',
+                    timeout: '5000'
+                }).show();
+            },
+            success: function (result) {
+                if (result.error) {
+                    new Noty({
+                        type: 'error',
+                        layout: 'topCenter',
+                        text: result.msg || '设置角色失败',
+                        timeout: '5000'
+                    }).show();
+                } else {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topCenter',
+                        text: '设置角色成功',
+                        timeout: '2000'
+                    }).show();
+                    $('#dialog_user_role').modal('hide');
+                    window.location.href='/admin/user_role';
+                }
+            }
+        });
+    });
     var zTreeOnClick = function (event, treeId, treeNode) {
         var isParent = treeNode.isParent;
         var name = treeNode.name;
@@ -69,6 +108,7 @@
 
         } else {
             var value = treeNode.value.split("public");
+            $("#filePath").val(value);
             $.ajax({
                 type: "get",
                 url: value[1],

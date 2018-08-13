@@ -182,7 +182,7 @@ router.get('/play', async function (req, res, next) {
         template = "player/souhu_play";
     } else if (player.indexOf("爱奇艺") >= 0 || player.indexOf("qiyi") >= 0 || player.indexOf("iqiyi") >= 0) {
         template = "player/iqiyi_play";
-    } else if (player.indexOf("Bilibili") >= 0) {
+    } else if (player.toLocaleString().indexOf("bilibili") >= 0) {
         template = "player/bilibili_play";
     } else if (player.indexOf("mp4") >= 0) {
         template = "player/mp4_play";
