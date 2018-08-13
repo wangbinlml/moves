@@ -35,9 +35,10 @@
                                     <a href="<%= item['url'] %>" target="_blank"><%= move['name'] %></a>
                                 <% } else if(item['url'].indexOf("vd3.bdstatic.com") >= 0) {%>
                                     <a href="<%= item['url'] %>" target="_blank"><%= move['name'] %></a>
-                                } else { %>
+                                 <%} else { %>
                                 <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
-                                    - <%= item['name'] %></a></p>
+                                    - <%= item['name'] %></a>
+                                    </p>
                             <%}%>
                         </li>
                         <% }) %>
