@@ -183,7 +183,7 @@ var crawler = function () {
                                         for (var pi = 0; pi < list.length; pi++) {
                                             var pli = list[pi].split("$");
                                             var ptitle = pi + 1;
-                                            if((ptitle + "").indexOf("集")>0){
+                                            if((ptitle + "").indexOf("集")==-1){
                                                 ptitle = ptitle + "集";
                                             }
                                             var purl = pli[0];
@@ -283,7 +283,7 @@ var crawler = function () {
             }
         }
         await pageService.update();
-        process.exit(0);
+        //process.exit(0);
     })();
 };
 schedule.scheduleJob('*/3 * * * *', function(){
