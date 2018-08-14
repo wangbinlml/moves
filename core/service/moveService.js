@@ -192,6 +192,10 @@ module.exports.insert = async (conn, value) => {
     return await mysql.query2(conn, "insert into tb_move (category_id,tag_id,name,year,area,cover,source,description,creator_id)" +
         "value (?,?,?,?,?,?,?,?,?)", value);
 };
+module.exports.insert2 = async (conn, value) => {
+    return await mysql.query2(conn, "insert into tb_move (category_id,tag_id,name,year,area,sets,cover,source,description,creator_id)" +
+        "value (?,?,?,?,?,?,?,?,?,?)", value);
+};
 module.exports.update = async (value) => {
     var sql = "update tb_move set ";
     if (value.category_id) {
