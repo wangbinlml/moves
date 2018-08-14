@@ -17,11 +17,12 @@ module.exports.findAll = async (currrent_page, num) => {
     }
     return result;
 };
+
 module.exports.findMoves = async (tag_id, currrent_page, num) => {
     let result = {};
     try {
         const data = await Pagination.getData(
-            ["select count(*) count from tb_move where  tag_id = " + tag_id + " and is_del =0",
+            ["select count(*) count from tb_move where tag_id = " + tag_id + " and is_del =0",
                 "select * from tb_move where tag_id = " + tag_id + " and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
@@ -30,6 +31,20 @@ module.exports.findMoves = async (tag_id, currrent_page, num) => {
         console.log(e);
         result.error = 1;
         result.msg = "获取列表失败";
+    }
+    return result;
+};
+module.exports.findNewsMoves = async (category_id, num) => {
+
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move where category_id=? and is_del =0 order by created_at desc limit ?", [category_id, num]);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取失败";
     }
     return result;
 };
@@ -175,16 +190,17 @@ module.exports.findMoveToday = async (start_time, end_time, count) => {
     }
     return result;
 };
-module.exports.findMoveTops = async (count) => {
+module.exports.findMoveTops = async (count,category_id) => {
+    category_id = category_id || "1";
     let result = {};
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select * from tb_move where top=1 and is_del =0 order by created_at desc limit 0,?", count);
+        result.data = await mysql.query("select * from tb_move where category_id=? and top=1 and is_del =0 order by created_at desc limit 0,?", [category_id,count]);
     } catch (e) {
         console.log(e);
         result.error = 1;
-        result.msg = "获取电影失败";
+        result.msg = "获取失败";
     }
     return result;
 };

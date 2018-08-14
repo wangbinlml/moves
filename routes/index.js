@@ -11,6 +11,8 @@ router.get('/', async function (req, res, next) {
     var dongzuo = await moveService.findMoves(1, current_page, 18);
     var kehuan = await moveService.findMoves(2, current_page, 18);
     var juqing = await moveService.findMoves(3, current_page, 18);
+    var newSets = await moveService.findNewsMoves(2, 12);
+    var setsTop = await moveService.findMoveTops(12, 2);
     var areas = await moveService.findAllArea();
     var tags = await tagService.findTags();
     var tops = await moveService.findMoveTops(12);
@@ -22,6 +24,8 @@ router.get('/', async function (req, res, next) {
         areas: areas,
         tags: tags,
         tops: tops,
+        setsTop: setsTop,
+        newSets: newSets,
         today_list: today_list,
         moves: moves.data.data,
         dongzuo: dongzuo.data.data,
