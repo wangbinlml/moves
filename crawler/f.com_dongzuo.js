@@ -13,17 +13,17 @@ var moveService = require("../core/service/moveService");
 var moveTagService = require("../core/service/moveTagService");
 var moveUrlService = require("../core/service/moveUrlService");
 var tagService = require("../core/service/tagService");
-
+var pageService = require("../core/service/pageService");
+var schedule = require("node-schedule");
 var logger = require('../core/logger').getLogger("system");
-
 var base_url = "http://www.52lailook.com";
-//动作
 var url = "http://www.52lailook.com/play/plist/15";
-(async () => {
-    //for (var ab = 1; ab <10; ab++) {
-    for (var ab = 1; ab > 0; ab--) {
+var crawler = function () {
+    (async () => {
+        var pageObj = await pageService.findAll();
+        var ab = pageObj.data[0]['page'];
         //列表
-        if(ab ==1){
+        if (ab == 1) {
             url = url + ".html";
         } else {
             url = url + "_" + ab + ".html";
@@ -33,7 +33,7 @@ var url = "http://www.52lailook.com/play/plist/15";
         var data = $('.mov_list li div.pic a');
         for (var i = 0; i < data.length; i++) {
             var dt = data[i];
-            console.log("第"+ab+"页=====第" + i + "条======");
+            console.log("第" + ab + "页=====第" + i + "条======");
             var a = dt.attribs.href;
             var src = dt.children[0].attribs.src;
             var hd = $('.mov_list li').eq(i).find("font").html();
@@ -120,19 +120,19 @@ var url = "http://www.52lailook.com/play/plist/15";
                 moveObj.area = area;
                 moveObj.sets = sets;
 
-                if (type != "" && type.indexOf("国产")>=0) {
+                if (type != "" && type.indexOf("国产") >= 0) {
                     moveObj.tag_id = 7;
-                } else if (type != "" && type.indexOf("欧美")>=0) {
+                } else if (type != "" && type.indexOf("欧美") >= 0) {
                     moveObj.tag_id = 6;
-                } else if (type != "" && type.indexOf("港剧")>=0) {
+                } else if (type != "" && type.indexOf("港剧") >= 0) {
                     moveObj.tag_id = 8;
-                } else if (type != "" && type.indexOf("韩剧")>=0) {
+                } else if (type != "" && type.indexOf("韩剧") >= 0) {
                     moveObj.tag_id = 9;
-                } else if (type != "" && type.indexOf("日剧")>=0) {
+                } else if (type != "" && type.indexOf("日剧") >= 0) {
                     moveObj.tag_id = 10;
-                } else if (type != "" && type.indexOf("台湾")>=0) {
+                } else if (type != "" && type.indexOf("台湾") >= 0) {
                     moveObj.tag_id = 11;
-                } else if (type != "" && type.indexOf("泰剧")>=0) {
+                } else if (type != "" && type.indexOf("泰剧") >= 0) {
                     moveObj.tag_id = 12;
                 }
 
@@ -168,44 +168,48 @@ var url = "http://www.52lailook.com/play/plist/15";
                         var titlePlay = titleP[j];
                         var linkPlay = linkP[j];
                         //for (var uu = 0; uu < linkPlay.length; uu++) {
-                            var play_url = base_url + linkPlay[0].link;
-                            //play_url = "http://www.52lailook.com/play/player/16750-1-19.html";
-                            var play_html = await utils.get(play_url);
-                            var $3 = cheerio.load(play_html, {decodeEntities: false});
-                            var script = $3("center div script");
-                            script.each(function (o, abcd) {
-                                var sc = $(this);
-                                if (sc.html() != "") {
-                                    source = sc.html().replace(/\n|\"/g, "").split("=")[1];
-                                    if (source != "" && (source.indexOf("(function()") == -1 && source.indexOf("{") == -1)) {
-                                        if (source.indexOf("+++") > -1) {
-                                            var list = source.split("+++");
-                                            for (var pi = 0; pi < list.length; pi++) {
-                                                var pli = list[pi].split("$");
-                                                var ptitle = pi + 1;
-                                                var purl = pli[0];
-                                                if(pli.length > 1) {
-                                                    ptitle = pli[0];
-                                                    purl = pli[1];
-                                                }
-                                                playList.push({
-                                                    play: titlePlay,//播放器
-                                                    title: ptitle,
-                                                    url: purl
-                                                });
+                        var play_url = base_url + linkPlay[0].link;
+                        //play_url = "http://www.52lailook.com/play/player/16750-1-19.html";
+                        var play_html = await utils.get(play_url);
+                        var $3 = cheerio.load(play_html, {decodeEntities: false});
+                        var script = $3("center div script");
+                        script.each(function (o, abcd) {
+                            var sc = $(this);
+                            if (sc.html() != "") {
+                                source = sc.html().replace(/\n|\"/g, "").split("=")[1];
+                                if (source != "" && (source.indexOf("(function()") == -1 && source.indexOf("{") == -1)) {
+                                    if (source.indexOf("+++") > -1) {
+                                        var list = source.split("+++");
+                                        for (var pi = 0; pi < list.length; pi++) {
+                                            var pli = list[pi].split("$");
+                                            var ptitle = pi + 1;
+                                            if((ptitle + "").indexOf("集")>0){
+                                                ptitle = ptitle + "集";
                                             }
-                                        } else {
-                                            var playUrl = source.substr(source.indexOf("$") + 1);
+                                            var purl = pli[0];
+                                            if (pli.length > 1) {
+                                                ptitle = pli[0];
+                                                purl = pli[1];
+                                            }
+                                            logger.info("===="+ptitle+"=====")
                                             playList.push({
                                                 play: titlePlay,//播放器
-                                                title: linkPlay.title,
-                                                url: playUrl
+                                                title: ptitle,
+                                                url: purl
                                             });
                                         }
+                                    } else {
+                                        var playUrl = source.substr(source.indexOf("$") + 1);
+                                        playList.push({
+                                            play: titlePlay,//播放器
+                                            title: linkPlay.title,
+                                            url: playUrl
+                                        });
                                     }
                                 }
-                            });
-                            //break;
+                            }
+                        });
+                        //break;
                         //}
                     }
                 }
@@ -258,25 +262,31 @@ var url = "http://www.52lailook.com/play/plist/15";
 
                     for (var r = 0; r < playList.length; r++) {
                         var playObj = playList[r];
-                        var moveUrlExists = await moveUrlService.findMoveByName(move_id, playObj.title, playObj.play);
-                        if (moveUrlExists && moveUrlExists.data.length > 0) {
-                            logger.info("===" + title + "__" + playObj.title + "鏈接已经存在里");
-                        } else {
-                            await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
+                        if ((playObj.play + "").trim() != "快播") {
+                            var moveUrlExists = await moveUrlService.findMoveByName(move_id, playObj.title, playObj.play);
+                            if (moveUrlExists && moveUrlExists.data.length > 0) {
+                                logger.info("===" + title + "__" + playObj.title + "鏈接已经存在里");
+                            } else {
+                                await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
+                            }
                         }
                     }
-
                     mysql.commit(conn);
                 } else {
                     logger.info(title + "無鏈接");
                     mysql.rollback(conn);
                 }
-                console.log("第"+ab+"页=====第" + i + "条======完成");
+                console.log("第" + ab + "页=====第" + i + "条======完成");
             } catch (e) {
                 mysql.rollback(conn);
                 console.log(e);
             }
         }
-    }
-    process.exit(0);
-})();
+        await pageService.update();
+        process.exit(0);
+    })();
+};
+schedule.scheduleJob('*/3 * * * *', function(){
+logger.info("=====================" + new Date() + "======================");
+crawler();
+});
