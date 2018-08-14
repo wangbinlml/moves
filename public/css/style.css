@@ -540,3 +540,34 @@ dd, dt {
         margin: 7.5px 0px;
     }
 }
+#play_page ul li p{
+    clear: both;
+    text-align: left;
+    font-weight: bold;
+}
+#play_page ul li {
+    text-align: center;
+}
+#play_page ul {
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px #ddd solid;
+    border-top: 0;
+    padding: 5px;
+}
+#play_page ul li a:visited {
+    font-size: 13px;
+    color: #000000;
+    text-decoration: none;
+}
+#play_page ul li a {
+    display: block;
+    float: left;
+    padding: 2px;
+    margin: 2px;
+    height: 32px;
+    line-height: 32px;
+    overflow: hidden;
+    border: 1px solid #C9E0F8;
+    background: #F7FBFF;
+}
