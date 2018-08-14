@@ -26,22 +26,20 @@
                 <div id="play_page" style="padding-top: 10px">
                     <div style="color: red"><p>小提示：视频加载需十秒左右，请耐心等待一会，如果播放器一直没反应，请刷新页面重新加载或者选择播放列表中另一个<b>播放地址</b>！</p></div>
                     <ul>
-                        <% moveUrls.forEach(function(item, index){ %>
                         <li>
-                            <p>
-                            地址<%=index+1%>:<% if(item['player'] == "iframe") {  %> 在线播放 <% } else { %> <%= item['player'] %> <% } %></p>
-                            <p>
-                                <% if(item['player'].indexOf("腾讯")>=0 && item['url'].indexOf("http") == 0) { %>
-                                    <a href="<%= item['url'] %>" target="_blank"><%= move['name'] %></a>
-                                <% } else if(item['url'].indexOf("vd3.bdstatic.com") >= 0) {%>
-                                    <a href="<%= item['url'] %>" target="_blank"><%= move['name'] %></a>
-                                 <%} else { %>
-                                <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= move['name'] %>
-                                    - <%= item['name'] %></a>
-                                    </p>
-                            <%}%>
+                            <% result.forEach(function(array, i){ %>
+                                <p>地址<%=i+1%>:<% if(array['player'] == "iframe") {  %> 在线播放 <% } else { %> <%= array['player'] %> <% } %></p>
+                                <% array.list.forEach(function(item, index){ %>
+                                    <% if(item['player'].indexOf("腾讯")>=0 && item['url'].indexOf("http") == 0) { %>
+                                        <a href="<%= item['url'] %>" target="_blank"><%= move['name'] %></a>
+                                    <% } else if(item['url'].indexOf("vd3.bdstatic.com") >= 0) {%>
+                                        <a href="<%= item['url'] %>" target="_blank"><%= move['name'] %></a>
+                                     <%} else { %>
+                                        <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= item['name'] %></a>
+                                    <%}%>
+                                <% }) %>
+                            <% }) %>
                         </li>
-                        <% }) %>
                     </ul>
                 </div>
             </div>

@@ -90,7 +90,7 @@ router.get('/detail', async function (req, res, next) {
     var move_id = req.query.move_id;
     var moves = await moveService.findOne(move_id);
     var move = moves.data[0];
-    if(move) {
+    if (move) {
         if (moves.data[0]['name']) {
             move.description = StringUtils.htmlDecodeByRegExp(moves.data[0]['description']);
         }
@@ -116,13 +116,40 @@ router.get('/detail', async function (req, res, next) {
         var relation_list = await moveService.findRelationMoves(tagID, move.area, 18);
         //浏览量最多的视频
         var mostViews = await moveService.findMostViewsMoves(tagID, move.area, 18);
+        var urls = moveUrls.data;
+        var playerList = [];
+        var exists = {};
+        var rlist = [];
+        var list = [];
+        var len = urls.length;
+        for (var i = 0; i < urls.length; i++) {
+            var urlObj = urls[i];
+            var player = urlObj.player;
+            if (exists[urlObj.player] == undefined) {
+                list = [];
+                exists[urlObj.player] = player;
+                playerList.push(player);
+                list.push(urlObj);
+                rlist.push(list);
+            } else {
+                list.push(urlObj);
+            }
+        }
+        var result = [];
+        for (var i = 0; i < playerList.length; i++) {
+            var player = playerList[i];
+            result.push({
+                player: player,
+                list: rlist[i]
+            });
+        }
         res.render('detail', {
             title: move.name || '电影',
             msg: "",
             move: move,
             relation_list: relation_list || [],
             mostViews: mostViews || [],
-            moveUrls: moveUrls.data,
+            result: result,
             downloads: downloads.data,
             actors: actors.data,
             user: req.session.user,
@@ -200,6 +227,33 @@ router.get('/play', async function (req, res, next) {
     //浏览量最多的视频
     var mostViews = await moveService.findMostViewsMoves(tagID, move.area, 18);
 
+    var urls = moveUrls.data;
+    var playerList = [];
+    var exists = {};
+    var rlist = [];
+    var list = [];
+    var len = urls.length;
+    for (var i = 0; i < urls.length; i++) {
+        var urlObj = urls[i];
+        var player = urlObj.player;
+        if (exists[urlObj.player] == undefined) {
+            list = [];
+            exists[urlObj.player] = player;
+            playerList.push(player);
+            list.push(urlObj);
+            rlist.push(list);
+        } else {
+            list.push(urlObj);
+        }
+    }
+    var result = [];
+    for (var i = 0; i < playerList.length; i++) {
+        var player = playerList[i];
+        result.push({
+            player: player,
+            list: rlist[i]
+        });
+    }
     res.render(template, {
         title: move.name || '电影',
         msg: "",
@@ -207,7 +261,7 @@ router.get('/play', async function (req, res, next) {
         relation_list: relation_list || [],
         mostViews: mostViews || [],
         currentMoveUrls: currentMoveUrls,
-        moveUrls: moveUrls.data,
+        result: result,
         downloads: downloads.data,
         actors: actors.data,
         user: req.session.user,
