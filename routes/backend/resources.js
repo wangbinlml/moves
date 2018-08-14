@@ -30,8 +30,8 @@ router.get('/load', async(req, res, next) => {
 });
 
 
-router.get('/saveContent', async(req, res, next) => {
-    var file = req.query.fileName;
+router.post('/saveContent', async(req, res, next) => {
+    var file = req.body.fileContent;
     var result = {
         error: 0,
         msg: ""

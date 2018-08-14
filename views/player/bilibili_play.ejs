@@ -7,8 +7,8 @@
             <div class="col-md-9 order-md-1">
                 <section class="panel">
                     <div class="panel-body table-responsive">
-                        <div id="youku_player">
-                            <iframe src='https://www.bilibili.com/bangumi/play/<%= currentMoveUrls['url'] %>'
+                        <div id="bilibili_player">
+                            <iframe src='https://player.bilibili.com/player.html?aid=<%= currentMoveUrls['url'] %>'
                                     frameborder='0' width='100%' height='400' allowfullscreen='true'></iframe>
                         </div>
                         <% include ../partials/move_detail %>
