@@ -25,12 +25,15 @@
 <script type="text/javascript" src="/player/ckplayer/ckplayer/ckplayer.js"></script>
 
 <script type="text/javascript">
-    var videoObject = {
-        container: '#youku_player',//“#”代表容器的ID，“.”或“”代表容器的class
-        variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
-        autoplay:true,
-        flashplayer:false,//如果强制使用flashplayer则设置成true
-        video:"<%= currentMoveUrls['url']  %>"//视频地址
-    };
-    var player = new ckplayer(videoObject);
+    <script type="text/javascript">
+    			var videoObject = {
+    				container: '#youku_player', //容器的ID或className
+    				variable: 'player',//播放函数名称
+    				flashplayer:true,
+    				video: [//视频地址列表形式
+    					['<%= currentMoveUrls['url'] %>', 'video/mp4', '中文标清', 0],
+    				]
+    			};
+    			var player = new ckplayer(videoObject);
+    		</script>
 </script>
