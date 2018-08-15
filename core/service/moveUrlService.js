@@ -5,7 +5,7 @@ module.exports.findMoveUrl = async (move_id) => {
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select * from tb_move_url where move_id = ? and is_del =0 order by player asc,CAST(name AS UNSIGNED) desc", move_id);
+        result.data = await mysql.query("select * from tb_move_url where move_id = ? and is_del =0 order by player asc,id desc", move_id);
     } catch (e) {
         console.log(e);
         result.error = 1;
