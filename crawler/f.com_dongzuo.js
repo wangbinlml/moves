@@ -254,6 +254,8 @@ var crawler = function () {
                         }
                     } else {
                         move_id = movelist.data[0]['id'];
+                        logger.info("===更新=====");
+                        await moveService.update(sets,move_id);
                     }
                     /*for (var r = 0; r < playList.length; r++) {
                         var playObj = playList[r];
@@ -283,10 +285,10 @@ var crawler = function () {
             }
         }
         await pageService.update();
-        //process.exit(0);
+        process.exit(0);
     })();
 };
-schedule.scheduleJob('*/3 * * * *', function(){
+//schedule.scheduleJob('*/3 * * * *', function(){
 logger.info("=====================" + new Date() + "======================");
 crawler();
-});
+//});

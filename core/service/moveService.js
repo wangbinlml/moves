@@ -212,31 +212,9 @@ module.exports.insert2 = async (conn, value) => {
     return await mysql.query2(conn, "insert into tb_move (category_id,tag_id,name,year,area,sets,cover,source,description,creator_id)" +
         "value (?,?,?,?,?,?,?,?,?,?)", value);
 };
-module.exports.update = async (value) => {
-    var sql = "update tb_move set ";
-    if (value.category_id) {
-        sql = sql + "category_id=?,";
-    }
-    if (value.tag_id) {
-        sql = sql + "tag_id=?,"
-    }
-    if (value.name) {
-        sql = sql + "name=?,"
-    }
-    if (value.cover) {
-        sql = sql + "cover=?,"
-    }
-    if (value.source) {
-        sql = sql + "source=?,"
-    }
-    if (value.category_id) {
-        sql = sql + "description=?,"
-    }
-    if (value.description) {
-        sql = sql + "updated_at=?,";
-        sql = sql + "updated_user_id=?)";
-    }
-    return await mysql.query(sql, value);
+module.exports.update = async (conn, sets,id) => {
+    var sql = "update tb_move set updated_at=?,sets=? where id=?";
+    return await mysql.query2(conn, sql, [new Date(),sets,id]);
 };
 module.exports.delete = async (id) => {
     var sql = "update tb_move set is_del=1 where id = ?";
