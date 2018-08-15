@@ -176,7 +176,12 @@ var crawler = function () {
                         script.each(function (o, abcd) {
                             var sc = $(this);
                             if (sc.html() != "") {
-                                source = sc.html().replace(/\n|\"/g, "").split("=")[1];
+                                var playList222 = sc.html().replace(/\n|\"/g, "");
+                                if(titlePlay.trim() == "优酷" || titlePlay.trim()=="youku"){
+                                    source = playList222.substr(playList222.indexOf("=")+1);
+                                } else {
+                                    source = playList222.split("=")[1];
+                                }
                                 if (source != "" && (source.indexOf("(function()") == -1 && source.indexOf("{") == -1)) {
                                     if (source.indexOf("+++") > -1) {
                                         var list = source.split("+++");
@@ -191,7 +196,7 @@ var crawler = function () {
                                                 ptitle = pli[0];
                                                 purl = pli[1];
                                             }
-                                            logger.info("===="+ptitle+"=====")
+                                            logger.info("====获取到第" + ab + "页"+titlePlay+"第"+ptitle+"=====")
                                             playList.push({
                                                 play: titlePlay,//播放器
                                                 title: ptitle,
@@ -255,7 +260,7 @@ var crawler = function () {
                     } else {
                         move_id = movelist.data[0]['id'];
                         logger.info("===更新=====");
-                        await moveService.update(sets,move_id);
+                        await moveService.update(conn, sets,move_id);
                     }
                     /*for (var r = 0; r < playList.length; r++) {
                         var playObj = playList[r];
@@ -264,6 +269,7 @@ var crawler = function () {
 
                     for (var r = 0; r < playList.length; r++) {
                         var playObj = playList[r];
+                        logger.info("====第" + ab + "页保存"+playObj.play+playObj.title+"=====")
                         if ((playObj.play + "").trim() != "快播") {
                             var moveUrlExists = await moveUrlService.findMoveByName(move_id, playObj.title, playObj.play);
                             if (moveUrlExists && moveUrlExists.data.length > 0) {
@@ -278,7 +284,7 @@ var crawler = function () {
                     logger.info(title + "無鏈接");
                     mysql.rollback(conn);
                 }
-                console.log("第" + ab + "页=====第" + i + "条======完成");
+                logger.info("第" + ab + "页=====第" + i + "条======完成");
             } catch (e) {
                 mysql.rollback(conn);
                 console.log(e);
@@ -289,6 +295,8 @@ var crawler = function () {
     })();
 };
 //schedule.scheduleJob('*/3 * * * *', function(){
-logger.info("=====================" + new Date() + "======================");
-crawler();
+//while (true) {
+    logger.info("=====================" + new Date() + "======================");
+    crawler();
+//}
 //});
