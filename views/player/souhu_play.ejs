@@ -8,11 +8,14 @@
                 <section class="panel">
                     <div class="panel-body table-responsive">
                         <div id="souhu_player">
-                            <embed wmode="Transparent" allowfullscreen="true" allowscriptaccess="always" quality="high" width="100%" height="380"
-                                   src="http://share.vrs.sohu.com/<%= currentMoveUrls['url'] %>/v.swf&topBar=1&autoplay=false&plid=8399917&pub_catecode=0&from=page"
-                                   type="application/x-shockwave-flash"/>
-                            </embed>
-
+                            <object width='100%' height='380'>
+                                <param name='allowFullScreen' value='true'>
+                                <param name='movie' value='http://share.vrs.sohu.com/<%= currentMoveUrls['url'] %>/v.swf&topBar=1&autoplay=false&plid=8399917&pub_catecode=0&from=page'/>
+                                <embed wmode="Transparent" allowfullscreen="true" allowscriptaccess="always" quality="high" width="100%" height="380"
+                                       src="http://share.vrs.sohu.com/<%= currentMoveUrls['url'] %>/v.swf&topBar=1&autoplay=false&plid=8399917&pub_catecode=0&from=page"
+                                       type="application/x-shockwave-flash"/>
+                                </embed>
+                            </object>
                         </div>
                         <% include ../partials/move_detail %>
                         <% include ../partials/relation_list %>
