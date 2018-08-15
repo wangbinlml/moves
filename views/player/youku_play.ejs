@@ -8,7 +8,7 @@
                 <section class="panel">
                     <div class="panel-body table-responsive">
                         <div id="youku_player">
-                            <!--<iframe height="400" width="100%" src='http://player.youku.com/embed/<%= currentMoveUrls['url'] %>' frameborder=0 'allowfullscreen'></iframe>-->
+                            <iframe height="400" width="100%" src='http://player.youku.com/embed/<%= currentMoveUrls['url'] %>' frameborder=0 'allowfullscreen'></iframe>
                         </div>
                         <% include ../partials/move_detail %>
                         <% include ../partials/relation_list %>
@@ -22,18 +22,3 @@
     </div>
 </div>
 <% include ../partials/footer %>
-<script type="text/javascript" src="/player/ckplayer/ckplayer/ckplayer.js"></script>
-
-<script type="text/javascript">
-    <script type="text/javascript">
-    			var videoObject = {
-    				container: '#youku_player', //容器的ID或className
-    				variable: 'player',//播放函数名称
-    				flashplayer:true,
-    				video: [//视频地址列表形式
-    					['<%= currentMoveUrls['url'] %>', 'video/mp4', '中文标清', 0],
-    				]
-    			};
-    			var player = new ckplayer(videoObject);
-    		</script>
-</script>
