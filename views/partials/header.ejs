@@ -41,7 +41,7 @@
                     <a class="navbar-brand" href="/">
                         <span itemprop="name">晨讯网</span>
                     </a>-->
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-left">
                         <li><a href="/">
                                 <span itemprop="name">晨讯网</span>
                             </a>
@@ -51,7 +51,10 @@
                         <li <% if(active == "2"){ %> class="active"<% } %>><a href="/move?category_id=2">电视剧</a></li>
                         <li <% if(active == "3"){ %> class="active"<% } %>><a href="/move?category_id=3">综艺</a></li>
                         <li <% if(active == "4"){ %> class="active"<% } %>><a href="/move?category_id=4">娱乐</a></li>
-                        <li class="nav navbar-nav navbar-right nav-search">
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right nav-search">
+                        <li>
                             <form action="/move/search" method="get" class="navbar-form">
                                 <div class="form-group">
                                     <input name="keyword" id="keyword" class="form-control" type="text" placeholder="搜索..."/>
