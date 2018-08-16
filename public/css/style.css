@@ -617,3 +617,13 @@ dd, dt {
     border: 1px solid #C9E0F8;
     background: #F7FBFF;
 }
+.hdtag {
+    background: #09C878;
+    padding: 0 5px;
+    color: #FFF;
+    font-size: 12px;
+    right: 2px;
+    bottom: 2px;
+    position: absolute;
+    border: none;
+}
