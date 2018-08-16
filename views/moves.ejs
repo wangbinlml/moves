@@ -13,7 +13,14 @@
                             <% moves.data.forEach(function(item, index){ %>
                             <div class="col-md-2 col-sm-3 col-xs-4">
                                 <div class="thumbnail">
-                                    <a href="/move/detail?move_id=<%= item['id'] %>"><img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
+                                    <a href="/move/detail?move_id=<%= item['id'] %>" style="position:relative;display:block;">
+                                    <img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" />
+                                    <% if(item['category_id']==2){ %>
+                                        <button class="hdtag"><%= item['sets'] %></button>
+                                    <% } else { %>
+                                        <button class="hdtag">全集</button>
+                                    <% } %>
+                                    </a>
                                     <div class="caption">
                                         <h3>
                                             <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
