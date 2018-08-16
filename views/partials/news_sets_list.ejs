@@ -10,10 +10,10 @@
                     <% if (newSets.data.length>0) {
                         newSets.data.forEach(function(item, index){
                     %>
-                    <li style="clear: both; width:100%;"  class="sets_label">
+                    <li style="clear: both; width:100%;" class="sets_label">
                         <%=index+1%> &nbsp;<a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
                         <% if(item['category_id']==2){ %>
-                            &nbsp;&nbsp;<label style="color: red;position: absolute;right: 0;">[<%= item['sets'] %>]</label>
+                            &nbsp;&nbsp;<label class="hdtag2">[<%= item['sets'] %>]</label>
                         <% } else { %>
 
                         <% } %>
