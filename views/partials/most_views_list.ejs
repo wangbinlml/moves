@@ -13,7 +13,7 @@
                     <li style="clear:both"  class="sets_label">
                     <%=index+1%> &nbsp;<a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
                         <% if(item['category_id']==2){ %>
-                            <label class="hdtag"><%= item['sets'] %></label>
+                            &nbsp;&nbsp;[<label style="color: red;"><%= item['sets'] %></label>]
                         <% } else { %>
 
                         <% } %>
