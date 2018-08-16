@@ -37,7 +37,7 @@
                         <% setsTop.data.forEach(function(item, index){ %>
                         <div class="col-md-2 col-sm-2 col-xs-4">
                             <div class="thumbnail">
-                                <a href="/move/detail?move_id=<%= item['id'] %>" style="position:relative;display:block;">
+                                <a href="/move/detail?move_id=<%= item['id'] %>" class="sets_label">
                                 <img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" />
                                 <button class="hdtag"><%= item['sets'] %></button>
                                 </a>
@@ -67,7 +67,9 @@
                         <% moves.forEach(function(item, index){ %>
                         <div class="col-md-2 col-sm-2 col-xs-4">
                             <div class="thumbnail">
-                                <a href="/move/detail?move_id=<%= item['id'] %>"><img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" /></a>
+                                <a href="/move/detail?move_id=<%= item['id'] %>" class="sets_label">
+                                <img title="<%= item['name'] %>" alt="<%= item['name'] %>" src="<%= item['cover'] %>" />
+                                </a>
                                 <div class="caption">
                                     <h3>
                                         <a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>

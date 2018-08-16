@@ -627,3 +627,7 @@ dd, dt {
     position: absolute;
     border: none;
 }
+.sets_label {
+    position:relative;
+    display:block;
+}
