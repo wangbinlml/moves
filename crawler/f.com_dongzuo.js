@@ -20,8 +20,8 @@ var base_url = "http://www.52lailook.com";
 var url = "http://www.52lailook.com/play/plist/15";
 var crawler = function () {
     (async () => {
-        var pageObj = await pageService.findAll();
-        var ab = pageObj.data[0]['page'];
+        //var pageObj = await pageService.findAll();
+        var ab = 2;//pageObj.data[0]['page'];
         //列表
         if (ab == 1) {
             url = url + ".html";
@@ -207,7 +207,7 @@ var crawler = function () {
                                         var playUrl = source.substr(source.indexOf("$") + 1);
                                         playList.push({
                                             play: titlePlay,//播放器
-                                            title: linkPlay.title,
+                                            title: linkPlay[0].title,
                                             url: playUrl
                                         });
                                     }
