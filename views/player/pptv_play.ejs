@@ -7,9 +7,8 @@
             <div class="col-md-9 order-md-1">
                 <section class="panel">
                     <div class="panel-body table-responsive">
-                        <div id="youku_player">
-                            <embed src="http://player.youku.com/player.php/sid/<%= currentMoveUrls['url'] %>/v.swf" allowFullScreen="true"
-                                   quality="high" width="100%" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+                        <div id="pptv_player">
+                            <iframe src="http://player.pptv.com/iframe/index.html#id=<%= currentMoveUrls['url'] %>&ctx=o%3Dv_share" allowtransparency="true" width="100%" height="400" scrolling="no" frameborder="0" ></iframe>
                         </div>
                         <% include ../partials/move_detail %>
                         <% include ../partials/relation_list %>
