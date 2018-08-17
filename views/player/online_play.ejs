@@ -1,6 +1,4 @@
 <% include ../partials/header %>
-<link rel="stylesheet" href="/player/DPlayer/DPlayer.min.css">
-<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.8.2/jquery.js"></script>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Page Content -->
@@ -24,22 +22,8 @@
     </div>
 </div>
 <% include ../partials/footer %>
-<!--<script src="/player/DPlayer/hls.min.js"></script>
-<script src="/player/DPlayer/DPlayer.min.js"></script>-->
 <script type="text/javascript" src="/player/ckplayer/ckplayer/ckplayer.js"></script>
 <script type="text/javascript">
-    /*const dp = new DPlayer({
-        container: document.getElementById('dplayer'),
-        screenshot: true,
-        autoplay: true,
-        theme: '#FADFA3',
-        video: {
-            url: "<%= currentMoveUrls['url'] %>",
-            //pic: '/images/banner.jpg',
-            //thumbnails: '/images/contact.png'
-        }
-   });*/
-
     var videoObject = {
         container: '#video',//“#”代表容器的ID，“.”或“”代表容器的class
         variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
