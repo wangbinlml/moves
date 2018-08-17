@@ -41,9 +41,7 @@
                                 <% array.list.forEach(function(item, index){ %>
                                     <% if(item['player'].indexOf("腾讯")>=0 && item['url'].indexOf("http") == 0) { %>
                                         <a href="<%= item['url'] %>" target="_blank"><%= move['name'] %></a>
-                                    <% } else if(item['url'].indexOf("vd3.bdstatic.com") >= 0) {%>
-                                        <a href="<%= item['url'] %>" target="_blank"><%= move['name'] %></a>
-                                     <%} else { %>
+                                    <% } else { %>
                                         <a href="/move/play?move_id=<%= item['move_id'] %>&id=<%= item['id'] %>&player=<%= item['player'] %>" target="_blank"><%= item['name'] %></a>
                                     <%}%>
                                 <% }) %>

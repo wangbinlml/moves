@@ -192,6 +192,7 @@ router.get('/play', async function (req, res, next) {
     currentMoveUrls = currentMoveUrls.data[0];
     var template = "player/online_play";
     player = player.trim();
+
     if (player.indexOf("西瓜影音") >= 0 || currentMoveUrls.url.indexOf(".rmvb") > 0) {
         template = "player/xigua_play";
     } else if (player == "iframe") {
