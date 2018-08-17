@@ -584,6 +584,12 @@ dd, dt {
         width: 100%;
     }
 }
+@media screen and (max-width:400px) {
+    .content-wrapper {
+        padding-bottom: 100px;
+        margin-top: 64px;
+    }
+}
 
 
 #play_page ul li p{
