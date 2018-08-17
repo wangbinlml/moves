@@ -198,9 +198,9 @@ router.get('/play', async function (req, res, next) {
         template = "player/iframe";
     } else if (player.indexOf("优酷") >= 0 || player.indexOf("youku") >= 0) {
         template = "player/youku_play";
-    } else if (player.indexOf("土豆") >= 0) {
+    } else if (player.indexOf("土豆") >= 0 || player.indexOf("tudou") >= 0) {
         template = "player/tudou_play";
-    } else if (player.indexOf("乐视") >= 0) {
+    } else if (player.indexOf("乐视") >= 0 || player.indexOf("letv") >= 0) {
         template = "player/letv_play";
     } else if (player.indexOf("酷6") >= 0) {
         template = "player/ku6_play";
