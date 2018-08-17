@@ -9,9 +9,9 @@
                     <div class="panel-body table-responsive">
                         <div id="letv_player">
                             <object width='100%' height='380'>
-                            <param name='allowFullScreen' value='true'>
-                            <param name='movie' value='//img1.c0.letv.com/ptv/player/swfPlayer.swf?autoPlay=0&id=<%=currentMoveUrls['url'] %>'/>
-                            <embed src='//img1.c0.letv.com/ptv/player/swfPlayer.swf?autoPlay=0&id=<%=currentMoveUrls['url'] %>' width='100%' height=’380’ allowFullScreen='true' type='application/x-shockwave-flash'/>
+                                <param name='allowFullScreen' value='true'>
+                                <param name='movie' value='//img1.c0.letv.com/ptv/player/swfPlayer.swf?autoPlay=1&id=<%currentMoveUrls['url'] %>'/>
+                                <embed src='//img1.c0.letv.com/ptv/player/swfPlayer.swf?autoPlay=1&id=<%currentMoveUrls['url'] %>' width='100%' height=’380’ allowFullScreen='true' type='application/x-shockwave-flash'/>
                             </object>
                         </div>
                         <% include ../partials/move_detail %>
