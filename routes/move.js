@@ -191,6 +191,7 @@ router.get('/play', async function (req, res, next) {
     }
     currentMoveUrls = currentMoveUrls.data[0];
     var template = "player/online_play";
+    player = player.trim();
     if (player.indexOf("西瓜影音") >= 0 || currentMoveUrls.url.indexOf(".rmvb") > 0) {
         template = "player/xigua_play";
     } else if (player == "iframe") {
@@ -217,6 +218,8 @@ router.get('/play', async function (req, res, next) {
         template = "player/mangguo_play";
     } else if (player.indexOf("AcFun视频") >= 0 || player.indexOf("AcFun") >= 0) {
         template = "player/acfun_play";
+    }else if (player.indexOf("pptv") >= 0 || player.toLocaleLowerCase().indexOf("pptv") >= 0) {
+        template = "player/pptv_play";
     }
 
     var areas = await moveService.findAllArea();
