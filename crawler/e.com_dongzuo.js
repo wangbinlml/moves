@@ -125,17 +125,77 @@ var crawler = function () {
                     var play = "";
                     if(urlPy.indexOf("m3u8")>0) {
                         play = "在线播放";
-                    } else if(playa.indexOf("qq")>=0 || playa.indexOf("腾讯")>=0) {
+                    } else */
+                    if(urlPy.indexOf("qq.com") >=0 || playa.indexOf("qq")>=0 || playa.indexOf("腾讯")>=0) {
                         play = "腾讯视频";
-                    }
-                    logger.info("=====play=" + play + "===="+moveObj.name);
-                    if(play!='') {
+                        var dotIndex = urlPy.lastIndexOf(".");
+                        var pIndex = urlPy.lastIndexOf("/");
+                        urlPy = urlPy.substring(pIndex+1,dotIndex);
+                        playList.push({
+                            play: play,//播放器
+                            title: plObj.title,
+                            url: urlPy
+                        });
+                    } else if(urlPy.indexOf("iqiyi.com") >=0 || playa.indexOf("qiyi")>=0 || playa.indexOf("爱奇艺")>=0) {
+                        play = "爱奇艺";
+                        var dotIndex = urlPy.lastIndexOf(".");
+                        var pIndex = urlPy.lastIndexOf("/");
+                        urlPy = urlPy.substring(pIndex+1,dotIndex);
+                        playList.push({
+                            play: play,//播放器
+                            title: plObj.title,
+                            url: urlPy
+                        });
+                    }  else if(urlPy.indexOf("mgtv.com") >=0 || playa.indexOf("mgtv")>=0 || playa.indexOf("mgtv")>=0) {
+                        play = "mgtv";
+                        var dotIndex = urlPy.lastIndexOf(".");
+                        var pIndex = urlPy.lastIndexOf("/");
+                        urlPy = urlPy.substring(pIndex+1,dotIndex);
+                        playList.push({
+                            play: play,//播放器
+                            title: plObj.title,
+                            url: urlPy
+                        });
+                    } else if(urlPy.indexOf("bdstatic.com") >=0) {
+                        play = "iframe";
+                        urlPy = "https://apis.tianxianle.com/mp4/mp4.php?id="+urlPy;
+                        playList.push({
+                            play: play,//播放器
+                            title: plObj.title,
+                            url: urlPy
+                        });
+                    } else  if(urlPy.indexOf("le.com") >=0 || playa.indexOf("乐视") >=0) {
+                        play = "letv";
+                        var dotIndex = urlPy.lastIndexOf(".");
+                        var pIndex = urlPy.lastIndexOf("/");
+                        urlPy = urlPy.substring(pIndex+1,dotIndex);
+                        playList.push({
+                            play: play,//播放器
+                            title: plObj.title,
+                            url: urlPy
+                        });
+                    }  else  if(urlPy.indexOf("sohu.com") >=0 || playa.indexOf("搜狐") >=0) {
+                        play = "sohu";
+                        var dotIndex = urlPy.lastIndexOf(".");
+                        var pIndex = urlPy.lastIndexOf("/");
+                        urlPy = urlPy.substring(pIndex+1,dotIndex);
+                        playList.push({
+                            play: play,//播放器
+                            title: plObj.title,
+                            url: urlPy
+                        });
+                    } else if (urlPy.indexOf("youku.com")>=0) {
+                        play = "youku";
+                        var dotIndex = urlPy.lastIndexOf(".");
+                        var pIndex = urlPy.lastIndexOf("/");
+                        urlPy = urlPy.substring(pIndex+1,dotIndex).replace("id_","");
                         playList.push({
                             play: play,//播放器
                             title: plObj.title,
                             url: urlPy
                         });
                     }
+                    logger.info("=====play=" + play + "===="+moveObj.name + "====urlPy==="+urlPy);
                     break;
                 }
                 if (playList.length > 0) {
@@ -186,7 +246,7 @@ var crawler = function () {
                 logger.error(e);
             }
         }
-        await pageService.update();
+        //await pageService.update();
         process.exit(0);
     })();
 };

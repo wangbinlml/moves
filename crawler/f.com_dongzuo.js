@@ -21,7 +21,7 @@ var url = "http://www.52lailook.com/play/plist/15";
 var crawler = function () {
     (async () => {
         //var pageObj = await pageService.findAll();
-        var ab = 2;//pageObj.data[0]['page'];
+        var ab = 1;//pageObj.data[0]['page'];
         //列表
         if (ab == 1) {
             url = url + ".html";
@@ -290,7 +290,7 @@ var crawler = function () {
                 console.log(e);
             }
         }
-        await pageService.update();
+        //await pageService.update();
         process.exit(0);
     })();
 };
