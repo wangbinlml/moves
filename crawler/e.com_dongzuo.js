@@ -122,8 +122,8 @@ var crawler = function () {
                     scripts = scripts.split("$$");
                     var playBSA = scripts[1].split("$");
                     var urlPy = playBSA[0];
-                    var play = "";
-                    if(urlPy.indexOf("m3u8")>0) {
+                    var play = playa;
+                    /*if(urlPy.indexOf("m3u8")>0) {
                         play = "在线播放";
                     } else */
                     if(urlPy.indexOf("qq.com") >=0 || playa.indexOf("qq")>=0 || playa.indexOf("腾讯")>=0) {
