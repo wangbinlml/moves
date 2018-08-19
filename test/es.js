@@ -8,7 +8,7 @@ var elasticsearch = require('elasticsearch');
         size: 20,
         from: 0,
         query: {
-            match_all: {}
+            match: {"name":"复仇者"}
         }
     };
     const results = await client.search({
