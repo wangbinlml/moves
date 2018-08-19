@@ -113,7 +113,7 @@
                 <h4 class="modal-title" id="exampleModalLabel">修改</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="e-menu-role-form">
+                <form class="form-horizontal" id="e-contents-form">
                     <div class="box-body">
                         <input type="hidden" data-name="e_id" name="e_id" id="e_id"/>
                         <div class="form-group">
@@ -122,43 +122,78 @@
                                 <input type="text" class="form-control" id="e_name" name="e_name" placeholder="请输入标题">
                             </div>
                         </div>
-                        <div class="form-group" id="form-password">
-                            <label for="password" class="col-sm-2 control-label">用户密码</label>
+                        <div class="form-group" id="form-category">
+                            <label for="category" class="col-sm-2 control-label">分类</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="e_password" name="e_password" placeholder="请输入密码"><label id="user_password_desc">不修改密码，该项可为空</label>
+                                <select id="category_id">
+                                    <option value="1">电影</option>
+                                    <option value="2">电视剧</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label">性别</label>
+                        <div class="form-group" id="form-tag">
+                            <label for="tags" class="col-sm-2 control-label">小分类</label>
                             <div class="col-sm-10">
-                                <select name="e_sex" id="e_sex" class="form-control">
-                                    <option value="1">男</option>
-                                    <option value="0">女</option>
+                                <select id="tag_id">
+                                    <option value="1">电影</option>
+                                    <option value="2">电视剧</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label">生日</label>
+                            <label for="year" class="col-sm-2 control-label">年份</label>
                             <div class="col-sm-10">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" name="e_birthday" class="form-control" id="e_birthday"
-                                           placeholder="请选择生日" readonly/>
-                                </div>
+                                <input type="text" name="year" id="year" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label">电话</label>
+                            <label for="area" class="col-sm-2 control-label">地区</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="e_phone" id="e_phone" placeholder="请输入电话">
+                                <input type="text" name="area" id="area" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label">邮箱</label>
+                            <label for="cover" class="col-sm-2 control-label">封面</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="e_mail" name="e_mail" placeholder="请输入邮箱">
+                                <input type="file" name="cover" id="cover" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="source" class="col-sm-2 control-label">来源</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="source" id="source" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="views" class="col-sm-2 control-label">浏览次数</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="e_views" id="e_views" placeholder="浏览次数">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sets" class="col-sm-2 control-label">更新至</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="e_sets" name="e_sets" placeholder="更新至">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">选项</label>
+                            <div class="col-sm-10">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox"  value="1" name="hot"/>最热
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox"  value="1" name="top">置顶
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox"  value="1" name="flash">flash展示
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">描述</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="description" id="description" />
                             </div>
                         </div>
                     </div>

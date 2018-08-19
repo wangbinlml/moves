@@ -33,10 +33,10 @@ router.get('/load', async(req, res, next) => {
     length = parseInt(length) || 0;
     draw = parseInt(draw) || 0;
 
-    var search = req.query.search;
-    if (search) {
-        sqlcount = sqlcount + " and name like '%" + search.value + "%'";
-        sql = sql + " and name like '%" + search.value + "%'";
+    var s_name = req.query.s_name;
+    if (s_name) {
+        sqlcount = sqlcount + " and name like '%" + s_name + "%'";
+        sql = sql + " and name like '%" + s_name + "%'";
     }
 
     var memuCount = await mysql.query(sqlcount);
