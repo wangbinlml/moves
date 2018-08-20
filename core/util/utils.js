@@ -69,7 +69,7 @@ var download = function (url, dir, filename, cb) {
     }
 };
 
-var get = function (url, cb) {
+var get = function (url, cb, char) {
     if (typeof cb == "function") {
         http.get(url, function (res) {
             var data = "";
@@ -215,6 +215,5 @@ exports.get2 = get2;
 exports.request = request;
 exports.GetRandomNum = GetRandomNum;
 exports.download = download;
-exports.request = request;
 exports.recursion = recursion;
 exports.geFileList = geFileList;

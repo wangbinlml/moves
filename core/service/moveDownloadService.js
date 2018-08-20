@@ -13,6 +13,19 @@ module.exports.findDownloadUrl = async (move_id) => {
     }
     return result;
 };
+module.exports.findDownloadInfo = async (move_id, name) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move_download where move_id = ? and name=? and is_del =0", [move_id,name]);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取演员失败";
+    }
+    return result;
+};
 module.exports.insert = async (conn,value) => {
     return await mysql.query2(conn, "insert into tb_move_download (move_id,name,download_address,creator_id)" +
         "value (?,?,?,?)", value);
