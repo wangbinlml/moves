@@ -20,7 +20,7 @@ var base_url = "http://yiybb.com";
 var url = "http://yiybb.com/jq/";
 var crawler = function () {
     (async () => {
-        var pageObj = await pageService.findAll(1);
+        var pageObj = await pageService.findAll(2);
         var ab = pageObj.data[0]['page'];
         //列表
         if (ab == 1) {
