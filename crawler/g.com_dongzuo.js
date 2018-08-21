@@ -98,7 +98,7 @@ var crawler = function () {
                                 }
                                 if (k == 1) {
                                     //地区：中国
-                                    area = typeItem[1];
+                                    area = typeItem[0];
                                 }
                             }
                         }
