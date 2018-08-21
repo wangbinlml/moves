@@ -1,11 +1,12 @@
 const mysql = require('../mysql');
 const moment = require('moment');
-module.exports.findAll = async () => {
+module.exports.findAll = async (id) => {
+    id = id || 1;
     let result = {};
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select * from page");
+        result.data = await mysql.query("select * from page where id=?",id);
     } catch (e) {
         console.log(e);
         result.error = 1;
