@@ -20,8 +20,8 @@ var base_url = "http://yiybb.com";
 var url = "http://yiybb.com/dz/";
 var crawler = function () {
     (async () => {
-        //var pageObj = await pageService.findAll();
-        var ab = 1;//pageObj.data[0]['page'];
+        var pageObj = await pageService.findAll();
+        var ab = pageObj.data[0]['page'];
         //列表
         if (ab == 1) {
             url = url + "Index.html";
@@ -157,6 +157,10 @@ var crawler = function () {
                 for (var j = 0; j < playObjList.length; j++) {
                     var source = "";
                     var titlePlay = playObjList[j];
+                    if (titlePlay.title.indexOf('快播')==0){
+                        logger.info("=========快播=============")
+                        continue;
+                    }
                     for (var uu = 0; uu < titlePlay.links.length; uu++) {
                         var play_url = base_url + titlePlay.links[uu].href;
                         var $3 = await utils.request(play_url);
@@ -177,7 +181,7 @@ var crawler = function () {
                             var reg = /src=\"(\S+url)/g;
                             var result = reg.exec(iframeHtml);
                             var iframeUrl = result[1].replace("'+url", idUrl);
-                            if (iframeUrl.indexOf("http") == -1) {
+                            if (iframeUrl.indexOf("http") != 0) {
                                 iframeUrl = base_url + iframeUrl;
                             }
                             var $6 = await utils.request(iframeUrl);
@@ -280,11 +284,11 @@ var crawler = function () {
                 console.log(e);
             }
         }
-        //await pageService.update();
+        await pageService.update();
         process.exit(0);
     })();
 };
-//schedule.scheduleJob('*/3 * * * *', function(){
+//schedule.scheduleJob('*/1 * * * *', function(){
 //while (true) {
 logger.info("=====================" + new Date() + "======================");
 crawler();

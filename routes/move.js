@@ -195,7 +195,7 @@ router.get('/play', async function (req, res, next) {
 
     if (player.indexOf("西瓜影音") >= 0 || currentMoveUrls.url.indexOf(".rmvb") > 0) {
         template = "player/xigua_play";
-    } else if (player == "iframe" || player == 'ck新线路' || player == '免费在线') {
+    } else if (player == "iframe" || player == 'ck新线路' || player == '免费在线' || player == "ck云播") {
         template = "player/iframe";
     } else if (player.indexOf("优酷") >= 0 || player.indexOf("youku") >= 0) {
         template = "player/youku_play";
