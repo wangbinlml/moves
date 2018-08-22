@@ -14,7 +14,8 @@ module.exports.findAll = async (id) => {
     }
     return result;
 };
-module.exports.update = async () => {
-    var sql = "update page set page=page-1";
-    return await mysql.query(sql);
+module.exports.update = async (id) => {
+    id = id || 1;
+    var sql = "update page set page=page-1 where id = ?";
+    return await mysql.query(sql,id);
 };
