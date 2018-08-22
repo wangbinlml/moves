@@ -20,8 +20,8 @@ var base_url = "http://yiybb.com";
 var url = "http://yiybb.com/kh/";
 var crawler = function () {
     (async () => {
-        var pageObj = await pageService.findAll(4);
-        var ab =pageObj.data[0]['page'];
+        //var pageObj = await pageService.findAll(4);
+        var ab = 1;//pageObj.data[0]['page'];
         if(ab < 0) {
             ab = 1;
         }
@@ -287,7 +287,7 @@ var crawler = function () {
                 console.log(e);
             }
         }
-        await pageService.update(4);
+        //await pageService.update(4);
         process.exit(0);
     })();
 };
