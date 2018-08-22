@@ -284,7 +284,7 @@ var crawler = function () {
                 console.log(e);
             }
         }
-        await pageService.update();
+        //await pageService.update();
         process.exit(0);
     })();
 };

@@ -278,7 +278,7 @@ async function crawler(ab) {
                 console.log(e);
             }
         }
-        await pageService.update();
+        //await pageService.update();
         process.exit(0);
 };
 //schedule.scheduleJob('*/1 * * * *', function(){
