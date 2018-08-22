@@ -18,10 +18,7 @@ var schedule = require("node-schedule");
 var logger = require('../core/logger').getLogger("system");
 var base_url = "http://yiybb.com";
 var url = "http://yiybb.com/dz/";
-var crawler = function () {
-    (async () => {
-        var pageObj = await pageService.findAll();
-        var ab = pageObj.data[0]['page'];
+async function crawler(ab) {
         //列表
         if (ab == 1) {
             url = url + "Index.html";
@@ -87,7 +84,7 @@ var crawler = function () {
                         //类型： 【年　代】：2018  【地　区】：欧美
                         type = chapter.text();
                         var str = chapter.text();//类型：动作片 年代：2018  地区：中国 更新：2018-05-19
-                        var list = str.split("【地　区】：");
+                        var list = str. split("【地　区】：");
                         for (var k = 0; k < list.length; k++) {
                             if (list[k] != "") {
                                 var typeItem = list[k].split("：");
@@ -104,6 +101,9 @@ var crawler = function () {
                         }
                     }
                 });
+                if (year=="" || year.trim() == "未知") {
+                    year = "2012"
+                }
                 moveObj.year = year;
                 moveObj.area = area;
                 moveObj.sets = sets;
@@ -157,8 +157,8 @@ var crawler = function () {
                 for (var j = 0; j < playObjList.length; j++) {
                     var source = "";
                     var titlePlay = playObjList[j];
-                    if (titlePlay.title.indexOf('快播')==0){
-                        logger.info("=========快播=============")
+                    if (titlePlay.title.indexOf('快播')==0 || titlePlay.title.indexOf("吉吉影音")==0 || titlePlay.title.indexOf("西瓜影音")==0){
+                        logger.info("=========快播===吉吉影音====西瓜影音======")
                         continue;
                     }
                     for (var uu = 0; uu < titlePlay.links.length; uu++) {
@@ -168,32 +168,26 @@ var crawler = function () {
                         var reg2 = /unescape\("(\w+.*?)"/g;
                         var result2 = reg2.exec(htmlPa);
                         var idUrl = set_code(unescape(result2[1], 0, 0));
-                        if (titlePlay.title == '西瓜影音'){
-                            playList.push({
-                                play: titlePlay.title,//播放器
-                                title: titlePlay.links[uu].text,
-                                url: iframeUrl
-                            });
-                        } else {
-                            var jsUrl = base_url + "/" + $3(".play_1").find("script").eq(1).attr("src");
-                            var $4 = await utils.request(jsUrl);
-                            var iframeHtml = $4.html();
-                            var reg = /src=\"(\S+url)/g;
-                            var result = reg.exec(iframeHtml);
-                            var iframeUrl = result[1].replace("'+url", idUrl);
-                            if (iframeUrl.indexOf("http") != 0) {
-                                iframeUrl = base_url + iframeUrl;
-                            }
-                            var $6 = await utils.request(iframeUrl);
-                            var video = $6("#a1").find("video").attr("src");
-                            var iframe = $6("#a1").find("iframe").attr("src");
 
-                            playList.push({
-                                play: titlePlay.title,//播放器
-                                title: titlePlay.links[uu].text,
-                                url: iframeUrl
-                            });
+                        var jsUrl = base_url + "/" + $3(".play_1").find("script").eq(1).attr("src");
+                        var $4 = await utils.request(jsUrl);
+                        var iframeHtml = $4.html();
+                        var reg = /src=\"(\S+url)/g;
+                        var result = reg.exec(iframeHtml);
+                        var iframeUrl = result[1].replace("'+url", idUrl);
+                        if (iframeUrl.indexOf("http") != 0) {
+                            iframeUrl = base_url + iframeUrl;
                         }
+                        var $6 = await utils.request(iframeUrl);
+                        var video = $6("#a1").find("video").attr("src");
+                        var iframe = $6("#a1").find("iframe").attr("src");
+
+                        playList.push({
+                            play: titlePlay.title,//播放器
+                            title: titlePlay.links[uu].text,
+                            url: iframeUrl
+                        });
+
                     }
                 }
 
@@ -286,11 +280,20 @@ var crawler = function () {
         }
         await pageService.update();
         process.exit(0);
-    })();
 };
 //schedule.scheduleJob('*/1 * * * *', function(){
 //while (true) {
 logger.info("=====================" + new Date() + "======================");
-crawler();
+(async () => {
+    try {
+        //var pageObj = await pageService.findAll();
+        var ab = 1;//pageObj.data[0]['page'];
+        //for (var i = 232; i > 0; i--) {
+            await crawler(ab);
+        //}
+    } catch (e) {
+        console.log(e)
+    }
+})();
 //}
 //});
