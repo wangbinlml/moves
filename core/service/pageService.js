@@ -19,3 +19,9 @@ module.exports.update = async (id) => {
     var sql = "update page set page=page-1 where id = ?";
     return await mysql.query(sql,id);
 };
+
+module.exports.increment = async (id) => {
+    id = id || 1;
+    var sql = "update page set page=page+1 where id = ?";
+    return await mysql.query(sql,id);
+};
