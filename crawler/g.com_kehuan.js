@@ -22,6 +22,9 @@ var crawler = function () {
     (async () => {
         /var pageObj = await pageService.findAll(4);
         var ab =pageObj.data[0]['page'];
+        if(ab < 0) {
+            ab = 1;
+        }
         //列表
         if (ab == 1) {
             url = url + "Index.html";
