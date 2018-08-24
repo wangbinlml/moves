@@ -101,7 +101,7 @@ module.exports.findMovesByTagId = async (tag_id, currrent_page, num) => {
     try {
         const data = await Pagination.getData(
             ["select count(*) count from tb_move where tag_id = '" + tag_id + "' and is_del =0",
-                "select * from tb_move where tag_id = '" + tag_id + "' and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
+                "select * from tb_move where tag_id = '" + tag_id + "' and is_del=0 order by year, created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
