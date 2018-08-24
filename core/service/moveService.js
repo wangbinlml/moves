@@ -143,7 +143,7 @@ module.exports.findRelationMoves = async (tag_id, area, offset) => {
     try {
         result.error = 0;
         result.msg = "";
-        result.data = await mysql.query("select * from tb_move where tag_id = ? and area=? and is_del =0 limit 0,? order by created_at desc ", [tag_id,area,offset]);
+        result.data = await mysql.query("select * from tb_move where tag_id = ? and area=? and is_del =0 order by created_at desc limit 0,? ", [tag_id,area,offset]);
     } catch (e) {
         console.log(e);
         result.error = 1;
