@@ -20,13 +20,13 @@ var base_url = "http://v.sigu.me";
 var url = "http://v.sigu.me/list.php?";
 var crawler = function () {
     (async () => {
-        var pageObj = await pageService.findAll(5);
+        var pageObj = await pageService.findAll(7);
         var ab = pageObj.data[0]['page'];
         if (ab < 0) {
             ab = 1;
         }
         //列表
-        url = url + "page=" + ab + "&cat=dongzuo&type=1";
+        url = url + "page=" + ab + "&cat=kehuan&type=1";
         var html = await utils.get(url);
         var $ = cheerio.load(html, {decodeEntities: false});
         var data = $('.v_con_box li');
@@ -53,7 +53,7 @@ var crawler = function () {
                 }
                 var moveObj = {
                     category_id: 1,
-                    tag_id: 1,
+                    tag_id: 2,
                     name: title,
                     cover: src,
                     source: "sigu.me",
@@ -142,7 +142,7 @@ var crawler = function () {
                     if (exits == false) {
                         moveObj = await moveService.insert2(conn, [moveObj.category_id, moveObj.tag_id, moveObj.name, year, area, moveObj.sets, moveObj.cover, moveObj.source, description, moveObj.creator_id]);
                         move_id = moveObj.insertId;
-                        var tagObj = await moveTagService.insert(conn, [move_id, 1]);
+                        var tagObj = await moveTagService.insert(conn, [move_id, 2]);
 
                         for (var u = 0; u < actors.length; u++) {
                             var actorObj = await actorService.findActorByName(actors[u]);
@@ -201,7 +201,7 @@ var crawler = function () {
                 console.log(e);
             }
         }
-        await pageService.increment(5);
+        await pageService.increment(7);
         process.exit(0);
     })();
 };
