@@ -22,11 +22,11 @@ var crawler = function () {
     (async () => {
         var pageObj = await pageService.findAll(5);
         var ab = pageObj.data[0]['page'];
-        if(ab < 0) {
+        if (ab < 0) {
             ab = 1;
         }
         //列表
-        url = url + "page="+ab+"&cat=dongzuo&type=1";
+        url = url + "page=" + ab + "&cat=dongzuo&type=1";
         var html = await utils.get(url);
         var $ = cheerio.load(html, {decodeEntities: false});
         var data = $('.v_con_box li');
@@ -40,7 +40,7 @@ var crawler = function () {
                 var title = dt.children[1].children[0].attribs.alt;
                 var a = dt.children[1].children[4].attribs.href;
                 var playParam = a.split("?")[1];
-                var detail_url = base_url+"/play.php?" + escape(playParam);
+                var detail_url = base_url + "/play.php?" + escape(playParam);
 
                 //演员
                 var actAbc = dt.children[3].children[3].children[0].data.replace("演员：", "");
@@ -77,32 +77,56 @@ var crawler = function () {
                 }
                 var html2 = await utils.get(detail_url);
                 var $2 = cheerio.load(html2, {decodeEntities: false});
-
-                var playSource = "http://v.sigu.me/souce/arr.php?bing=0&"+playParam;
-                var sourceList = await utils.get(playSource);
-                sourceList = JSON.parse(sourceList);
-                var playSourceListUrlsList = [];
-                var apiUrl = "http://api.bbbbbb.me";
-                for (var y = 0; y< sourceList.length; y++) {
-                    var html222 = await utils.get(apiUrl +"/jx/?url="+escape(sourceList[y]));
-                    var $7 = cheerio.load(html222, {decodeEntities: false});
-                    var sourceLines = $7(".panel").find("a");
-                    for (var b = 0; b < sourceLines.length; b++) {
-                        var sourceLine = sourceLines[b];
-                        var sourceHref = unescape(sourceLine.attribs.href);
-                        var sourceTitle = sourceLine.children[0].data;
-                        var reg = /sigu\('(\S+)'\)/g;
-                        var result = reg.exec(sourceHref);
-                        var params = result[1].substring(result[1].indexOf("?url=")+5);
-                        var uri = result[1].substring(0, result[1].indexOf("?")+1);
-                        result = escape(params);
-                        var sHref = apiUrl + uri + "url=" +result;
-                        playSourceListUrlsList.push({
-                            play: "iframe",//播放器
-                            title: sourceTitle,
-                            url: sHref
-                        });
+                var flag = false;
+                var pages = [];
+                for (var pp = 0; pp < 6; pp++) {
+                    try {
+                        var aaaa = "http://v.sigu.me/souce/arr.php?bing=" + pp + "&" + playParam;
+                        var bbbb = await utils.get(aaaa);
+                        if (bbbb == "[null]") {
+                            break;
+                        }
+                        pages.push("1");
+                    } catch (e) {
+                        flag = true;
                     }
+                    if (flag) {
+                        break;
+                    }
+                }
+                var playListSource = [];
+                for (var uu = 0; uu < pages.length; uu++) {
+                    var ppp = "在线资源" + (uu + 1);
+                    var playSource = "http://v.sigu.me/souce/arr.php?bing=" + uu + "&" + playParam;
+                    var sourceList = await utils.get(playSource);
+                    sourceList = JSON.parse(sourceList);
+                    var playSourceListUrlsList = [];
+                    var apiUrl = "http://api.bbbbbb.me";
+                    for (var y = 0; y < sourceList.length; y++) {
+                        var html222 = await utils.get(apiUrl + "/jx/?url=" + escape(sourceList[y]));
+                        var $7 = cheerio.load(html222, {decodeEntities: false});
+                        var sourceLines = $7(".panel").find("a");
+                        for (var b = 0; b < sourceLines.length; b++) {
+                            var sourceLine = sourceLines[b];
+                            var sourceHref = unescape(sourceLine.attribs.href);
+                            var sourceTitle = sourceLine.children[0].data;
+                            var reg = /sigu\('(\S+)'\)/g;
+                            var result = reg.exec(sourceHref);
+                            var params = result[1].substring(result[1].indexOf("?url=") + 5);
+                            var uri = result[1].substring(0, result[1].indexOf("?") + 1);
+                            result = escape(params);
+                            var sHref = apiUrl + uri + "url=" + result;
+                            playSourceListUrlsList.push({
+                                play: ppp,//播放器
+                                title: sourceTitle,
+                                url: sHref
+                            });
+                        }
+                    }
+                    playListSource.push({
+                        play: ppp,
+                        list: playSourceListUrlsList
+                    });
                 }
 
                 moveObj.year = year;
@@ -112,13 +136,13 @@ var crawler = function () {
                 //下载地址
                 var downloadList = [];
 
-                if (playSourceListUrlsList.length > 0) {
+                if (playListSource.length > 0) {
                     var description = StringUtils.htmlEncodeByRegExp(content);
                     var move_id = "";
                     if (exits == false) {
                         moveObj = await moveService.insert2(conn, [moveObj.category_id, moveObj.tag_id, moveObj.name, year, area, moveObj.sets, moveObj.cover, moveObj.source, description, moveObj.creator_id]);
                         move_id = moveObj.insertId;
-                        var tagObj = await moveTagService.insert(conn, [move_id, 4]);
+                        var tagObj = await moveTagService.insert(conn, [move_id, 1]);
 
                         for (var u = 0; u < actors.length; u++) {
                             var actorObj = await actorService.findActorByName(actors[u]);
@@ -141,7 +165,7 @@ var crawler = function () {
 
                     for (var f = 0; f < downloadList.length; f++) {
                         var downloadObj = downloadList[f];
-                        var actorObj = await moveDownloadService.findDownloadInfo(move_id,downloadObj.title);
+                        var actorObj = await moveDownloadService.findDownloadInfo(move_id, downloadObj.title);
                         if (actorObj && actorObj.data.length == 0) {
                             await moveDownloadService.insert(conn, [move_id, downloadObj.title, downloadObj.url, 1]);
                         }
@@ -151,15 +175,18 @@ var crawler = function () {
                         await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
                     }*/
 
-                    for (var r = 0; r < playSourceListUrlsList.length; r++) {
-                        var playObj = playSourceListUrlsList[r];
-                        logger.info("====第" + ab + "页保存" + playObj.play + playObj.title + "=====")
-                        if ((playObj.play + "").trim() != "快播") {
-                            var moveUrlExists = await moveUrlService.findMoveByName(move_id, playObj.title, playObj.play);
-                            if (moveUrlExists && moveUrlExists.data.length > 0) {
-                                logger.info("===" + title + "__" + playObj.title + "鏈接已经存在里");
-                            } else {
-                                await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
+                    for (var abc = 0; abc < playListSource.length; abc++) {
+                        var playSourceListUrlsLista = playListSource[abc]['list'];
+                        for (var r = 0; r < playSourceListUrlsLista.length; r++) {
+                            var playObj = playSourceListUrlsLista[r];
+                            logger.info("====第" + ab + "页保存" + playObj.play + playObj.title + "=====线路"+[abc])
+                            if ((playObj.play + "").trim() != "快播") {
+                                var moveUrlExists = await moveUrlService.findMoveByName(move_id, playObj.title, playObj.play);
+                                if (moveUrlExists && moveUrlExists.data.length > 0) {
+                                    logger.info("===" + title + "__" + playObj.title + "鏈接已经存在里");
+                                } else {
+                                    await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
+                                }
                             }
                         }
                     }
@@ -174,7 +201,7 @@ var crawler = function () {
                 console.log(e);
             }
         }
-        await pageService.increment(5);
+        await pageService.increment(1);
         process.exit(0);
     })();
 };
