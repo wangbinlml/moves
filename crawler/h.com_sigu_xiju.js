@@ -20,8 +20,8 @@ var base_url = "http://v.sigu.me";
 var url = "http://v.sigu.me/list.php?";
 var crawler = function () {
     (async () => {
-        var pageObj = await pageService.findAll(6);
-        var ab = pageObj.data[0]['page'];
+        //var pageObj = await pageService.findAll(6);
+        var ab = 1;//pageObj.data[0]['page'];
         if (ab < 0) {
             ab = 1;
         }
