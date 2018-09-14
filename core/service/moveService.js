@@ -190,6 +190,19 @@ module.exports.findMoveToday = async (start_time, end_time, count) => {
     }
     return result;
 };
+module.exports.findMoveTodayUpdate = async (start_time, count) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move where updated_at >= ? and is_del =0 order by updated_at desc limit ?", [start_time, count]);
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取电影失败";
+    }
+    return result;
+};
 module.exports.findMoveTops = async (count,category_id) => {
     category_id = category_id || "1";
     let result = {};

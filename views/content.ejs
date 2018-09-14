@@ -23,11 +23,7 @@
                     </div>
                 </div>
             </section>
-        </div>
-        <% include partials/today_list %>
-    </div>
-    <div class="row">
-        <div class="col-md-9 order-md-1">
+
             <section class="panel">
                 <header class="panel-heading">
                     推荐电视剧<a href="/move?category_id=2">更多</a>
@@ -52,12 +48,7 @@
                     </div>
                 </div>
             </section>
-        </div>
 
-        <% include partials/news_sets_list %>
-    </div>
-    <div class="row">
-        <div class="col-md-9 order-md-1">
             <section class="panel">
                 <header class="panel-heading">
                     最新电影
@@ -81,6 +72,7 @@
                     </div>
                 </div>
             </section>
+
             <section class="panel">
                 <header class="panel-heading">
                     剧情电影<a href="/move/tags?tag_id=3&tag_name=剧情电影">更多</a>
@@ -102,6 +94,7 @@
                     </div>
                 </div>
             </section>
+
             <section class="panel">
                 <header class="panel-heading">
                     动作电影<a href="/move/tags?tag_id=1&tag_name=动作电影">更多</a>
@@ -148,5 +141,8 @@
         </div>
         <% include partials/tags_list %>
         <% include partials/area_list %>
+        <% include partials/today_list %>
+        <% include partials/news_sets_list %>
+        <% include partials/today_update_list.ejs %>
     </div>
 </div>

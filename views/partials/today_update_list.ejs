@@ -2,15 +2,15 @@
 <div class="col-md-3 order-md-2 area_list">
     <section class="panel">
         <header class="panel-heading">
-            今日新增
+            今日更新
         </header>
         <div class="slimScrollDiv">
             <div class="panel-body" id="noti-box">
                 <ul>
-                    <% if (today_list.data.length>0) {
-                        today_list.data.forEach(function(item, index){
+                    <% if (today_update_list.data.length>0) {
+                    today_update_list.data.forEach(function(item, index){
                     %>
-                    <li style="clear: both; width:100%;" class="sets_label">
+                    <li style="" class="sets_label">
                         <%=index+1%> &nbsp;<a href="/move/detail?move_id=<%= item['id'] %>"><%= item['name'] %></a>
                         <% if(item['category_id']==2){ %>
                             &nbsp;&nbsp;<label class="hdtag2">[<%= item['sets'] %>]</label>
@@ -22,7 +22,7 @@
                         })
                         } else {
                     %>
-                    <li>今天暂无新增</li>
+                    <li>今天暂无更新</li>
                     <% } %>
                 </ul>
             </div>
