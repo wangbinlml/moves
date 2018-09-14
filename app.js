@@ -20,6 +20,7 @@ var contactUs = require('./routes/contact-us');
 var downloads = require('./routes/downloads');
 var menu_auth = require("./routes/backend/menu_auth");
 var verify = require('./routes/verify');
+//var search = require('./routes/search');
 var admin = require('./routes/admin');
 
 var app = express();
@@ -76,6 +77,7 @@ app.use('/move', move);
 app.use('/login', login);
 app.use('/verify', verify);
 app.use('/admin', admin);
+//app.use('/search', search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -14,7 +14,7 @@ module.exports.getData= async (sql, current_page, num) => {
 
     // 计算总页数
     var allCount = count[0]['count'];
-    var allPage = parseInt(allCount) / 20;
+    var allPage = parseInt(allCount) / num;
     var pageStr = allPage.toString();
     // 不能被整除
     if (pageStr.indexOf('.') > 0) {
