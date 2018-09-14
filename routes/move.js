@@ -1,6 +1,7 @@
 var express = require('express');
-var _ = require('lodash');
 var router = express.Router();
+var _ = require('lodash');
+const moment = require('moment');
 const StringUtils = require('../core/util/StringUtils');
 const moveService = require('../core/service/moveService');
 const actorService = require('../core/service/actorService');
@@ -36,6 +37,8 @@ router.get('/', async function (req, res, next) {
         data.data = paginationObj;
         moves = paginationObj;
     }
+    var today = moment().format("YYYY-MM-DD");
+    var today_update_list = await moveService.findMoveTodayUpdate(today + " 00:00:00", 20);
     var areas = await moveService.findAllArea();
     var tags = await tagService.findTags();
     res.render("moves", {
@@ -45,6 +48,7 @@ router.get('/', async function (req, res, next) {
         moves: moves,
         areas: areas,
         tags: tags,
+        today_update_list: today_update_list,
         user: req.session.user,
         active: category_id
     });
