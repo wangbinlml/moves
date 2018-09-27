@@ -111,6 +111,11 @@ var get = function (url, cb, char) {
     }
 };
 var get2 = function (url, cb) {
+    var options = {
+        url: url,
+        encoding: null,
+        headers: headers
+    };
     if (typeof cb == "function") {
         https.get(url, function (res) {
             var data = "";
@@ -125,7 +130,14 @@ var get2 = function (url, cb) {
         });
     } else {
         return new Promise(function (resolve, reject) {
-            https.get(url, function (res) {
+            originRequest(options, function (error, response, body) {
+                if (!error && response.statusCode == 200) {// 发送请求
+                    resolve(body);
+                } else {
+                    reject(error);
+                }
+            });
+            /*https.get(url, function (res) {
                 var data = "";
                 res.on("data", function (buf) {
                     data = data + buf;
@@ -135,7 +147,7 @@ var get2 = function (url, cb) {
                 });
             }).on('error', function (e) {
                 reject("Got error: " + e.message)
-            });
+            });*/
         });
     }
 };
