@@ -28,8 +28,9 @@ var crawler = function () {
         } else {
             url = url + "_" + ab + ".html";
         }
-        var html = await utils.get(url);
-        var $ = cheerio.load(html, {decodeEntities: false});
+        //var html = await utils.get(url);
+        //var $ = cheerio.load(html, {decodeEntities: false});
+        var $ = await utils.request(url,"utf-8");
         var data = $('.mov_list li div.pic a');
         for (var i = 0; i < data.length; i++) {
             var dt = data[i];
@@ -64,8 +65,8 @@ var crawler = function () {
             var content = "";
             var playList = [];
 
-            var detail_html = await utils.get(detail_url);
-            var $2 = cheerio.load(detail_html, {decodeEntities: false});
+            //var detail_html = await utils.get(detail_url);
+            var $2 = await utils.request(detail_url,"utf-8");//cheerio.load(detail_html, {decodeEntities: false});
 
             var conn = await mysql.getConnection();
             mysql.beginTransaction(conn);
@@ -171,7 +172,7 @@ var crawler = function () {
                         var play_url = base_url + linkPlay[0].link;
                         //play_url = "http://www.52lailook.com/play/player/16750-1-19.html";
                         var play_html = await utils.get(play_url);
-                        var $3 = cheerio.load(play_html, {decodeEntities: false});
+                        var $3 = await utils.request(play_url,"utf-8");//cheerio.load(play_html, {decodeEntities: false});
                         var script = $3("center div script");
                         script.each(function (o, abcd) {
                             var sc = $(this);
