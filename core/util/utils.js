@@ -70,6 +70,11 @@ var download = function (url, dir, filename, cb) {
 };
 
 var get = function (url, cb, char) {
+    var options = {
+        url: url,
+        encoding: null,
+        headers: headers
+    };
     if (typeof cb == "function") {
         http.get(url, function (res) {
             var data = "";
@@ -84,7 +89,14 @@ var get = function (url, cb, char) {
         });
     } else {
         return new Promise(function (resolve, reject) {
-            http.get(url, function (res) {
+            originRequest(options, function (error, response, body) {
+                if (!error && response.statusCode == 200) {// 发送请求
+                    resolve(body);
+                } else {
+                    reject(error);
+                }
+            });
+            /*http.get(url, function (res) {
                 var data = "";
                 res.on("data", function (buf) {
                     data = data + buf;
@@ -94,7 +106,7 @@ var get = function (url, cb, char) {
                 });
             }).on('error', function (e) {
                 reject("Got error: " + e.message)
-            });
+            });*/
         });
     }
 };
