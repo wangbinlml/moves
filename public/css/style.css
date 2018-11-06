@@ -575,6 +575,9 @@ dd, dt {
         margin-right: 0px;
         margin-bottom: 2px;
     }
+    .navbar-header {
+        width: auto;
+    }
 }
 .navbar-header {
     width: 100%;
