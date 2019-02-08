@@ -10,6 +10,14 @@
                         <div id="iqiyi_player">
                             <iframe src='http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=<%= currentMoveUrls['url'] %>&tvId=<%= currentMoveUrls['url'] %>&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%'
                                     frameborder='0' width='100%' height='400' allowfullscreen='true'></iframe>
+
+                            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="100%" height="400">
+                              <param name="movie" value="http://dispatcher.video.qiyi.com/disp/shareplayer.swf?vid=754159da4d6063c7eb8e99fb04020bab&tvId=<%= currentMoveUrls['url'] %>&coop=&cid=&bd=1"/>
+                              <param name="quality" value="high"/>
+                              <param name="wmode" value="transparent"/>
+                              <param value="true" name="allowFullScreen"/>
+                              <embed src="http://dispatcher.video.qiyi.com/disp/shareplayer.swf?vid=754159da4d6063c7eb8e99fb04020bab&tvId=479728600&coop=&cid=&bd=1" wmode="transparent" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="680" height="520" allowfullscreen="true"/>
+                            </object>
                          </div>
                         <% include ../partials/play_list %>
                         <% include ../partials/relation_list %>
