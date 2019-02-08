@@ -249,7 +249,7 @@ var crawler = function () {
                 console.log(e);
             }
         }
-        //await pageService.update(9);
+        await pageService.update(9);
         process.exit(0);
     })();
 };
