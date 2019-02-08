@@ -13,7 +13,9 @@ var cheerio = require("cheerio");
 var headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36'
 };
-
+var headers2 = {
+    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
+};
 var request = function (url, charset, cb) {
     // 发送请求
     var options = {
@@ -151,6 +153,47 @@ var get2 = function (url, cb) {
         });
     }
 };
+var get3 = function (url, cb) {
+    var options = {
+        url: url,
+        encoding: null,
+        headers: headers2
+    };
+    if (typeof cb == "function") {
+        https.get(url, function (res) {
+            var data = "";
+            res.on("data", function (buf) {
+                data = data + buf;
+            });
+            res.on('end', function () {
+                cb(null, data);
+            });
+        }).on('error', function (e) {
+            cb("Got error: " + e.message);
+        });
+    } else {
+        return new Promise(function (resolve, reject) {
+            originRequest(options, function (error, response, body) {
+                if (!error && response.statusCode == 200) {// 发送请求
+                    resolve(body);
+                } else {
+                    reject(error);
+                }
+            });
+            /*https.get(url, function (res) {
+                var data = "";
+                res.on("data", function (buf) {
+                    data = data + buf;
+                });
+                res.on('end', function () {
+                    resolve(data);
+                });
+            }).on('error', function (e) {
+                reject("Got error: " + e.message)
+            });*/
+        });
+    }
+};
 
 /*
  * 递归遍历
@@ -233,11 +276,25 @@ var readFile = function(path,filesList,targetObj)
         }
     }
 }
+function httpString(s) {
+    //var reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
+    //var reg = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    //var reg=/(http(s)?\:\/\/)?(www\.)?(\w+\:\d+)?(\/\w+)+\.(swf|gif|jpg|bmp|jpeg)/gi;
+    //var reg=/(http(s)?\:\/\/)?(www\.)?(\w+\:\d+)?(\/\w+)+\.(swf|gif|jpg|bmp|jpeg)/gi;
+    var reg= /(https?|http|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/g;
+    //var reg= /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?$/;
+    //v = v.replace(reg, "<a href='$1$2'>$1$2</a>"); //这里的reg就是上面的正则表达式
+    //s = s.replace(reg, "$1$2"); //这里的reg就是上面的正则表达式
+    s = s.match(reg);
+    return(s)
+}
 
 exports.get = get;
 exports.get2 = get2;
+exports.get3 = get3;
 exports.request = request;
 exports.GetRandomNum = GetRandomNum;
 exports.download = download;
 exports.recursion = recursion;
 exports.geFileList = geFileList;
+exports.httpString = httpString;
