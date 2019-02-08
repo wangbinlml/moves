@@ -151,12 +151,18 @@ var crawler = function () {
                     if(ef == "") continue;
                     var tt = "#"+playList[oo]['title']+"$";
                     var id = ef.replace(tt,"");
-                    var iframe = "https://ck.ee7e.com/jx.php?id="+id;
-                    var html333 = await utils.get3("https://ck.ee7e.com/jx.php?id="+id);
-                    var $8 = cheerio.load(html333, {decodeEntities: false});
-                    var sct = $8("script")[8]['children'][0]['data'];
-                    var urls = utils.httpString(sct);
-                    var url3 = urls[1];
+
+                    if(ef.indexOf("iqiyi")>=0) {
+                        ppp="爱奇艺";
+                        var url3 = id.replace("_iqiyi","");
+                    } else {
+                        var iframe = "https://ck.ee7e.com/jx.php?id=" + id;
+                        var html333 = await utils.get3("https://ck.ee7e.com/jx.php?id=" + id);
+                        var $8 = cheerio.load(html333, {decodeEntities: false});
+                        var sct = $8("script")[8]['children'][0]['data'];
+                        var urls = utils.httpString(sct);
+                        var url3 = urls[1];
+                    }
                     /*if(oo == 0){
                         playSourceListUrlsList.push({
                             play: "iframe",//播放器
@@ -164,6 +170,7 @@ var crawler = function () {
                             url: iframe
                         });
                     }*/
+
                     playSourceListUrlsList.push({
                         play: ppp,//播放器
                         title: playList[oo]['title'],
