@@ -8,10 +8,9 @@
                 <section class="panel">
                     <div class="panel-body table-responsive">
                         <div id="iqiyi_player">
-                            <iframe src='http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=77a4ba9809e102a2148796a15c4d964c&tvId=<%= currentMoveUrls['url'] %>&sign=2c2b428709b613a48425847a62f0dfbc17545dd569d1bfaf09cdad939321e65b&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%'
-                            frameborder='0' width='100%' height='100%' allowfullscreen='true'></iframe>
+                            <iframe src='http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=<%= currentMoveUrls['url'] %>&tvId=<%= currentMoveUrls['url'] %>&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%'
+                                    frameborder='0' width='100%' height='400' allowfullscreen='true'></iframe>
                          </div>
-
                         <% include ../partials/play_list %>
                         <% include ../partials/relation_list %>
                     </div>
