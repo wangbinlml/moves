@@ -22,8 +22,8 @@ var url = "http://m.kanww.com/list/";
 //yy6029
 var crawler = function () {
     (async () => {
-        var pageObj = await pageService.findAll(8);
-        var ab = pageObj.data[0]['page'];
+        //var pageObj = await pageService.findAll(8);
+        var ab = 1;//pageObj.data[0]['page'];
         if (ab < 0) {
             ab = 1;
         }
@@ -139,17 +139,17 @@ var crawler = function () {
                     if(ef == "") continue;
                     var tt = "#"+playList[oo]['title']+"$";
                     var id = ef.replace(tt,"");
-                    if(ef.indexOf("iqiyi")>=0) {
+                    /*if(ef.indexOf("iqiyi")>=0) {
                         ppp="爱奇艺";
                         var url3 = id.replace("_iqiyi","");
-                    } else {
+                    } else {*/
                         var iframe = "https://ck.ee7e.com/jx.php?id=" + id;
                         var html333 = await utils.get3("https://ck.ee7e.com/jx.php?id=" + id);
                         var $8 = cheerio.load(html333, {decodeEntities: false});
                         var sct = $8("script")[8]['children'][0]['data'];
                         var urls = utils.httpString(sct);
                         var url3 = urls[1];
-                    }
+                    //}
                     /*if(oo == 0){
                         playSourceListUrlsList.push({
                             play: "iframe",//播放器
@@ -224,11 +224,11 @@ var crawler = function () {
                                 if ((playObj.play + "").trim() != "快播") {
                                     flag = true;
                                     var moveUrlExists = await moveUrlService.findMoveByName(move_id, playObj.title, playObj.play);
-                                    //if (moveUrlExists && moveUrlExists.data.length > 0) {
-                                    //   logger.info("===" + title + "__" + playObj.title + "鏈接已经存在里");
-                                    //} else {
-                                    await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
-                                    // }
+                                    if (moveUrlExists && moveUrlExists.data.length > 0) {
+                                       logger.info("===" + title + "__" + playObj.title + "鏈接已经存在里");
+                                    } else {
+                                        await moveUrlService.insert(conn, [move_id, playObj.title, playObj.url, playObj.play, 1]);
+                                     }
                                 }
                             } catch (e) {
                                 flag = false;
@@ -251,7 +251,7 @@ var crawler = function () {
                 console.log(e);
             }
         }
-        await pageService.update(8);
+        //await pageService.update(8);
         process.exit(0);
     })();
 };
