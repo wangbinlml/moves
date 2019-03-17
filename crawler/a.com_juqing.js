@@ -15,9 +15,9 @@ var moveUrlService = require("../core/service/moveUrlService");
 var tagService = require("../core/service/tagService");
 var logger = require('../core/logger').getLogger("system");
 
-var base_url = "http://www.52lailook.com";
+var base_url = "http://www.52laikk.com";
 //动作
-var url = "http://www.52lailook.com/play/plist/12";
+var url = "http://www.52laikk.com/play/plist/12";
 (async () => {
     //到50页
     //for (var ab = 1; ab <10; ab++) {

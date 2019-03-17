@@ -16,9 +16,9 @@ var tagService = require("../core/service/tagService");
 
 var logger = require('../core/logger').getLogger("system");
 
-var base_url = "http://www.52lailook.com";
+var base_url = "http://www.52laikk.com";
 //动作
-var url = "http://www.52lailook.com/play/plist/8";
+var url = "http://www.52laikk.com/play/plist/8";
 (async () => {
     //for (var ab = 1; ab <10; ab++) {
     for (var ab = 1; ab > 0; ab--) {
@@ -138,7 +138,7 @@ var url = "http://www.52lailook.com/play/plist/8";
                         var titlePlay = titleP[j];
                         var linkPlay = linkP[j];
                         var play_url = base_url + linkPlay.link;
-                        //play_url = "http://www.52lailook.com/play/player/16750-1-19.html";
+                        //play_url = "http://www.52laikk.com/play/player/16750-1-19.html";
                         var play_html = await utils.get(play_url);
                         var $3 = cheerio.load(play_html, {decodeEntities: false});
                         var script = $3("center div script");
