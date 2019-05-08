@@ -18,14 +18,14 @@ var moveTagService = require("../core/service/moveTagService");
 var moveUrlService = require("../core/service/moveUrlService");
 var tagService = require("../core/service/tagService");
 var pageService = require("../core/service/pageService");
-var base_url = "https://www.lookpian.com";
+var base_url = "https://www.kanpian33.com";
 var schedule = require("node-schedule");
 
 var crawler = function () {
     (async () => {
         //var pageObj = await pageService.findAll();
         var page = 1;//pageObj.data[0]['page'];
-        var url = "https://www.lookpian.com/search.php?page="+page+"&searchtype=5&tid=1";
+        var url = "https://www.kanpian33.com/search.php?page="+page+"&searchtype=5&tid=1";
         logger.info("url: " + url);
         var html = await utils.get2(url);
         var $ = cheerio.load(html, {decodeEntities: false});
@@ -50,7 +50,7 @@ var crawler = function () {
                     tag_id: 3,
                     name: title,
                     cover: src,
-                    source: "lookpian",
+                    source: "kanpian33",
                     description: "",
                     creator_id: 1
                 };
