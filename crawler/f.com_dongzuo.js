@@ -16,8 +16,8 @@ var tagService = require("../core/service/tagService");
 var pageService = require("../core/service/pageService");
 var schedule = require("node-schedule");
 var logger = require('../core/logger').getLogger("system");
-var base_url = "http://www.52laikk.com";
-var url = "http://www.52laikk.com/play/plist/15";
+var base_url = "http://www.52gqhd.com";
+var url = "http://www.52gqhd.com/play/plist/15";
 var crawler = function () {
     (async () => {
         //var pageObj = await pageService.findAll();
@@ -73,12 +73,14 @@ var crawler = function () {
             try {
                 var $5 = $2("#nr_if");
                 var p = $2("#nr_if").children("p");
+                var h1 = $2("#nr_if").find("h1");
+                var title2 = h1.text()
                 p.each(function (index, item) {
                     var chapter = $(this);
                     if (index == 0) {
                         //电影
-                        var title2 = chapter.find("a").text();
-                    } else if (index == 1) {
+                        //var title2 = chapter.find("a").text();
+                    } else if (index == 2) {
                         //演员表：
                         var actorList = chapter.find("a");
                         actorList.each(function (a, al) {
@@ -86,7 +88,7 @@ var crawler = function () {
                                 actors.push($(this).text());
                             }
                         });
-                    } else if (index == 2) {
+                    } else if (index == 3) {
                         //类型：
                         type = chapter.find("a").text();
                         var str = chapter.text();//类型：动作片 年代：2018  地区：中国 更新：2018-05-19
@@ -170,7 +172,7 @@ var crawler = function () {
                         var linkPlay = linkP[j];
                         //for (var uu = 0; uu < linkPlay.length; uu++) {
                         var play_url = base_url + linkPlay[0].link;
-                        //play_url = "http://www.52laikk.com/play/player/16750-1-19.html";
+                        //play_url = "http://www.52gqhd.com/play/player/16750-1-19.html";
                         //var play_html = await utils.get(play_url);
                         //var $3 = cheerio.load(play_html, {decodeEntities: false});
 
