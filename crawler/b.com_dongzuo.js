@@ -18,9 +18,9 @@ var moveUrlService = require("../core/service/moveUrlService");
 var tagService = require("../core/service/tagService");
 
 var logger = require('../core/logger').getLogger("system");
-var base_url = "http://www.84dm.com";
+var base_url = "http://www.50bx.com";
 //动作
-var url = "http://www.84dm.com/type/1/1.html";
+var url = "http://www.50bx.com/type/1/1.html";
 (async () => {
     //到50页
         //列表
@@ -52,7 +52,7 @@ var url = "http://www.84dm.com/type/1/1.html";
                     tag_id: 3,
                     name: title,
                     cover: src,
-                    source: "84dm",
+                    source: "50bx",
                     description: "",
                     creator_id: 1
                 };
@@ -208,7 +208,7 @@ var url = "http://www.84dm.com/type/1/1.html";
                         const postData = querystring.stringify(objData);
 
                         const options = {
-                            hostname: 'www.84dm.com',
+                            hostname: 'www.50bx.com',
                             port: 80,
                             path: '/url.php',
                             method: 'POST'
