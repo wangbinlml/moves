@@ -650,3 +650,6 @@ dd, dt {
     position:relative;
     display:block;
 }
+.detail-img {
+    width: 100%;
+}
