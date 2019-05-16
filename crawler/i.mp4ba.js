@@ -89,9 +89,9 @@ var crawler = function () {
                 //演员表：
                 if(actList.length>0) {
                     var actorList = actList[1].split("/");
-                    for (var i = 0; i < actorList.length; i++) {
-                        if (actorList[i] != "") {
-                            actors.push(actorList[i]);
+                    for (var b = 0; b < actorList.length; b++) {
+                        if (actorList[b] != "") {
+                            actors.push(actorList[b]);
                         }
                     }
                 }
