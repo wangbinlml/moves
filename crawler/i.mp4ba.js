@@ -60,18 +60,18 @@ var crawler = function () {
             var content = "";
             var playList = [];
 
-            if (type == "动作片") {
+            if (type.indexOf("动作") != -1) {
                 moveObj.tag_id = 1;
-            } else if (type == "科幻片") {
+            } else if (type.indexOf("科幻片") != -1) {
                 moveObj.tag_id = 2;
-            } else if (type == "剧情片") {
+            } else if (type.indexOf("剧情片") != -1) {
                 moveObj.tag_id = 3;
-            } else if (type == "喜剧片") {
+            } else if (type.indexOf("喜剧片") != -1) {
                 moveObj.tag_id = 4;
-            } else if (type == "恐怖片") {
+            } else if (type.indexOf("恐怖片") != -1) {
                 moveObj.tag_id = 5;
             } else {
-                moveObj.tag_id = 4;
+                moveObj.tag_id = 2;
             }
 
             //var detail_html = await utils.get(detail_url);
