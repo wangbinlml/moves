@@ -108,7 +108,7 @@ var crawler = function () {
                 images.each(function (ind) {
                     var bannar = $(this);
                     if(ind == 0) {
-                        content = content + "<br/><div>" + title + "截图</div>";
+                        content = content + "<br/><div class='names'>" + title + "截图</div>";
                     }
                     content = content + "<img class='detail-img' src = '"+bannar.attr('src')+"'/>";
                 });

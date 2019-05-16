@@ -653,3 +653,9 @@ dd, dt {
 .detail-img {
     width: 100%;
 }
+.names {
+    border-left: 4px solid #5FB878;
+    padding: 0 0 0 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
