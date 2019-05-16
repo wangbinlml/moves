@@ -210,6 +210,17 @@ var crawler = function () {
                         move_id = movelist.data[0]['id'];
                         logger.info("===更新=====");
                         await moveService.update(conn, sets,move_id);
+                        for (var f = 0; f < downloadList.length; f++) {
+                            var downloadObj = downloadList[f];
+                            var title = downloadObj.title;
+                            var type = downloadObj.type;
+                            var exisDownload = await moveDownloadService.findDownloadInfoByType(move_id,title,type);
+                            if (exisDownload && exisDownload.data.length > 0) {
+                                logger.info("下载链接存在了")
+                            } else {
+                                await moveDownloadService.insert(conn, [move_id, title, downloadObj.url, downloadObj.type, 1]);
+                            }
+                        }
                     }
                     mysql.commit(conn);
                     logger.info("第" + ab + "页=====第" + i + "条======完成");
