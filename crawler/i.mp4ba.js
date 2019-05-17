@@ -144,7 +144,7 @@ var crawler = function () {
                                     var as = $(this).find('ul').find('li');
                                     var as2 = $(this).find('ul').find('li').children('a');
                                     var tp = 0;
-                                    //var title2 = as2.text();//集数，或者名字
+                                    var title2 = as2.text();//集数，或者名字
                                     if (tabList[index - 1] == "720P") {
                                         tp = 2;
                                     } else if (tabList[index - 1] == "1080P") {
@@ -152,22 +152,26 @@ var crawler = function () {
                                     } else if (tabList[index - 1] == "百度网盘") {
                                         tp = 3;
                                     }
-                                    as2.each(function () {
-                                        var tt = $(this);
-                                        var title2 = "[" + tabList[index - 1] + "]" + tt.text();
-                                        var p = as.find('.btn-group').find('p');
+                                    title2 = "[" + tabList[index - 1] + "]" + title2;
+                                    as.each(function () {
+                                        var tt = title2;
+                                        var alist = $(this).find('.btn-group').find('a');
+                                        var p = $(this).find('.btn-group').find('p');
                                         if (p && p.text().indexOf("提取码") != -1) {
-                                            title2 = title2 + "-" + p.text();
+                                            tt = title2 + "-" + p.text();
                                         }
-
-                                        var href = tt.attr("href"); //下载链接
-                                        if (href) {
-                                            downloadList.push({
-                                                title: title2,
-                                                type: tp,
-                                                url: href
-                                            });
-                                        }
+                                        alist.each(function () {
+                                            var a = $(this);
+                                            var href = a.attr("href"); //下载链接
+                                            var txt = a.text(); //下载工具label；BT下载
+                                            if (href) {
+                                                downloadList.push({
+                                                    title: tt,
+                                                    type: tp,
+                                                    url: href
+                                                });
+                                            }
+                                        });
                                     });
                                 }
                             });
