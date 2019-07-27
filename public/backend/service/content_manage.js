@@ -19,7 +19,7 @@ var datatable = $('#contents').DataTable({
         {"data": "tag"},
         {"data": "year"},
         {"data": "area"},
-        {"data": "hot"},
+        {"data": "top"},
         {"data": "flash"},
         {"data": "views"},
         {"data": "source"},
@@ -35,7 +35,9 @@ var datatable = $('#contents').DataTable({
                 if (sex == "男") {
                     row.sex = 1;
                 }
-                return '<a class="" data-toggle="modal" id="content_id_' + row.id + '" data-target="#e-dialog-content" data-whatever=\'' + JSON.stringify(row) + '\'><i class="fa fa-edit icon-white"></i> 编辑</a>&nbsp;&nbsp;<a name="' + row.id + '" onclick="removeData(' + row.id + ')" class="content_remove"><i class="fa fa-remove icon-white"></i> 删除</a>';
+                return '<a class="" data-toggle="modal" id="content_id_' + row.id + '" data-target="#e-dialog-content" data-whatever=\'' + JSON.stringify(row) + '\'><i class="fa fa-edit icon-white"></i> 编辑</a>' +
+                    '&nbsp;&nbsp;<a name="' + row.id + '" onclick="removeData(' + row.id + ')" class="content_remove"><i class="fa fa-remove icon-white"></i> 删除</a>' +
+                    '&nbsp;&nbsp;<a name="' + row.id + '" onclick="topDataContent(' + row.id + ','+row.top+')" class="content_remove"><i class="fa fa-remove icon-white"></i> '+(row.top ==1 ? "取消置顶" : "置顶")+'</a>';
             }
         }
     ],
@@ -198,6 +200,40 @@ var deleteContentData = function (ids) {
                     type: 'success',
                     layout: 'topCenter',
                     text: result.msg || '删除用户成功',
+                    timeout: '2000'
+                }).show();
+                datatable.ajax.url('/admin/contents/load?s_name=' + $("#s_name").val()).load();
+            }
+        }
+    });
+};
+var topDataContent = function (ids,top) {
+    $.ajax({
+        type: "post",
+        url: "/admin/contents/top",
+        asyc: false,
+        data: {ids: ids, top:top},
+        error: function (error) {
+            new Noty({
+                type: 'error',
+                layout: 'topCenter',
+                text: '内部错误，请稍后再试',
+                timeout: '5000'
+            }).show();
+        },
+        success: function (result) {
+            if (result.error) {
+                new Noty({
+                    type: 'error',
+                    layout: 'topCenter',
+                    text: result.msg || '置顶失败',
+                    timeout: '2000'
+                }).show();
+            } else {
+                new Noty({
+                    type: 'success',
+                    layout: 'topCenter',
+                    text: result.msg || '置顶成功',
                     timeout: '2000'
                 }).show();
                 datatable.ajax.url('/admin/contents/load?s_name=' + $("#s_name").val()).load();

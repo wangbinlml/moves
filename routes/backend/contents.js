@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
 });
 router.get('/load', async(req, res, next) => {
     var sqlcount = "select count(*) count from tb_move where is_del=0";
-    var sql = "select * from tb_move where is_del=0";
+    var sql = "select * from tb_move where is_del=0 ";
 
     var start = req.query.start;
     var length = req.query.length;
@@ -40,7 +40,7 @@ router.get('/load', async(req, res, next) => {
     }
 
     var memuCount = await mysql.query(sqlcount);
-    sql = sql + " ORDER BY id DESC limit " + start + "," + length;
+    sql = sql + " ORDER BY top desc, id DESC limit " + start + "," + length;
     var result = await mysql.query(sql);
     var backResult = {
         draw: draw,
@@ -70,6 +70,7 @@ router.get('/load', async(req, res, next) => {
             year: result[i].year,
             area: result[i].area,
             hot: result[i].hot,
+            top: result[i].top,
             flash: result[i].flash,
             views: result[i].views,
             source: result[i].source,
@@ -173,4 +174,43 @@ router.delete('/delete', async(req, res, next) => {
     }
     res.status(200).json(result);
 });
+
+router.post('/top', async(req, res, next) => {
+    var result = {
+        error: 0,
+        msg: ""
+    };
+
+    var conn = await mysql.getConnection();
+    await mysql.beginTransaction(conn);
+    try {
+        var user = req.session.user;
+        log.info("delete role params: ", req.body);
+        var ids = req.body.ids;
+        var top = req.body.top;
+        if(top == 1) {
+            top = 0;
+        } else if(top ==0) {
+            top = 1;
+        }
+        if (ids && ids.trim() != "") {
+            sql = "update tb_move set top=? where id=?";
+            var params = [top, ids];
+            ret = await mysql.query(sql, params);
+            await common.saveOperateLog(req, "设置top：" + ids + ";ID: " + ids);
+            await mysql.commit(conn);
+        } else {
+            result.error = 1;
+            result.msg = "设置失败，必须选择一项";
+            await mysql.rollback(conn);
+        }
+    } catch (e) {
+        log.error("delete role ret:", e);
+        result.error = 1;
+        result.msg = "删除失败，请联系管理员";
+        await mysql.rollback(conn);
+    }
+    res.status(200).json(result);
+});
+
 module.exports = router;
