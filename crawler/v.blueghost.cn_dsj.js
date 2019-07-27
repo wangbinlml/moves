@@ -56,7 +56,7 @@ var crawler = function () {
                 };
                 var actors = [];
                 var year = "0";//年代
-                var area = "";//区域
+                var area = "未知";//区域
                 var sets = "";//集数
                 var content = "";
                 var playList = [];
