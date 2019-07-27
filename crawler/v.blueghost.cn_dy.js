@@ -55,7 +55,7 @@ var crawler = function () {
                     creator_id: 1
                 };
                 var actors = [];
-                var year = "";//年代
+                var year = "0";//年代
                 var area = "";//区域
                 var sets = "";//集数
                 var content = "";
