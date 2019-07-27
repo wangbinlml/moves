@@ -15,6 +15,7 @@ var datatable = $('#contents').DataTable({
                 return '<input type="checkbox" name="content_id_' + data + '" value="' + data + '">';
             }
         },
+        {"data": "id"},
         {"data": "name"},
         {"data": "tag"},
         {"data": "year"},
