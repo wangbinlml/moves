@@ -86,7 +86,7 @@ var crawler = function () {
                                     area = avalue;
                                 } else if(ibc == 2) {
                                     //年份
-                                    if(avalue != "未知") {
+                                    if(avalue != "未知" && avalue !="") {
                                         year = avalue;
                                     }
                                 }
