@@ -59,3 +59,22 @@ module.exports.delete = async (id) => {
     var sql = "update tb_move_url set is_del=1 where id = ?";
     return await mysql.query(sql, id);
 };
+
+module.exports.findMoveByLikeName = async (url) => {
+    let result = {};
+    try {
+        result.error = 0;
+        result.msg = "";
+        result.data = await mysql.query("select * from tb_move_url where url like '"+url+"%' and is_del =0");
+    } catch (e) {
+        console.log(e);
+        result.error = 1;
+        result.msg = "获取播放url失败";
+    }
+    return result;
+};
+
+module.exports.updateUrl = async (url,id) => {
+    var sql = "update tb_move_url set player='iframe',url=? where id=?";
+    return await mysql.query(sql, [url,id]);
+};
