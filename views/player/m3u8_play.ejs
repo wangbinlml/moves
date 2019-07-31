@@ -1,0 +1,48 @@
+<% include ../partials/header %>
+<link rel="stylesheet" href="/dplayer/DPlayer.min.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 order-md-1">
+                <section class="panel">
+                    <div class="panel-body table-responsive">
+                        <h3><%=move['name']%>-<%=currentMoveUrls['player']%>-<%=currentMoveUrls['name']%></h3>
+                        <div id="dplayer">
+
+                        </div>
+                        <% include ../partials/play_list %>
+                        <% include ../partials/relation_list %>
+                    </div>
+                </section>
+            </div>
+            <% include ../partials/most_views_list %>
+            <% include ../partials/tags_list %>
+            <% include ../partials/area_list %>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>
+<script type="text/javascript" src="/dplayer/DPlayer.min.js"></script>
+<script type="text/javascript" src="/dplayer/flv.min.js"></script>
+<script type="text/javascript" src="/dplayer/hls.min.js"></script>
+<script type="text/javascript">
+    const dp = new DPlayer({
+        container: document.getElementById('dplayer'),
+        autoplay:true,
+        preload: 'auto',
+        theme: '#FADFA3',
+        loop: true,
+        lang: 'zh-cn',
+        video: {
+            quality: [{
+                name: 'HD',
+                url: '<%= currentMoveUrls["url"] %>',
+                type: 'auto'
+            }],
+            defaultQuality: 0
+        }
+    });
+</script>
+

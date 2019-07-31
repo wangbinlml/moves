@@ -197,7 +197,9 @@ router.get('/play', async function (req, res, next) {
     var template = "player/online_play";
     player = player.trim();
 
-    if (player.indexOf("西瓜影音") >= 0 || currentMoveUrls.url.indexOf(".rmvb") > 0) {
+    if (currentMoveUrls.url.indexOf(".m3u8") > 0) {
+        template = "player/m3u8_play";
+    } else if (player.indexOf("西瓜影音") >= 0 || currentMoveUrls.url.indexOf(".rmvb") > 0) {
         template = "player/xigua_play";
     } else if (player == "iframe" || (player.indexOf("在线播放b")==0 && currentMoveUrls.url.indexOf(".html") > 0) || player.indexOf("在线资源")==0 || player == 'ck新线路' || player == '免费在线' || player == "ck云播" || player == "Migu在线" || player == "在线(备用)") {
         template = "player/iframe";
