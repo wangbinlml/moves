@@ -24,7 +24,11 @@
     </div>
 </div>
 <% include ../partials/footer %>
-
+<script type="text/javascript" src="/player/clappr/clappr.min.js"></script>
+<script>
+    var player = new Clappr.Player({source: "<%= currentMoveUrls['url']  %>", parentId: "#dplayer"});
+</script>
+<!--
 <script type="text/javascript" src="/dplayer/flv.min.js"></script>
 <script type="text/javascript" src="/dplayer/hls.min.js"></script>
 <script type="text/javascript" src="/dplayer/DPlayer.min.js"></script>
@@ -47,4 +51,4 @@
         }
     });
 </script>
-
+-->
