@@ -9,7 +9,7 @@
                 <section class="panel">
                     <div class="panel-body table-responsive">
                         <h3><%=move['name']%>-<%=currentMoveUrls['player']%>-<%=currentMoveUrls['name']%></h3>
-                        <div id="dplayer">
+                       <div id="dplayer">
 
                         </div>
                         <% include ../partials/play_list %>
@@ -24,9 +24,10 @@
     </div>
 </div>
 <% include ../partials/footer %>
-<script type="text/javascript" src="/dplayer/DPlayer.min.js"></script>
+
 <script type="text/javascript" src="/dplayer/flv.min.js"></script>
 <script type="text/javascript" src="/dplayer/hls.min.js"></script>
+<script type="text/javascript" src="/dplayer/DPlayer.min.js"></script>
 <script type="text/javascript">
     const dp = new DPlayer({
         container: document.getElementById('dplayer'),
@@ -39,6 +40,7 @@
             quality: [{
                 name: 'HD',
                 url: '<%= currentMoveUrls["url"] %>',
+                pic: '<%= move["cover"] %>',
                 type: 'auto'
             }],
             defaultQuality: 0
