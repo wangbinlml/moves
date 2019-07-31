@@ -24,13 +24,25 @@
 </div>
 <% include ../partials/footer %>
 <script type="text/javascript" src="/player/clappr/clappr.min.js"></script>
+<script type="text/javascript" src="/player/clappr/clappr-markers-plugin.js"></script>
 <script>
     var player = new Clappr.Player({
         source: "<%= currentMoveUrls['url']  %>",
         parentId: "#dplayer",
         width:"100%",
         autoPlay: true,
-        loop:true
+        loop:true,
+        plugins: {
+            core: [ClapprMarkersPlugin]
+        },
+        markersPlugin: {
+            markers: [
+                new ClapprMarkersPlugin.StandardMarker(0, "The beginning!"),
+                new ClapprMarkersPlugin.StandardMarker(90, "Something interesting."),
+                new ClapprMarkersPlugin.StandardMarker(450, "The conclusion.")
+            ],
+            tooltipBottomMargin: 17 // optional
+        }
     });
 </script>
 <!--
