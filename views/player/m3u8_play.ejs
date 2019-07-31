@@ -26,7 +26,13 @@
 <% include ../partials/footer %>
 <script type="text/javascript" src="/player/clappr/clappr.min.js"></script>
 <script>
-    var player = new Clappr.Player({source: "<%= currentMoveUrls['url']  %>", parentId: "#dplayer"});
+    var player = new Clappr.Player({
+        source: "<%= currentMoveUrls['url']  %>",
+        parentId: "#dplayer",
+        width:"100%",
+        autoPlay: true,
+        loop:true
+    });
 </script>
 <!--
 <script type="text/javascript" src="/dplayer/flv.min.js"></script>
