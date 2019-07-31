@@ -23,19 +23,14 @@
     </div>
 </div>
 <% include ../partials/footer %>
-<script type="text/javascript">
-    window.addEventListener('resize',function(){document.getElementById('dplayer').style.height=window.innerHeight+'px';});
-</script>
-<script type="text/javascript" src="/player/xgplayer/index.js"></script>
-<script type="text/javascript" src="/player/xgplayer/hls/index.js"></script>
-<script type="text/javascript">
-    new window.HlsJsPlayer({
-        id: 'dplayer',
-        url: '<%= currentMoveUrls["url"] %>',
-        autoplay: true,
-        playsinline: true,
-        height: window.innerHeight,
-        width: window.innerWidth
+<script type="text/javascript" src="/player/clappr/clappr.min.js"></script>
+<script>
+    var player = new Clappr.Player({
+        source: "<%= currentMoveUrls['url']  %>",
+        parentId: "#dplayer",
+        width:"100%",
+        autoPlay: true,
+        loop:true
     });
 </script>
 <!--
