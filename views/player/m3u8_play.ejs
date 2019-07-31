@@ -1,5 +1,4 @@
 <% include ../partials/header %>
-<link rel="stylesheet" href="/dplayer/DPlayer.min.css">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Page Content -->
@@ -25,13 +24,13 @@
 </div>
 <% include ../partials/footer %>
 <script type="text/javascript">
-    window.addEventListener('resize',function(){document.getElementById('mse').style.height=window.innerHeight+'px';});
+    window.addEventListener('resize',function(){document.getElementById('dplayer').style.height=window.innerHeight+'px';});
 </script>
 <script type="text/javascript" src="/player/xgplayer/index.js"></script>
 <script type="text/javascript" src="/player/xgplayer/hls/index.js"></script>
 <script type="text/javascript">
     new window.HlsJsPlayer({
-        id: 'mse',
+        id: 'dplayer',
         url: '<%= currentMoveUrls["url"] %>',
         autoplay: true,
         playsinline: true,
