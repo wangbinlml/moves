@@ -236,7 +236,7 @@ var url = "http://www.52gqhd.com/play/plist/13";
 
                         for (var f = 0; f < downloadList.length; f++) {
                             var downloadObj = downloadList[f];
-                            await moveDownloadService.insert(conn, [move_id, downloadObj.title, downloadObj.url, 1]);
+                            await moveDownloadService.insert(conn, [move_id, downloadObj.title, downloadObj.url, 2,  1]);
                         }
                     } else {
                         move_id = movelist.data[0]['id'];
