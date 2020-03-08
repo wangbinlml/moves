@@ -13,6 +13,7 @@ var moveService = require("../core/service/moveService");
 var moveTagService = require("../core/service/moveTagService");
 var moveUrlService = require("../core/service/moveUrlService");
 var tagService = require("../core/service/tagService");
+var pageService = require("../core/service/pageService");
 
 
 var logger = require('../core/logger').getLogger("system");
@@ -22,7 +23,12 @@ var base_url = "https://www.btmao.cc/";
 var url = "https://www.btmao.cc/list/s-2-wd--letter--year-0-area--order--p";
 (async () => {
     //for (var ab = 1; ab <535; ab++) {
-    for (var ab = 271; ab > 0; ab--) {
+    //for (var ab = 271; ab > 0; ab--) {
+        var pageObj = await pageService.findAll(14);
+        var ab = pageObj.data[0]['page'];
+        if (ab < 0) {
+            ab = 1;
+        }
         //列表
         url = url + "-" + ab + ".html";
 
@@ -225,6 +231,7 @@ var url = "https://www.btmao.cc/list/s-2-wd--letter--year-0-area--order--p";
                 logger.info(e);
             }
         }
-    }
+    //}
+    await pageService.update(14);
     process.exit(0);
 })();
