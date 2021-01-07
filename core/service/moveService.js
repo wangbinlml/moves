@@ -64,9 +64,10 @@ module.exports.findAllMoves = async (category, currrent_page, num) => {
     }
     return result;
 };
-module.exports.search = async (keywords, currrent_page, num) => {
+module.exports.search = async (keyword, currrent_page, num) => {
     let result = {};
     try {
+        /*
         let where = "";
         for (let i = 0; i < keywords.length; i++) {
             const keyword = keywords[i];
@@ -79,6 +80,10 @@ module.exports.search = async (keywords, currrent_page, num) => {
         const data = await Pagination.getData(
             ["select count(*) count from tb_move where (" + where + ") and is_del =0",
                 "select * from tb_move where (" + where + ") and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
+         */
+        const data = await Pagination.getData(
+            ["select count(*) count from tb_move where name like '%" + keyword + "%' and is_del =0",
+                "select * from tb_move where name like '%" + keyword + "%' and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;

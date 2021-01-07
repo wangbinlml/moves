@@ -287,20 +287,24 @@ router.get('/search', async function (req, res, next) {
     var current_page = req.query.current_page || "1";
     var moves = [];
     if (keyword != "") {
-        var result = nodejieba.cut(keyword);
-        log.info("分词：", result);
-        var data = await moveService.search(result, current_page, 10);
+        ///var result = nodejieba.cut(keyword);
+        //log.info("分词：", result);
+        var data = await moveService.search(keyword, current_page, 10);
         var paginationObj = data.data;
         var paginationData = paginationObj.data;
         var pData = [];
         for (var i = 0; i < paginationData.length; i++) {
             var paginObj = paginationData[i];
-            var name = paginObj.name;
-            for (let j = 0; j < result.length; j++) {
+            /**
+             *
+             * var name = paginObj.name;
+             for (let j = 0; j < result.length; j++) {
                 const cut = result[j];
                 name = name.replace(cut, "<font color='red'>" + cut + "</font>");
             }
-            paginObj.name = name;
+             paginObj.name = name;
+             */
+            paginObj.name = paginObj.name.replace(keyword, "<font color='red'>" + keyword + "</font>");
             var description = StringUtils.htmlDecodeByRegExp(paginObj['description']);
             description = description.replace(/<\/?.+?>/g, "").replace(/<\/?.+?>/g, "");
             description = description.length > 30 ? description.substr(30) + "..." : description;
