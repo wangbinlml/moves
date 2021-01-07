@@ -70,11 +70,15 @@ module.exports.search = async (keywords, currrent_page, num) => {
         let where = "";
         for (let i = 0; i < keywords.length; i++) {
             const keyword = keywords[i];
-            where = where + "name like '%" + keyword + "%'";
+            if (i == 0) {
+                where = "name like '%" + keyword + "%'";
+            } else {
+                where = where + " or name like '%" + keyword + "%'";
+            }
         }
         const data = await Pagination.getData(
-            ["select count(*) count from tb_move where '" + where + "' and is_del =0",
-                "select * from tb_move where name like '" + where + "' and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
+            ["select count(*) count from tb_move where '(" + where + ")' and is_del =0",
+                "select * from tb_move where name like '(" + where + ")' and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
