@@ -295,7 +295,12 @@ router.get('/search', async function (req, res, next) {
         var pData = [];
         for (var i = 0; i < paginationData.length; i++) {
             var paginObj = paginationData[i];
-            paginObj.name = paginObj.name.replace(keyword, "<font color='red'>" + keyword + "</font>");
+            var name = paginObj.name;
+            for (let j = 0; j < result.length; j++) {
+                const cut = result[j];
+                name = name.replace(cut, "<font color='red'>" + cut + "</font>");
+            }
+            paginObj.name = name;
             var description = StringUtils.htmlDecodeByRegExp(paginObj['description']);
             description = description.replace(/<\/?.+?>/g, "").replace(/<\/?.+?>/g, "");
             description = description.length > 30 ? description.substr(30) + "..." : description;
