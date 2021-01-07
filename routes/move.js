@@ -10,6 +10,7 @@ const moveDownloadService = require('../core/service/moveDownloadService');
 const moveUrlService = require('../core/service/moveUrlService');
 const categoryService = require('../core/service/categoryService');
 const tagService = require('../core/service/tagService');
+const log = require('../core/logger').getLogger("system");
 
 router.get('/', async function (req, res, next) {
     var category_id = req.query.category_id || "1";
