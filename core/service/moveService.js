@@ -77,8 +77,8 @@ module.exports.search = async (keywords, currrent_page, num) => {
             }
         }
         const data = await Pagination.getData(
-            ["select count(*) count from tb_move where '(" + where + ")' and is_del =0",
-                "select * from tb_move where '(" + where + ")' and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
+            ["select count(*) count from tb_move where (" + where + ") and is_del =0",
+                "select * from tb_move where (" + where + ") and is_del=0 order by created_at desc limit ?,?"], currrent_page, num);
         result.error = 0;
         result.msg = "";
         result.data = data;
