@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 const moment = require('moment');
+const nodejieba = require("nodejieba");
 const StringUtils = require('../core/util/StringUtils');
 const moveService = require('../core/service/moveService');
 const actorService = require('../core/service/actorService');
@@ -285,7 +286,9 @@ router.get('/search', async function (req, res, next) {
     var current_page = req.query.current_page || "1";
     var moves = [];
     if (keyword != "") {
-        var data = await moveService.search(keyword, current_page, 10);
+        var result = nodejieba.cut(keyword);
+        log.info("分词：", result);
+        var data = await moveService.search(result, current_page, 10);
         var paginationObj = data.data;
         var paginationData = paginationObj.data;
         var pData = [];
