@@ -30,7 +30,7 @@ var url = "http://www.52kkhd.com/play/plist/9";
         }
         var html = await utils.get(url);
         var $ = cheerio.load(html, {decodeEntities: false});
-        var data = $('.mov_list li div.pic a');
+        var data = $('.list-inline li div.pic a');
         for (var i = 0; i < data.length; i++) {
             var dt = data[i];
             console.log("第"+ab+"页=====第" + i + "条======");
@@ -67,9 +67,9 @@ var url = "http://www.52kkhd.com/play/plist/9";
             var conn = await mysql.getConnection();
             mysql.beginTransaction(conn);
             try {
-                var $5 = $2("#nr_if");
-                var p = $2("#nr_if").children("p");
-                var h1 = $2("#nr_if").find("h1");
+                var $5 = $2("#nr_lt");
+                var p = $2("#nr_lt").children("p");
+                var h1 = $2("#nr_lt").find("h4");
                 var title2 = h1.text();
                 p.each(function (index, item) {
                     var chapter = $(this);
@@ -114,9 +114,9 @@ var url = "http://www.52kkhd.com/play/plist/9";
                 moveObj.area = area;
 
                 //网盘链接：
-                var div = $2("#nr_if #div");
+                var div = $2("#nr_lt #div");
                 //播放地址
-                var playurlm = $2("#nr_if .playurlm");
+                var playurlm = $2("#nr_lt").find('.ui-box').prev('div');
                 if (playurlm) {
                     var titleP = [];
                     var linkP = [];
@@ -141,7 +141,7 @@ var url = "http://www.52kkhd.com/play/plist/9";
                         var play_url = base_url + linkPlay.link;
                         var play_html = await utils.get(play_url);
                         var $3 = cheerio.load(play_html, {decodeEntities: false});
-                        var script = $3("center div script");
+                        var script = $3("div.bg-dark script");
                         script.each(function (o, abcd) {
                             var sc = $(this);
                             if (sc.html() != "") {
@@ -175,7 +175,7 @@ var url = "http://www.52kkhd.com/play/plist/9";
 
                 //下载地址
                 var downloadList = [];
-                var ui_box = $2("#nr_if .ui-box .down_list ul li .down_part_name a");
+                var ui_box = $2("#nr_lt .ui-box .down_list ul li .down_part_name a");
                 if (ui_box) {
                     ui_box.each(function () {
                         var a = $(this);
@@ -206,7 +206,7 @@ var url = "http://www.52kkhd.com/play/plist/9";
                     if (htm.indexOf("</a>") > 0) {
                         htm = htm.substr(htm.indexOf("</a>") + 4);
                     }
-                    var description = StringUtils.htmlEncodeByRegExp(htm);
+                    var description = '暂无详情';//StringUtils.htmlEncodeByRegExp(htm);
                     /*moveObj = await moveService.insert(conn, [moveObj.category_id, moveObj.tag_id, moveObj.name, year, area, moveObj.cover, moveObj.source, description, moveObj.creator_id]);
                     var move_id = moveObj.insertId;*/
                     var move_id = "";
